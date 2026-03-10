@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git --yes 2>&1)",
+      "Bash(cp -r /tmp/placecompanion/. /Users/evertiz/placecompanion/ --backup=numbered 2>/dev/null || rsync -a /tmp/placecompanion/ /Users/evertiz/placecompanion/ --exclude='.git')",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(gh auth:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}
