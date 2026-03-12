@@ -12,7 +12,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { messages, propertyConfig } = body as {
-      // UIMessage shape sent by TextStreamChatTransport
       messages: Array<{ role: string; parts: Array<{ type: string; text?: string }> }>;
       propertyConfig?: PropertyConfig;
     };
@@ -24,8 +23,6 @@ export async function POST(req: Request) {
     const config = propertyConfig ?? demoConfig;
     const systemPrompt = buildSystemPrompt(config);
 
-    // Convert UIMessage[] to the format streamText expects
-    // Filter out assistant-only greeting injected client-side to avoid confusion
     const modelMessages = await convertToModelMessages(
       messages as Parameters<typeof convertToModelMessages>[0],
     );
@@ -34,7 +31,7 @@ export async function POST(req: Request) {
       model: anthropic("claude-haiku-4-5-20251001"),
       system: systemPrompt,
       messages: modelMessages,
-      maxOutputTokens: 512,
+      maxOutputTokens: 1024,
     });
 
     return result.toTextStreamResponse();

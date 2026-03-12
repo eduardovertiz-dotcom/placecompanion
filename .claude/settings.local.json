@@ -6,7 +6,8 @@
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(gh auth:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
