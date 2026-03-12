@@ -1,4 +1,5 @@
 import type { PropertyConfig } from "@/types/property";
+import type { ChatConfig } from "@/components/chat-interface";
 
 export const marazulConfig: PropertyConfig = {
   id: "marazul-riviera-maya",
@@ -65,4 +66,12 @@ export const marazulConfig: PropertyConfig = {
   branding: {
     primaryColor: "#2D9E6B",
   },
+};
+
+export const marazulChatConfig: ChatConfig = {
+  hotelName: "MarAzul Riviera Maya",
+  assistantName: "Marina",
+  collection: "MarAzul Collection",
+  systemPrompt: marazulConfig.companion.personality,
+  suggestionChips: marazulConfig.suggestions,
 };

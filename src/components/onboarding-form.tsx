@@ -1,254 +1,291 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Plus,
-  Trash2,
-  Check,
-  Copy,
-  ExternalLink,
-  BedDouble,
-  HeartPulse,
-  Plane,
-  Home,
-  ShoppingBag,
-  GraduationCap,
-} from "lucide-react";
-import type { PropertyConfig, SpaceVertical } from "@/types/property";
-import { VERTICAL_FORM_CONFIGS } from "@/lib/vertical-configs";
+import { useState, useEffect } from "react";
+import { Check, ChevronRight, Loader2, BotMessageSquare } from "lucide-react";
+import { InlineDemo } from "@/components/inline-demo";
 
-type Step = 1 | 2 | 3 | 4 | 5;
+type Step = 1 | 2 | 3 | 4;
 
-const VERTICAL_OPTIONS: Array<{
-  value: SpaceVertical;
-  icon: React.ElementType;
-}> = [
-  { value: "hotel_resort", icon: BedDouble },
-  { value: "hospital_clinic", icon: HeartPulse },
-  { value: "airport_transport", icon: Plane },
-  { value: "residential", icon: Home },
-  { value: "shopping_retail", icon: ShoppingBag },
-  { value: "university_campus", icon: GraduationCap },
+const CATEGORIES = [
+  "Restaurant & Dining",
+  "Spa & Wellness",
+  "Amenities & Facilities",
+  "Location & Navigation",
+  "Policies & Hours",
+  "Nearby Experiences",
 ];
 
-function StepIndicator({ current, total }: { current: Step; total: number }) {
-  return (
-    <div className="flex items-center gap-2 mb-8">
-      {Array.from({ length: total }).map((_, i) => {
-        const step = (i + 1) as Step;
-        const done = step < current;
-        const active = step === current;
-        return (
-          <div key={i} className="flex items-center gap-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
-                done
-                  ? "bg-emerald-600 text-white"
-                  : active
-                  ? "bg-emerald-600 text-white"
-                  : "bg-slate-200 text-slate-500"
-              }`}
-            >
-              {done ? <Check className="w-4 h-4" /> : step}
-            </div>
-            {i < total - 1 && (
-              <div
-                className={`h-0.5 w-12 transition-colors ${
-                  done ? "bg-emerald-600" : "bg-slate-200"
-                }`}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+const TONES = ["Professional", "Friendly", "Concierge", "Relaxed"];
 
-interface FormData {
-  type: SpaceVertical | "";
-  name: string;
-  city: string;
-  country: string;
-  address: string;
-  primaryLanguage: string;
-  companion_name: string;
-  companion_personality: string;
-  companion_greeting: string;
-  services: string[];
-  faqs: Array<{ question: string; answer: string }>;
-  phone: string;
-  whatsapp: string;
-  email: string;
-}
+const HIGHLIGHTS = ["Dining", "Spa", "Activities", "Local Area", "All of the above"];
 
-const defaultForm: FormData = {
-  type: "",
-  name: "",
-  city: "",
-  country: "",
-  address: "",
-  primaryLanguage: "en",
-  companion_name: "",
-  companion_personality: "",
-  companion_greeting: "",
-  services: [""],
-  faqs: [{ question: "", answer: "" }],
-  phone: "",
-  whatsapp: "",
-  email: "",
-};
+const PREVIEW_CHIPS = [
+  "What time is breakfast?",
+  "Do you have a spa?",
+  "Where is the pool?",
+  "Can I get late checkout?",
+];
+
+function buildPreviewPrompt(hotelName: string, tone: string, highlights: string[]): string {
+  const toneMap: Record<string, string> = {
+    Professional: "professional and polished",
+    Friendly: "warm, friendly, and approachable",
+    Concierge: "attentive and knowledgeable, like a luxury concierge",
+    Relaxed: "relaxed, easy-going, and casual",
+  };
+  const toneDesc = toneMap[tone] ?? "helpful and professional";
+  const focus = highlights.length ? highlights.join(", ") : "all hotel services";
+  const name = hotelName || "your hotel";
+  return `You are the AI Guest Companion for ${name}. Be ${toneDesc}. Focus especially on: ${focus}. Keep responses concise but complete. Respond in whatever language the guest uses — English or Spanish only.`;
+}
 
 export function OnboardingForm() {
   const [step, setStep] = useState<Step>(1);
-  const [form, setForm] = useState<FormData>(defaultForm);
-  const [submitted, setSubmitted] = useState(false);
-  const [generatedConfig, setGeneratedConfig] = useState<PropertyConfig | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [hotelInput, setHotelInput] = useState("");
+  const [hotelUrl, setHotelUrl] = useState("");
+  const [detectedCount, setDetectedCount] = useState(0);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
+  const [hotelName, setHotelName] = useState("");
+  const [tone, setTone] = useState("Friendly");
+  const [highlights, setHighlights] = useState<string[]>(["All of the above"]);
 
-  function updateField(field: keyof FormData, value: unknown) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  useEffect(() => {
+    if (step !== 2) return;
+    setDetectedCount(0);
+    setAnalysisComplete(false);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    CATEGORIES.forEach((_, i) => {
+      const t = setTimeout(() => {
+        setDetectedCount(i + 1);
+        if (i === CATEGORIES.length - 1) setAnalysisComplete(true);
+      }, 500 + i * 550);
+      timers.push(t);
+    });
+    return () => timers.forEach(clearTimeout);
+  }, [step]);
+
+  function toggleHighlight(label: string) {
+    if (label === "All of the above") {
+      setHighlights(["All of the above"]);
+      return;
+    }
+    setHighlights((prev) => {
+      const without = prev.filter((h) => h !== "All of the above");
+      if (without.includes(label)) {
+        const next = without.filter((h) => h !== label);
+        return next.length ? next : ["All of the above"];
+      }
+      return [...without, label];
+    });
   }
 
-  function selectVertical(value: SpaceVertical) {
-    const cfg = VERTICAL_FORM_CONFIGS[value];
-    setForm((prev) => ({
-      ...prev,
-      type: value,
-      companion_personality: cfg.defaultPersonality,
-      companion_greeting: cfg.defaultGreeting,
-    }));
-  }
+  const previewPrompt = buildPreviewPrompt(hotelName, tone, highlights);
 
-  function updateService(index: number, value: string) {
-    const updated = [...form.services];
-    updated[index] = value;
-    setForm((prev) => ({ ...prev, services: updated }));
-  }
+  const inputCls =
+    "w-full bg-white border rounded-xl px-4 py-3 text-[15px] text-[#0A0806] placeholder-[#5C5650]/50 outline-none focus:border-[#141413]/40 transition-colors duration-200 font-sans";
+  const inputStyle = { borderColor: "rgba(10,8,6,0.15)" };
+  const labelCls = "block font-sans text-[13px] font-medium text-[#3A3A38] uppercase tracking-[0.12em] mb-2";
 
-  function addService() {
-    setForm((prev) => ({ ...prev, services: [...prev.services, ""] }));
-  }
-
-  function removeService(index: number) {
-    setForm((prev) => ({
-      ...prev,
-      services: prev.services.filter((_, i) => i !== index),
-    }));
-  }
-
-  function updateFaq(index: number, field: "question" | "answer", value: string) {
-    const updated = [...form.faqs];
-    updated[index] = { ...updated[index], [field]: value };
-    setForm((prev) => ({ ...prev, faqs: updated }));
-  }
-
-  function addFaq() {
-    setForm((prev) => ({
-      ...prev,
-      faqs: [...prev.faqs, { question: "", answer: "" }],
-    }));
-  }
-
-  function removeFaq(index: number) {
-    setForm((prev) => ({
-      ...prev,
-      faqs: prev.faqs.filter((_, i) => i !== index),
-    }));
-  }
-
-  function handleSubmit() {
-    if (!form.type) return;
-    const config: PropertyConfig = {
-      id: `${form.name.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`,
-      name: form.name,
-      type: form.type,
-      location: {
-        city: form.city,
-        country: form.country,
-        address: form.address || undefined,
-      },
-      language: {
-        primary: form.primaryLanguage as PropertyConfig["language"]["primary"],
-        supported: [form.primaryLanguage as PropertyConfig["language"]["primary"]],
-      },
-      companion: {
-        name: form.companion_name,
-        personality: form.companion_personality,
-        greeting: form.companion_greeting.replace("{name}", form.companion_name),
-      },
-      services: form.services.filter(Boolean),
-      faqs: form.faqs.filter((f) => f.question && f.answer),
-      contact: {
-        phone: form.phone || undefined,
-        whatsapp: form.whatsapp || undefined,
-        email: form.email || undefined,
-      },
-    };
-    setGeneratedConfig(config);
-    setSubmitted(true);
-  }
-
-  async function copyConfig() {
-    if (!generatedConfig) return;
-    await navigator.clipboard.writeText(JSON.stringify(generatedConfig, null, 2));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
-  const verticalCfg = form.type ? VERTICAL_FORM_CONFIGS[form.type] : null;
-
-  if (submitted && generatedConfig) {
+  if (step === 1) {
     return (
-      <div className="bg-white rounded-xl border border-slate-100 p-8 text-center max-w-2xl mx-auto">
-        <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Check className="w-7 h-7 text-emerald-600" />
-        </div>
-        <h2 className="text-2xl font-bold text-slate-900 mb-2">
-          Your assistant is ready
-        </h2>
-        <p className="text-slate-500 mb-6">
-          <strong>{generatedConfig.companion.name}</strong> is configured for{" "}
-          <strong>{generatedConfig.name}</strong>. Here&apos;s your JSON configuration:
+      <div>
+        <h1 className="font-serif text-[52px] max-md:text-[38px] leading-[1.05] font-semibold text-[#141413] mb-4">
+          Let&apos;s build your hotel assistant.
+        </h1>
+        <p className="font-sans text-[#3A3A38] text-[17px] leading-[1.7] font-light mb-10">
+          Paste your hotel&apos;s guest guide, services menu, or website URL. Our AI will read it
+          and configure your assistant automatically.
         </p>
-        <div className="relative bg-slate-900 rounded-xl p-4 text-left mb-6">
-          <button
-            onClick={copyConfig}
-            className="absolute top-3 right-3 flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
-          >
-            {copied ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-400">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" />
-                Copy
-              </>
-            )}
-          </button>
-          <pre className="text-xs text-slate-300 overflow-auto max-h-64 font-mono">
-            {JSON.stringify(generatedConfig, null, 2)}
-          </pre>
+
+        <div className="space-y-5">
+          <div>
+            <label className={labelCls}>Hotel Guide / Services</label>
+            <textarea
+              value={hotelInput}
+              onChange={(e) => setHotelInput(e.target.value)}
+              placeholder="Paste your hotel guide, services document, room information, restaurant hours, spa menu... anything that describes your property."
+              className="w-full bg-white border border-[#141413]/15 text-[#141413] placeholder-[#141413]/40 rounded-xl p-4 text-[15px] font-sans resize-none focus:outline-none focus:border-[#141413]/40 h-40"
+            />
+          </div>
+
+          <div>
+            <label className={labelCls}>Or paste a URL</label>
+            <input
+              type="url"
+              value={hotelUrl}
+              onChange={(e) => setHotelUrl(e.target.value)}
+              placeholder="https://yourhotel.com/guest-guide"
+              className="w-full bg-white border border-[#141413]/15 text-[#141413] placeholder-[#141413]/40 rounded-xl px-4 py-3 text-[15px] font-sans focus:outline-none focus:border-[#141413]/40"
+            />
+          </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href="/demo"
-            className="inline-flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors"
-          >
-            <ExternalLink className="w-4 h-4" />
-            See demo with this config
-          </a>
+
+        <div className="mt-8">
           <button
-            onClick={() => {
-              setSubmitted(false);
-              setStep(1);
-              setForm(defaultForm);
-            }}
-            className="inline-flex items-center gap-2 border border-slate-200 text-slate-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            onClick={() => setStep(2)}
+            disabled={!hotelInput.trim() && !hotelUrl.trim()}
+            className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors flex items-center gap-2 disabled:opacity-40"
           >
-            Configure another space
+            Analyze My Hotel
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          <p className="font-sans text-[13px] text-[#3A3A38] mt-3 font-light">
+            Takes about 30 seconds
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 2) {
+    return (
+      <div>
+        <h1 className="font-serif text-[52px] max-md:text-[38px] leading-[1.05] font-semibold text-[#0A0806] mb-4">
+          Your assistant is learning your hotel.
+        </h1>
+        <p className="font-sans text-[#5C5650] text-[17px] leading-[1.7] font-light mb-10">
+          {analysisComplete
+            ? "Analysis complete. We found the following in your hotel information."
+            : "Reading your property information and detecting categories..."}
+        </p>
+
+        <div className="bg-white rounded-2xl p-6 mb-6" style={{ border: "1px solid rgba(10,8,6,0.10)" }}>
+          <ul className="space-y-3">
+            {CATEGORIES.map((cat, i) => {
+              const detected = i < detectedCount;
+              return (
+                <li
+                  key={cat}
+                  className={`flex items-center justify-between transition-opacity duration-500 ${
+                    detected ? "opacity-100" : "opacity-30"
+                  }`}
+                >
+                  <span className="font-sans text-[15px] text-[#0A0806] font-light">{cat}</span>
+                  {detected ? (
+                    <span className="flex items-center gap-1.5 font-sans text-[13px] text-[#141413] font-medium">
+                      <Check className="w-3.5 h-3.5" />
+                      Detected
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1.5 font-sans text-[13px] text-[#5C5650]/60">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      Scanning...
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {analysisComplete && (
+          <div className="mb-8">
+            <p className="font-sans text-[15px] text-[#5C5650] font-light">
+              <span className="text-[#141413] font-medium">
+                {detectedCount * 2} services detected
+              </span>{" "}
+              across {detectedCount} categories
+            </p>
+          </div>
+        )}
+
+        <button
+          onClick={() => setStep(3)}
+          disabled={!analysisComplete}
+          className="inline-flex items-center gap-2 bg-[#141413] hover:bg-[#2A2A2A] text-[#FAF9F5] px-8 h-12 rounded-lg font-sans text-[15px] font-medium transition-colors duration-200 disabled:opacity-40"
+        >
+          {analysisComplete ? (
+            <>Preview Your Assistant <ChevronRight className="w-4 h-4" /></>
+          ) : (
+            <><Loader2 className="w-4 h-4 animate-spin" /> Analyzing...</>
+          )}
+        </button>
+      </div>
+    );
+  }
+
+  if (step === 3) {
+    return (
+      <div>
+        <h1 className="font-serif text-[52px] max-md:text-[38px] leading-[1.05] font-semibold text-[#0A0806] mb-4">
+          Almost ready.
+        </h1>
+        <p className="font-sans text-[#5C5650] text-[17px] leading-[1.7] font-light mb-10">
+          Three quick questions and your assistant is ready to preview.
+        </p>
+
+        <div className="space-y-8">
+          <div>
+            <label className={labelCls}>What&apos;s your hotel called?</label>
+            <input
+              type="text"
+              value={hotelName}
+              onChange={(e) => setHotelName(e.target.value)}
+              placeholder="e.g. MarAzul Riviera Maya"
+              className={inputCls}
+              style={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label className={labelCls}>How should your assistant sound?</label>
+            <div className="grid grid-cols-2 gap-3">
+              {TONES.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTone(t)}
+                  className={`text-left px-4 py-3 rounded-xl border font-sans text-[15px] font-medium transition-all duration-200 ${
+                    tone === t
+                      ? "border-[#141413]/40 bg-[#141413]/10 text-[#141413]"
+                      : "bg-white text-[#5C5650]"
+                  }`}
+                  style={tone === t ? {} : { borderColor: "rgba(10,8,6,0.15)" }}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className={labelCls}>What&apos;s most important to highlight?</label>
+            <div className="flex flex-wrap gap-2">
+              {HIGHLIGHTS.map((h) => {
+                const active = highlights.includes(h);
+                return (
+                  <button
+                    key={h}
+                    onClick={() => toggleHighlight(h)}
+                    className={`px-4 py-2 rounded-full font-sans text-[14px] font-medium border transition-all duration-200 ${
+                      active
+                        ? "border-[#141413]/40 bg-[#141413]/10 text-[#141413]"
+                        : "bg-white text-[#5C5650]"
+                    }`}
+                    style={active ? {} : { borderColor: "rgba(10,8,6,0.15)" }}
+                  >
+                    {active && <Check className="inline w-3 h-3 mr-1.5 -mt-0.5" />}
+                    {h}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 flex items-center gap-4">
+          <button
+            onClick={() => setStep(4)}
+            disabled={!hotelName.trim()}
+            className="inline-flex items-center gap-2 bg-[#141413] hover:bg-[#2A2A2A] text-[#FAF9F5] px-8 h-12 rounded-lg font-sans text-[15px] font-medium transition-colors duration-200 disabled:opacity-40"
+          >
+            See Your Assistant Live
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => setStep(2)}
+            className="font-sans text-[15px] text-[#5C5650] hover:text-[#0A0806] transition-colors duration-200"
+          >
+            ← Back
           </button>
         </div>
       </div>
@@ -256,352 +293,45 @@ export function OnboardingForm() {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 p-8 max-w-2xl mx-auto">
-      <StepIndicator current={step} total={5} />
+    <div>
+      <h1 className="font-serif text-[52px] max-md:text-[38px] leading-[1.05] font-semibold text-[#0A0806] mb-4">
+        Your assistant is ready.
+      </h1>
+      <p className="font-sans text-[#5C5650] text-[17px] leading-[1.7] font-light mb-8">
+        {hotelName
+          ? `This is ${hotelName}'s AI Guest Companion. Ask it anything.`
+          : "Try your AI Guest Companion below. Ask it anything."}
+      </p>
 
-      {/* Step 1: Choose vertical */}
-      {step === 1 && (
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">What type of space are you?</h2>
-          <p className="text-slate-500 text-sm mb-6">
-            Select your space type. The AI profile will be pre-configured for your industry.
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            {VERTICAL_OPTIONS.map(({ value, icon: Icon }) => {
-              const cfg = VERTICAL_FORM_CONFIGS[value];
-              const selected = form.type === value;
-              return (
-                <button
-                  key={value}
-                  onClick={() => selectVertical(value)}
-                  className={`text-left p-4 rounded-xl border-2 transition-all ${
-                    selected
-                      ? "border-emerald-500 bg-emerald-50"
-                      : "border-slate-100 hover:border-slate-300 bg-white"
-                  }`}
-                >
-                  <div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${
-                      selected ? "bg-emerald-100" : "bg-slate-100"
-                    }`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 ${
-                        selected ? "text-emerald-600" : "text-slate-500"
-                      }`}
-                    />
-                  </div>
-                  <div
-                    className={`text-sm font-medium ${
-                      selected ? "text-emerald-700" : "text-slate-700"
-                    }`}
-                  >
-                    {cfg.label}
-                  </div>
-                  <div className="text-xs text-slate-400 mt-0.5 leading-snug">
-                    {cfg.description}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <InlineDemo
+        chips={PREVIEW_CHIPS}
+        systemPrompt={previewPrompt}
+        headerName={hotelName || "Your Hotel"}
+        className="h-[480px] max-md:h-[420px] mb-8"
+      />
 
-      {/* Step 2: Basic info */}
-      {step === 2 && (
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">About your space</h2>
-          <p className="text-slate-500 text-sm mb-6">
-            Basic information about your {verticalCfg?.label.toLowerCase() ?? "space"}.
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Space name *
-              </label>
-              <input
-                type="text"
-                value={form.name}
-                onChange={(e) => updateField("name", e.target.value)}
-                placeholder="e.g. Hotel La Palma"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">City *</label>
-                <input
-                  type="text"
-                  value={form.city}
-                  onChange={(e) => updateField("city", e.target.value)}
-                  placeholder="e.g. Paris"
-                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Country *</label>
-                <input
-                  type="text"
-                  value={form.country}
-                  onChange={(e) => updateField("country", e.target.value)}
-                  placeholder="e.g. France"
-                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Address (optional)
-              </label>
-              <input
-                type="text"
-                value={form.address}
-                onChange={(e) => updateField("address", e.target.value)}
-                placeholder="e.g. 15 Rue du Marais"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3: AI companion */}
-      {step === 3 && (
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">Your AI companion</h2>
-          <p className="text-slate-500 text-sm mb-6">
-            Customize the identity and communication style of your assistant.
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Assistant name *
-              </label>
-              <input
-                type="text"
-                value={form.companion_name}
-                onChange={(e) => updateField("companion_name", e.target.value)}
-                placeholder="e.g. Luna, Max, Aria..."
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Personality & instructions *
-              </label>
-              <textarea
-                rows={4}
-                value={form.companion_personality}
-                onChange={(e) => updateField("companion_personality", e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 resize-none"
-              />
-              <p className="text-xs text-slate-400 mt-1">
-                Pre-filled based on your space type. Customize as needed.
-              </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Opening greeting *
-              </label>
-              <textarea
-                rows={2}
-                value={form.companion_greeting}
-                onChange={(e) => updateField("companion_greeting", e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 resize-none"
-              />
-              <p className="text-xs text-slate-400 mt-1">
-                Use <code className="font-mono">{"{name}"}</code> to insert the assistant&apos;s name.
-              </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Primary language
-              </label>
-              <select
-                value={form.primaryLanguage}
-                onChange={(e) => updateField("primaryLanguage", e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              >
-                <option value="en">English</option>
-                <option value="es">Español</option>
-                <option value="pt">Português</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="zh">中文 (Mandarin)</option>
-              </select>
-              <p className="text-xs text-slate-400 mt-1">
-                The assistant will always respond in the visitor&apos;s language regardless of this setting.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Step 4: Services & FAQs */}
-      {step === 4 && (
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">Services & FAQs</h2>
-          <p className="text-slate-500 text-sm mb-6">
-            This information is what your assistant will use to answer visitor questions.
-          </p>
-          <div className="space-y-6">
-            {/* Services */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Available services
-              </label>
-              <div className="space-y-2">
-                {form.services.map((s, i) => (
-                  <div key={i} className="flex gap-2">
-                    <input
-                      type="text"
-                      value={s}
-                      onChange={(e) => updateService(i, e.target.value)}
-                      placeholder={verticalCfg?.servicePlaceholder ?? "e.g. Wi-Fi available in all areas"}
-                      className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-                    />
-                    <button
-                      onClick={() => removeService(i)}
-                      className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={addService}
-                className="mt-2 flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-                Add service
-              </button>
-            </div>
-
-            {/* FAQs */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Frequently asked questions
-              </label>
-              <div className="space-y-3">
-                {form.faqs.map((faq, i) => (
-                  <div key={i} className="bg-slate-50 rounded-lg p-3 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-500">Question {i + 1}</span>
-                      <button
-                        onClick={() => removeFaq(i)}
-                        className="text-slate-400 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      value={faq.question}
-                      onChange={(e) => updateFaq(i, "question", e.target.value)}
-                      placeholder={verticalCfg?.faqQuestionPlaceholder ?? "e.g. What are your opening hours?"}
-                      className="w-full border border-slate-200 bg-white rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-                    />
-                    <textarea
-                      rows={2}
-                      value={faq.answer}
-                      onChange={(e) => updateFaq(i, "answer", e.target.value)}
-                      placeholder={verticalCfg?.faqAnswerPlaceholder ?? "Enter the answer here."}
-                      className="w-full border border-slate-200 bg-white rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 resize-none"
-                    />
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={addFaq}
-                className="mt-2 flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-                Add question
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Step 5: Contact */}
-      {step === 5 && (
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">Contact information</h2>
-          <p className="text-slate-500 text-sm mb-6">
-            The assistant will share these details when a visitor needs additional help.
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
-              <input
-                type="tel"
-                value={form.phone}
-                onChange={(e) => updateField("phone", e.target.value)}
-                placeholder="+1 212 555 0100"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp</label>
-              <input
-                type="tel"
-                value={form.whatsapp}
-                onChange={(e) => updateField("whatsapp", e.target.value)}
-                placeholder="+1 212 555 0100"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => updateField("email", e.target.value)}
-                placeholder="info@yourspace.com"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
-              />
-            </div>
-          </div>
-
-          <div className="mt-6 bg-emerald-50 rounded-xl p-4 text-sm text-emerald-700">
-            <strong>All set.</strong> Click &ldquo;Generate config&rdquo; to get the JSON
-            for your space, ready to use with the Place Companion API.
-          </div>
-        </div>
-      )}
-
-      {/* Navigation */}
-      <div className="flex items-center justify-between mt-8">
-        <button
-          onClick={() => setStep((prev) => Math.max(1, prev - 1) as Step)}
-          disabled={step === 1}
-          className="text-sm text-slate-500 hover:text-slate-700 transition-colors disabled:opacity-30"
+      <div className="bg-white rounded-2xl p-6 mb-6" style={{ border: "1px solid rgba(10,8,6,0.10)" }}>
+        <p className="font-sans text-[15px] text-[#5C5650] font-light mb-4">
+          Save your assistant to keep it →
+        </p>
+        <a
+          href="mailto:hola@placecompanion.com?subject=Place Companion — Create Account"
+          className="inline-flex items-center gap-2 bg-[#141413] hover:bg-[#2A2A2A] text-[#FAF9F5] px-8 h-12 rounded-lg font-sans text-[15px] font-medium transition-colors duration-200 w-full justify-center"
         >
-          ← Back
-        </button>
-        {step < 5 ? (
-          <button
-            onClick={() => setStep((prev) => Math.min(5, prev + 1) as Step)}
-            disabled={
-              (step === 1 && !form.type) ||
-              (step === 2 && (!form.name || !form.city || !form.country)) ||
-              (step === 3 && (!form.companion_name || !form.companion_greeting))
-            }
-            className="bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors disabled:opacity-40"
-          >
-            Continue →
-          </button>
-        ) : (
-          <button
-            onClick={handleSubmit}
-            className="bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors"
-          >
-            Generate config
-          </button>
-        )}
+          <BotMessageSquare className="w-4 h-4" />
+          Create Your Account
+        </a>
+        <p className="font-sans text-[13px] text-[#5C5650]/80 text-center mt-3 font-light">
+          No credit card required · Live in minutes
+        </p>
       </div>
+
+      <button
+        onClick={() => setStep(3)}
+        className="font-sans text-[15px] text-[#5C5650] hover:text-[#0A0806] transition-colors duration-200"
+      >
+        ← Back to configuration
+      </button>
     </div>
   );
 }

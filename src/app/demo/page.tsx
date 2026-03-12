@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChatInterface } from "@/components/chat-interface";
-import { marazulConfig } from "@/lib/marazul-config";
+import { marazulChatConfig } from "@/lib/marazul-config";
 
 export default function DemoPage() {
   return (
@@ -74,7 +74,7 @@ export default function DemoPage() {
 
             {/* Chat */}
             <div className="flex-1 overflow-hidden">
-              <ChatInterface config={marazulConfig} />
+              <ChatInterface config={marazulChatConfig} />
             </div>
           </div>
         </div>

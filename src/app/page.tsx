@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ChatInterface } from "@/components/chat-interface";
 import { FaqSection } from "@/components/faq-section";
-import { marazulConfig } from "@/lib/marazul-config";
+import { marazulChatConfig } from "@/lib/marazul-config";
 
 const HOTEL_KNOWLEDGE = [
   "Restaurant hours and menus",
@@ -88,7 +88,7 @@ export default function HomePage() {
                   Your 24/7 AI Guest Companion
                 </p>
               </div>
-              <ChatInterface config={marazulConfig} />
+              <ChatInterface config={marazulChatConfig} />
             </div>
             </div>
 
