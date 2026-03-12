@@ -2,33 +2,34 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "600", "700"],
+  variable: "--font-serif",
+  display: "swap",
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Place Companion — The AI that knows your hotel.",
+  title: "Place Companion — AI Guest Companion for Hotels",
   description:
-    "An intelligent guest assistant for hotels. Multilingual, available 24/7, live in minutes.",
+    "An intelligent AI assistant for every guest, at every hour. Place Companion knows your hotel and your destination — multilingual, live in minutes.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body
-        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
-        style={{ background: "#1C1917", color: "#E8E3DC" }}
-      >
+      <body className={`${cormorantGaramond.variable} ${dmSans.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

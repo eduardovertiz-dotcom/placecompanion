@@ -1,243 +1,286 @@
+import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { FinalCTA } from "@/components/final-cta";
+
+const HOTEL_KNOWLEDGE = [
+  "Restaurant hours and menus",
+  "Spa treatments and availability",
+  "Room types and amenities",
+  "Pool and beach club rules",
+  "Check-in and checkout policies",
+  "Transportation and transfers",
+];
+
+const DESTINATION_KNOWLEDGE = [
+  "Best local restaurants",
+  "Beaches and natural attractions",
+  "Activities and surf schools",
+  "Pharmacies and essentials",
+  "Markets and shopping",
+  "Hidden local favorites",
+];
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-[#1C1917] text-[#E8E3DC]">
+    <div style={{ background: "#141413" }}>
       <SiteNav />
 
-      {/* ── HERO ── */}
-      <section className="py-40 text-center">
-        <div className="max-w-6xl mx-auto px-6">
-          <h1
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.05] max-w-4xl mx-auto"
-            style={{ fontSize: "88px" }}
-          >
-            Everything your guests will ever ask.
-          </h1>
-          <p className="font-sans text-[20px] font-light text-[#A8A099] mt-6">
-            Place Companion knows your hotel and your destination — completely.
-          </p>
-        </div>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section
+        className="py-40 text-center px-8"
+        style={{ background: "#141413" }}
+      >
+        <h1
+          className="font-serif font-normal text-[#FAF9F5] max-w-5xl mx-auto"
+          style={{ fontSize: "96px", lineHeight: 1.0 }}
+        >
+          Everything your guests will ever ask.
+        </h1>
+        <p
+          className="font-sans text-[#9C9A93] mt-6 max-w-2xl mx-auto"
+          style={{ fontSize: "20px", lineHeight: 1.75 }}
+        >
+          Place Companion knows your hotel and your destination — completely.
+        </p>
       </section>
 
-      {/* ── INTELLIGENCE ── */}
-      <section className="py-32">
-        <div className="max-w-6xl mx-auto px-6 text-center">
+      {/* ── INTELLIGENCE ─────────────────────────────────── */}
+      <section className="py-32 text-center px-8" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto">
           <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
             fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
             className="mx-auto mb-6"
           >
-            <rect x="8" y="8" width="28" height="28" rx="2" />
-            <rect x="14" y="16" width="5" height="5" />
-            <rect x="25" y="16" width="5" height="5" />
-            <rect x="14" y="25" width="5" height="5" />
-            <rect x="25" y="25" width="5" height="5" />
+            <rect x="10" y="20" width="36" height="28" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
+            <path d="M18 20V15a10 10 0 0120 0v5" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" />
+            <rect x="23" y="28" width="10" height="8" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "56px" }}
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             It knows your hotel. And your destination.
           </h2>
-          <p className="font-sans text-[18px] font-light text-[#A8A099] max-w-2xl mx-auto mt-6 leading-[1.75]">
+          <p
+            className="font-sans text-[#9C9A93] max-w-2xl mx-auto mt-6"
+            style={{ fontSize: "18px", lineHeight: 1.75 }}
+          >
             Your guests don&apos;t just ask about your services. They ask about beach
             conditions, where to eat after midnight, which pharmacy is open Sunday.
           </p>
-          <div className="grid md:grid-cols-[1fr_auto_1fr] max-w-3xl mx-auto mt-16 gap-16 text-left">
+
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-16 text-left">
             <div>
-              <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase mb-5">
+              <p
+                className="font-sans uppercase tracking-widest mb-5"
+                style={{ fontSize: "11px", color: "#9C9A93" }}
+              >
                 YOUR HOTEL
-              </div>
-              <ul className="space-y-3">
-                {[
-                  "Restaurant hours and menus",
-                  "Spa treatments and availability",
-                  "Room types and amenities",
-                  "Pool and beach club rules",
-                  "Check-in and checkout policies",
-                  "Transportation and transfers",
-                ].map((item) => (
-                  <li
+              </p>
+              <div className="space-y-3">
+                {HOTEL_KNOWLEDGE.map((item) => (
+                  <p
                     key={item}
-                    className="font-sans text-[16px] font-light text-[#A8A099]"
+                    className="font-sans font-light text-[#9C9A93]"
+                    style={{ fontSize: "16px" }}
                   >
                     {item}
-                  </li>
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
-            <div className="w-px bg-white/[0.08] self-stretch" />
+            <div
+              className="self-stretch mx-8"
+              style={{ width: "1px", background: "rgba(250,249,245,0.08)" }}
+            />
             <div>
-              <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase mb-5">
+              <p
+                className="font-sans uppercase tracking-widest mb-5"
+                style={{ fontSize: "11px", color: "#9C9A93" }}
+              >
                 YOUR DESTINATION
-              </div>
-              <ul className="space-y-3">
-                {[
-                  "Best local restaurants",
-                  "Beaches and natural attractions",
-                  "Activities and surf schools",
-                  "Pharmacies and essentials",
-                  "Markets and shopping",
-                  "Hidden local favorites",
-                ].map((item) => (
-                  <li
+              </p>
+              <div className="space-y-3">
+                {DESTINATION_KNOWLEDGE.map((item) => (
+                  <p
                     key={item}
-                    className="font-sans text-[16px] font-light text-[#A8A099]"
+                    className="font-sans font-light text-[#9C9A93]"
+                    style={{ fontSize: "16px" }}
                   >
                     {item}
-                  </li>
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── GUEST JOURNEY ── */}
-      <section className="py-32">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
-            fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
-            className="mx-auto mb-6"
-          >
-            <path d="M8 8 h28 a4 4 0 0 1 4 4 v16 a4 4 0 0 1 -4 4 H20 l-8 6 v-6 H8 a4 4 0 0 1 -4 -4 V12 a4 4 0 0 1 4 -4 z" />
-          </svg>
-          <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "56px" }}
-          >
-            With your guests from arrival to review.
-          </h2>
-          <div className="grid md:grid-cols-3 gap-12 mt-16 text-left">
+      {/* ── GUEST JOURNEY ────────────────────────────────── */}
+      <section className="py-32" style={{ background: "#0F0E0D" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="text-center mb-16">
+            <svg
+              width="56"
+              height="56"
+              viewBox="0 0 56 56"
+              fill="none"
+              className="mx-auto mb-6"
+            >
+              <path
+                d="M10 13h36a2 2 0 012 2v22a2 2 0 01-2 2H18l-10 8V15a2 2 0 012-2z"
+                stroke="#FAF9F5"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <h2
+              className="font-serif font-normal text-[#FAF9F5]"
+              style={{ fontSize: "68px", lineHeight: 1.05 }}
+            >
+              With your guests from arrival to review.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
             {[
               {
                 stage: "PRE-ARRIVAL",
-                title: "Before they pack their bags",
+                title: "Before they arrive",
                 desc: "The assistant link arrives in their booking confirmation. Guests explore the property, plan meals, book treatments — before they pack their bags.",
               },
               {
                 stage: "DURING STAY",
-                title: "At every touch point",
+                title: "While they're there",
                 desc: "QR codes in rooms, lobby, pool, spa, restaurant. Every question answered instantly, in any language, at any hour.",
               },
               {
                 stage: "AFTER STAY",
-                title: "Turn satisfaction into advocacy",
+                title: "After they leave",
                 desc: "A warm follow-up with a direct link to leave a review. Happy guests become public advocates.",
               },
             ].map((s) => (
               <div key={s.stage}>
-                <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase">
+                <p
+                  className="font-sans uppercase tracking-widest text-[#9C9A93]"
+                  style={{ fontSize: "11px" }}
+                >
                   {s.stage}
-                </div>
-                <div className="font-sans text-[20px] font-normal text-[#E8E3DC] mt-3">
+                </p>
+                <p
+                  className="font-sans font-normal text-[#FAF9F5] mt-3"
+                  style={{ fontSize: "20px" }}
+                >
                   {s.title}
-                </div>
-                <div className="font-sans text-[16px] font-light text-[#A8A099] mt-2 leading-[1.75]">
+                </p>
+                <p
+                  className="font-sans font-light text-[#9C9A93] mt-2"
+                  style={{ fontSize: "16px", lineHeight: 1.75 }}
+                >
                   {s.desc}
-                </div>
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── DEPLOYMENT ── */}
-      <section className="py-32">
-        <div className="max-w-6xl mx-auto px-6 text-center">
+      {/* ── DEPLOYMENT ───────────────────────────────────── */}
+      <section className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
           <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
             fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
             className="mx-auto mb-6"
           >
-            <circle cx="10" cy="22" r="5" />
-            <line x1="15" y1="22" x2="17" y2="22" />
-            <circle cx="22" cy="22" r="5" />
-            <line x1="27" y1="22" x2="29" y2="22" />
-            <circle cx="34" cy="22" r="5" />
+            <circle cx="28" cy="12" r="5" stroke="#FAF9F5" strokeWidth="1.5" />
+            <circle cx="12" cy="44" r="5" stroke="#FAF9F5" strokeWidth="1.5" />
+            <circle cx="44" cy="44" r="5" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="24" y1="16" x2="16" y2="40" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="32" y1="16" x2="40" y2="40" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="17" y1="44" x2="39" y2="44" stroke="#FAF9F5" strokeWidth="1.5" />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "56px" }}
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             Three ways guests reach your assistant.
           </h2>
-          <div className="grid md:grid-cols-3 gap-12 mt-16 text-left">
+
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto mt-16 text-left">
             {[
               {
                 title: "QR Codes",
-                desc: "Print and place in rooms, lobby, pool, restaurant. Guests scan and ask instantly.",
+                desc: "Print and place anywhere — rooms, lobby, pool deck, restaurant menus, key card sleeves. Guests scan and the assistant opens instantly.",
               },
               {
                 title: "Hotel Website",
-                desc: "Embedded widget on your site. Guests ask before they even arrive.",
+                desc: "Embed the assistant widget on your site. Guests get answers before they've even booked.",
               },
               {
                 title: "Shareable Link",
-                desc: "Send in your booking confirmation. Guests arrive already informed.",
+                desc: "Send a link in booking confirmations, pre-arrival emails, or WhatsApp. One tap and the conversation begins.",
               },
-            ].map((d) => (
-              <div key={d.title}>
-                <div className="font-sans text-[18px] font-normal text-[#E8E3DC]">
-                  {d.title}
-                </div>
-                <div className="font-sans text-[16px] font-light text-[#A8A099] mt-2 leading-[1.75]">
-                  {d.desc}
-                </div>
+            ].map((item) => (
+              <div key={item.title}>
+                <p
+                  className="font-sans font-normal text-[#FAF9F5]"
+                  style={{ fontSize: "18px" }}
+                >
+                  {item.title}
+                </p>
+                <p
+                  className="font-sans font-light text-[#9C9A93] mt-2"
+                  style={{ fontSize: "16px", lineHeight: 1.75 }}
+                >
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── WHERE IT FITS ── */}
-      <section className="py-32">
-        <div className="max-w-6xl mx-auto px-6 text-center">
+      {/* ── WHERE IT FITS ────────────────────────────────── */}
+      <section className="py-32 text-center px-8" style={{ background: "#0F0E0D" }}>
+        <div className="max-w-7xl mx-auto">
           <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
             fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
             className="mx-auto mb-6"
           >
-            <circle cx="22" cy="22" r="16" />
-            <polygon points="22,12 25,22 22,28 19,22" fill="none" />
-            <line x1="22" y1="6" x2="22" y2="12" />
-            <line x1="22" y1="32" x2="22" y2="38" />
-            <line x1="6" y1="22" x2="12" y2="22" />
-            <line x1="32" y1="22" x2="38" y2="22" />
+            <circle cx="28" cy="28" r="20" stroke="#FAF9F5" strokeWidth="1.5" />
+            <circle cx="28" cy="28" r="5" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="28" y1="8" x2="28" y2="18" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="28" y1="38" x2="28" y2="48" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="8" y1="28" x2="18" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="38" y1="28" x2="48" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "56px" }}
+            className="font-serif font-normal text-[#FAF9F5] max-w-3xl mx-auto"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             It works alongside everything you already have.
           </h2>
+
           <p
-            className="font-serif italic text-[#E8E3DC] max-w-2xl mx-auto text-center mt-10 leading-[1.4]"
-            style={{ fontSize: "30px" }}
+            className="font-serif italic text-[#FAF9F5] max-w-2xl mx-auto mt-10"
+            style={{ fontSize: "28px", lineHeight: 1.4 }}
           >
-            &ldquo;Your PMS manages your operations. Place Companion talks to your guests.
-            Two different jobs. Zero conflict. Nothing to integrate.&rdquo;
+            &ldquo;Your PMS manages your operations. Place Companion talks to your
+            guests. Two different jobs. Zero conflict. Nothing to integrate.&rdquo;
           </p>
+
           <div className="space-y-4 mt-10">
             {[
               "Not a PMS — doesn't touch reservations or payments.",
@@ -245,7 +288,11 @@ export default function FeaturesPage() {
               "Not an app — guests scan a QR, no download required.",
               "Not an integration — connect nothing, configure nothing.",
             ].map((s) => (
-              <p key={s} className="font-sans text-[17px] text-[#A8A099]">
+              <p
+                key={s}
+                className="font-sans text-[#9C9A93] text-center"
+                style={{ fontSize: "17px" }}
+              >
                 {s}
               </p>
             ))}
@@ -253,7 +300,54 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      <FinalCTA />
+      {/* ── FINAL CTA ────────────────────────────────────── */}
+      <section className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
+            fill="none"
+            className="mx-auto mb-6"
+          >
+            <path
+              d="M10 28a18 18 0 0136 0"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <circle cx="28" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
+            <path
+              d="M28 34v10M24 40l4 4 4-4"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <h2
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
+          >
+            Create your hotel assistant.
+          </h2>
+          <p
+            className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-5"
+            style={{ fontSize: "18px", lineHeight: 1.75 }}
+          >
+            See how guests experience your property when every question has an
+            instant answer.
+          </p>
+          <Link
+            href="/onboarding"
+            className="font-sans font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white/90 h-12 px-8 rounded-md inline-flex items-center transition-colors duration-200 mt-10"
+            style={{ fontSize: "15px" }}
+          >
+            Create Your Hotel Assistant
+          </Link>
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   );
