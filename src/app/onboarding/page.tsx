@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Extracted = Record<string, any> | null
@@ -9,6 +10,22 @@ type Extracted = Record<string, any> | null
 interface ChatMessage {
   role: string
   content: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildSystemPromptFromExtracted(extracted: any): string {
+  if (!extracted) return ''
+  let prompt = `You are an AI Guest Companion for ${extracted.hotelName || 'this hotel'}.`
+  if (extracted.location) prompt += ` Located in ${extracted.location}.`
+  if (extracted.roomCount) prompt += ` The hotel has ${extracted.roomCount} rooms.`
+  prompt += '\n\nPROPERTY KNOWLEDGE:\n'
+  if (extracted.restaurant?.found) prompt += `- ${extracted.restaurant.name || 'Restaurant'}: ${extracted.restaurant.hours || ''} ${extracted.restaurant.cuisine || ''}\n`
+  if (extracted.spa?.found) prompt += `- ${extracted.spa.name || 'Spa'}: ${extracted.spa.hours || ''}. Treatments: ${extracted.spa.treatments?.join(', ') || ''}\n`
+  if (extracted.amenities?.found) prompt += `- Amenities: ${extracted.amenities.items?.join(', ') || ''}\n`
+  if (extracted.policies?.found) prompt += `- Check-in: ${extracted.policies.checkin || 'not specified'}. Check-out: ${extracted.policies.checkout || 'not specified'}\n`
+  if (extracted.nearby?.found) prompt += `- Nearby: ${extracted.nearby.items?.join(', ') || ''}\n`
+  prompt += '\nRULES: Warm concierge tone. Respond in the guest\'s language. Recommend hotel services first. Be concise but complete.'
+  return prompt
 }
 
 export default function OnboardingPage() {
@@ -26,6 +43,9 @@ export default function OnboardingPage() {
   const [streamingText, setStreamingText] = useState('')
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [password, setPassword] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -121,6 +141,60 @@ export default function OnboardingPage() {
     }
   }
 
+  async function handleCreateAccount() {
+    if (!email.includes('@')) { setSaveError('Please enter a valid email'); return }
+    if (password.length < 8) { setSaveError('Password must be at least 8 characters'); return }
+
+    setIsSaving(true)
+    setSaveError('')
+
+    const supabase = createClient()
+
+    // Create account
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { hotel_name: extracted?.hotelName } }
+    })
+
+    if (authError) {
+      setSaveError(authError.message)
+      setIsSaving(false)
+      return
+    }
+
+    // Build system prompt from extracted data
+    const systemPrompt = buildSystemPromptFromExtracted(extracted)
+
+    // Save property to database
+    const { error: propertyError } = await supabase
+      .from('properties')
+      .insert({
+        user_id: authData.user!.id,
+        hotel_name: extracted?.hotelName || 'My Hotel',
+        location: extracted?.location || null,
+        room_count: extracted?.roomCount || null,
+        extracted_data: extracted,
+        system_prompt: systemPrompt,
+        is_active: true
+      })
+      .select()
+      .single()
+
+    if (propertyError) {
+      setSaveError('Account created but could not save hotel. Please contact support.')
+      setIsSaving(false)
+      return
+    }
+
+    // Clear localStorage
+    localStorage.removeItem('pc_lead')
+
+    // Redirect to dashboard
+    window.location.href = '/dashboard'
+  }
+
+  // Keep for legacy reference (no longer called in Step 4)
   async function handleEmailSubmit() {
     localStorage.setItem('pc_lead', JSON.stringify({
       email,
@@ -534,94 +608,84 @@ export default function OnboardingPage() {
       {/* STEP 4 */}
       {step === 4 && (
         <div className="max-w-lg mx-auto px-6 pt-24 text-center pb-16">
-          {!isSubmitted ? (
-            <>
-              <p className="font-sans uppercase tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
-                ONE LAST STEP
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
+            ONE LAST STEP
+          </p>
+          <h1
+            className="font-serif font-normal mt-4"
+            style={{ fontSize: '64px', lineHeight: 1.05, color: '#0A0806' }}
+          >
+            Save your assistant.
+          </h1>
+          <p
+            className="font-sans font-light mt-4 max-w-md mx-auto"
+            style={{ fontSize: '18px', color: '#5C5650', lineHeight: 1.7 }}
+          >
+            Create your account to deploy your assistant and start your 14-day free trial.
+          </p>
+
+          <div className="mt-8 space-y-4 text-left">
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="w-full font-sans focus:outline-none transition-colors"
+              style={{
+                height: '56px',
+                background: 'white',
+                border: '1px solid rgba(10,8,6,0.15)',
+                borderRadius: '12px',
+                padding: '0 20px',
+                fontSize: '16px',
+                color: '#0A0806',
+              }}
+              onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(10,8,6,0.15)' }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Create a password (min 8 characters)"
+              className="w-full font-sans focus:outline-none transition-colors"
+              style={{
+                height: '56px',
+                background: 'white',
+                border: '1px solid rgba(10,8,6,0.15)',
+                borderRadius: '12px',
+                padding: '0 20px',
+                fontSize: '16px',
+                color: '#0A0806',
+              }}
+              onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(10,8,6,0.15)' }}
+            />
+            {saveError && (
+              <p className="font-sans" style={{ fontSize: '14px', color: '#EF4444' }}>
+                {saveError}
               </p>
-              <h1
-                className="font-serif font-normal mt-4"
-                style={{ fontSize: '64px', lineHeight: 1.05, color: '#0A0806' }}
-              >
-                Save your assistant.
-              </h1>
-              <p
-                className="font-sans font-light mt-4 max-w-md mx-auto"
-                style={{ fontSize: '18px', color: '#5C5650', lineHeight: 1.7 }}
-              >
-                Enter your email and we&apos;ll hold your assistant configuration. Your 14-day free trial starts when you&apos;re ready.
-              </p>
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full mt-8 font-sans focus:outline-none transition-colors"
-                style={{
-                  height: '56px',
-                  background: 'white',
-                  border: '1px solid rgba(10,8,6,0.15)',
-                  borderRadius: '12px',
-                  padding: '0 20px',
-                  fontSize: '16px',
-                  color: '#0A0806',
-                }}
-                onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
-                onBlur={e => { e.target.style.borderColor = 'rgba(10,8,6,0.15)' }}
-              />
-              <button
-                onClick={handleEmailSubmit}
-                disabled={!email.includes('@')}
-                className="w-full mt-4 font-sans font-medium transition-colors"
-                style={{
-                  height: '48px',
-                  borderRadius: '6px',
-                  fontSize: '16px',
-                  background: !email.includes('@') ? '#9A9590' : '#2D9E6B',
-                  color: 'white',
-                  border: 'none',
-                  cursor: !email.includes('@') ? 'not-allowed' : 'pointer',
-                }}
-              >
-                Start My Free Trial →
-              </button>
-              <p className="font-sans mt-3" style={{ fontSize: '12px', color: '#9A9590' }}>
-                14-day free trial · No credit card required · Cancel anytime
-              </p>
-            </>
-          ) : (
-            <>
-              <div
-                className="mx-auto flex items-center justify-center"
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  background: '#2D9E6B',
-                }}
-              >
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <path d="M4 14L10.5 20.5L24 7" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <h1
-                className="font-serif font-normal mt-8"
-                style={{ fontSize: '56px', lineHeight: 1.05, color: '#0A0806' }}
-              >
-                You&apos;re on the list.
-              </h1>
-              <p className="font-sans mt-4" style={{ fontSize: '18px', color: '#5C5650' }}>
-                We&apos;ll be in touch within 24 hours to get your assistant live.
-              </p>
-              <Link
-                href="/"
-                className="font-sans mt-8 inline-block"
-                style={{ fontSize: '14px', color: '#9A9590' }}
-              >
-                ← Back to homepage
-              </Link>
-            </>
-          )}
+            )}
+            <button
+              onClick={handleCreateAccount}
+              disabled={isSaving}
+              className="w-full font-sans font-medium transition-colors"
+              style={{
+                height: '56px',
+                borderRadius: '12px',
+                fontSize: '16px',
+                background: isSaving ? '#9A9590' : '#2D9E6B',
+                color: 'white',
+                border: 'none',
+                cursor: isSaving ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {isSaving ? 'Creating your account...' : 'Create Account & Start Free Trial'}
+            </button>
+          </div>
+          <p className="font-sans text-center mt-3" style={{ fontSize: '12px', color: '#9A9590' }}>
+            14-day free trial · No credit card required · Cancel anytime
+          </p>
         </div>
       )}
     </div>
