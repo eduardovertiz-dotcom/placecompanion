@@ -1,346 +1,391 @@
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { FinalCTA } from "@/components/final-cta";
 import { ChatInterface } from "@/components/chat-interface";
+import { FaqSection } from "@/components/faq-section";
 import { marazulConfig } from "@/lib/marazul-config";
+
+const HOTEL_KNOWLEDGE = [
+  "Restaurant hours and menus",
+  "Spa treatments and availability",
+  "Room types and amenities",
+  "Pool and beach club rules",
+  "Check-in and checkout policies",
+  "Transportation and transfers",
+];
+
+const DESTINATION_KNOWLEDGE = [
+  "Best local restaurants",
+  "Beaches and natural attractions",
+  "Activities and surf schools",
+  "Pharmacies and essentials",
+  "Markets and shopping",
+  "Hidden local favorites",
+];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#1C1917] text-[#E8E3DC]">
+    <div className="min-h-screen" style={{ background: "#141413" }}>
       <SiteNav />
 
-      {/* ── HERO ── */}
-      <section className="min-h-screen flex items-center">
-        <div className="max-w-6xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 py-16 lg:py-24">
-          {/* Left */}
-          <div className="flex flex-col justify-center">
-            <h1
-              className="font-serif font-normal text-[#E8E3DC] leading-[1.05] tracking-[-0.02em]"
-              style={{ fontSize: "clamp(38px, 7vw, 88px)" }}
-            >
-              The AI that knows your hotel. And your destination.
-            </h1>
-            <p className="font-sans text-[20px] font-light text-[#A8A099] mt-6 leading-[1.75]">
-              An intelligent assistant for every guest, at every hour.
-            </p>
-            <p className="font-sans text-[17px] text-[#2D9E6B] mt-5">
-              Your hotel becomes searchable by conversation.
-            </p>
-            <div className="flex flex-wrap items-center gap-3 mt-10">
-              <Link
-                href="/onboarding"
-                className="inline-flex items-center bg-[#2D9E6B] text-[#E8E3DC] h-12 px-6 rounded-md font-sans font-medium text-sm hover:bg-[#3DC47F] transition-colors"
-              >
-                Create Your Hotel Assistant
-              </Link>
-              <a
-                href="#hero-demo"
-                className="inline-flex items-center border border-white/25 text-[#E8E3DC] h-12 px-6 rounded-md font-sans text-sm hover:bg-white/5 transition-colors"
-              >
-                Try the Demo
-              </a>
-            </div>
-            <p className="font-sans text-[12px] text-[#6B6560] mt-4">
-              No credit card required · Live in minutes · Multilingual by default
-            </p>
-          </div>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section
+        className="py-24 pt-28 flex items-center"
+        style={{ background: "#141413" }}
+      >
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          {/* Right — demo window */}
-          <div
-            id="hero-demo"
-            className="bg-[#0F0D0B] rounded-2xl border border-white/[0.08] overflow-hidden flex flex-col h-[380px] sm:h-[480px] lg:h-[580px]"
-          >
-            <div className="px-6 py-5 border-b border-white/[0.08] flex-shrink-0">
-              <div className="flex items-center justify-between">
-                <span className="font-sans text-[18px] font-medium text-[#E8E3DC]">
-                  MarAzul Riviera Maya
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#2D9E6B] animate-pulse" />
-              </div>
-              <div className="font-sans text-[13px] font-light text-[#2D9E6B] mt-1">
-                Part of the MarAzul Collection
-              </div>
-              <div className="font-sans text-[12px] font-light text-[#6B6560] mt-0.5">
-                Your 24/7 AI Guest Companion
+            {/* Left — headline, subhead, one button */}
+            <div>
+              <h1
+                className="font-serif font-normal text-[#FAF9F5]"
+                style={{ fontSize: "96px", lineHeight: 1.0, letterSpacing: "-0.02em" }}
+              >
+                The AI that knows your hotel. And your destination.
+              </h1>
+
+              <p
+                className="font-sans font-light mt-8"
+                style={{ fontSize: "20px", lineHeight: 1.7, color: "#9C9A93" }}
+              >
+                An intelligent assistant for every guest, at every hour.
+              </p>
+
+              <div className="mt-12">
+                <Link
+                  href="/onboarding"
+                  className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors mt-4 inline-flex items-center w-auto self-start"
+                >
+                  Create Your Hotel Assistant
+                </Link>
               </div>
             </div>
-            <div className="flex-1 overflow-hidden">
+
+            {/* Right — demo window */}
+            <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
+            <div
+              className="flex flex-col"
+              style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D', height: '580px' }}
+            >
+              <div
+                className="flex-shrink-0 px-6 py-5"
+                style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-sans text-[20px] font-semibold text-[#FAF9F5]">
+                    MarAzul Riviera Maya
+                  </span>
+                  <div
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ background: "#FAF9F5" }}
+                  />
+                </div>
+                <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
+                  Part of the MarAzul Collection
+                </p>
+                <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
+                  Your 24/7 AI Guest Companion
+                </p>
+              </div>
               <ChatInterface config={marazulConfig} />
             </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── PAIN ── */}
-      <section className="py-16 lg:py-32">
-        <div className="max-w-6xl mx-auto px-6 flex flex-wrap justify-center gap-3">
+      {/* ── PAIN PILLS ───────────────────────────────────── */}
+      <section className="py-32" style={{ background: "#141413" }}>
+        <div className="flex justify-center gap-4 flex-wrap px-8">
           {[
             "Where is breakfast served?",
             "Do you have airport transportation?",
             "Where can I get dinner after 10 PM?",
           ].map((q) => (
-            <div
+            <span
               key={q}
-              className="border border-white/[0.18] rounded-full px-5 py-2.5 text-base lg:px-8 lg:py-3.5 lg:text-lg font-sans font-light text-[#A8A099] hover:border-white/35 hover:text-[#E8E3DC] transition-all cursor-default"
+              className="font-sans font-light text-[#9C9A93] hover:text-[#FAF9F5] hover:border-white/35 transition-all cursor-default rounded-full border border-white/[0.18]"
+              style={{ padding: "14px 32px", fontSize: "18px" }}
             >
               {q}
-            </div>
+            </span>
           ))}
         </div>
       </section>
 
-      {/* ── REVENUE ── */}
-      <section className="py-16 lg:py-32">
-        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[42%_58%] gap-10 lg:gap-20 items-center">
-          {/* Left */}
-          <div>
-            <svg
-              width="44"
-              height="44"
-              viewBox="0 0 44 44"
-              fill="none"
-              stroke="#E8E3DC"
-              strokeWidth="1.25"
-              className="mb-6"
-            >
-              <circle cx="22" cy="22" r="16" />
-              <polyline points="16,22 22,14 28,22" />
-              <line x1="22" y1="14" x2="22" y2="30" />
-            </svg>
-            <h2
-              className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 5vw, 56px)" }}
-            >
-              Turn guest questions into revenue.
-            </h2>
-            <p className="font-sans text-[18px] font-light text-[#A8A099] mt-5 leading-[1.75]">
-              Every question is an intent signal. Place Companion captures the ones your
-              team never had time to act on.
-            </p>
-          </div>
+      {/* ── REVENUE ──────────────────────────────────────── */}
+      <section className="py-32" style={{ background: "#0F0E0D" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="grid lg:grid-cols-[42%_58%] gap-20 items-center">
 
-          {/* Right */}
-          <div className="bg-[#0F0D0B] rounded-2xl p-5 sm:p-9 border border-white/[0.06]">
-            <div className="font-sans text-[11px] text-[#6B6560] mb-3">10:14 PM</div>
-            <div className="bg-[#242019] rounded-[12px_12px_12px_3px] px-4 py-3 font-sans text-[15px] text-[#E8E3DC] max-w-[85%]">
-              Do you have any spa treatments available tomorrow morning?
+            {/* Left */}
+            <div>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-8">
+                <circle cx="24" cy="24" r="23" stroke="#FAF9F5" strokeWidth="1.5"/>
+                <path d="M24 13v22M29 17.5C29 14.9 26.8 13.5 24 13.5s-5 1.4-5 4c0 5.5 10 4.5 10 10 0 3-2.2 5-5 5s-5-2-5-5" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <h2
+                className="font-serif font-normal text-[#FAF9F5]"
+                style={{ fontSize: "68px", lineHeight: 1.05 }}
+              >
+                Turn guest questions into revenue.
+              </h2>
+              <p
+                className="font-sans font-light text-[#9C9A93] mt-5"
+                style={{ fontSize: "18px", lineHeight: 1.75 }}
+              >
+                Every question is an intent signal. Place Companion captures
+                the ones your team never had time to act on.
+              </p>
             </div>
-            <div className="mt-4">
-              <div className="font-sans text-[11px] text-[#2D9E6B] text-right">
+
+            {/* Right — conversation */}
+            <div
+              className="rounded-2xl p-8"
+              style={{
+                background: "#1F1E1D",
+                border: "1px solid rgba(250,249,245,0.06)",
+              }}
+            >
+              <p
+                className="font-sans text-[#4F4D4A] mb-3"
+                style={{ fontSize: "11px" }}
+              >
+                10:14 PM
+              </p>
+              <div
+                className="font-sans text-[#FAF9F5] inline-block"
+                style={{
+                  background: "#141413",
+                  border: "1px solid rgba(250,249,245,0.06)",
+                  borderRadius: "12px 12px 12px 3px",
+                  padding: "12px 16px",
+                  fontSize: "15px",
+                  maxWidth: "85%",
+                }}
+              >
+                Do you have any spa treatments available tomorrow morning?
+              </div>
+              <p
+                className="font-sans text-right mt-4"
+                style={{ fontSize: "11px", color: "#9C9A93" }}
+              >
                 Marina · Place Companion
+              </p>
+              <div
+                className="font-sans text-[#FAF9F5] ml-auto mt-2"
+                style={{
+                  background: "#141413",
+                  border: "1px solid rgba(250,249,245,0.06)",
+                  borderRadius: "12px 12px 3px 12px",
+                  padding: "12px 16px",
+                  fontSize: "15px",
+                  maxWidth: "85%",
+                }}
+              >
+                Good evening. Spa Ixchel opens at 9 AM. Deep tissue 60min ·
+                $85. Mayan stone therapy · $120. Shall I note a reservation?
               </div>
-              <div className="bg-[#1E3328] rounded-[12px_12px_3px_12px] px-4 py-3 border border-[#2D9E6B]/20 font-sans text-[15px] text-[#E8E3DC] max-w-[85%] ml-auto mt-2">
-                Good evening. Spa Ixchel opens at 9 AM. Deep tissue 60min · $85. Mayan
-                stone therapy · $120. Shall I note a reservation?
-              </div>
+              <p
+                className="font-sans font-medium text-center mt-5"
+                style={{ fontSize: "13px", letterSpacing: "0.06em", color: "#9C9A93" }}
+              >
+                One booking. $85. Monthly investment: covered.
+              </p>
             </div>
-            <div className="mt-5 text-center font-sans text-[13px] text-[#2D9E6B] font-medium tracking-[0.06em]">
-              One booking. $85. Monthly investment: covered.
-            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── INTELLIGENCE ── */}
-      <section className="py-16 lg:py-32 text-center">
-        <div className="max-w-6xl mx-auto px-6">
-          <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
-            fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
-            className="mx-auto mb-6"
-          >
-            <rect x="8" y="8" width="28" height="28" rx="2" />
-            <rect x="14" y="16" width="5" height="5" />
-            <rect x="25" y="16" width="5" height="5" />
-            <rect x="14" y="25" width="5" height="5" />
-            <rect x="25" y="25" width="5" height="5" />
+      {/* ── INTELLIGENCE ─────────────────────────────────── */}
+      <section className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
+            <rect x="10" y="20" width="36" height="28" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
+            <path
+              d="M18 20V15a10 10 0 0120 0v5"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <rect x="23" y="28" width="10" height="8" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "clamp(30px, 5vw, 56px)" }}
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             It knows your hotel. And your destination.
           </h2>
-          <div className="grid md:grid-cols-[1fr_auto_1fr] max-w-3xl mx-auto mt-10 lg:mt-16 gap-8 lg:gap-16 text-left">
+
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-16 text-left">
             <div>
-              <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase mb-5">
+              <p className="font-sans text-[13px] font-semibold text-[#FAF9F5] tracking-[0.18em] uppercase mb-5">
                 YOUR HOTEL
-              </div>
-              <ul className="space-y-3">
-                {[
-                  "Restaurant hours and menus",
-                  "Spa treatments and availability",
-                  "Room types and amenities",
-                  "Pool and beach club rules",
-                  "Check-in and checkout policies",
-                  "Transportation and transfers",
-                ].map((item) => (
-                  <li key={item} className="font-sans text-[16px] font-light text-[#A8A099]">
+              </p>
+              <div className="space-y-3">
+                {HOTEL_KNOWLEDGE.map((item) => (
+                  <p key={item} className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "16px" }}>
                     {item}
-                  </li>
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
-            <div className="hidden md:block w-px bg-white/[0.08] self-stretch" />
+
+            <div
+              className="self-stretch mx-8"
+              style={{ width: "1px", background: "rgba(250,249,245,0.08)" }}
+            />
+
             <div>
-              <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase mb-5">
+              <p className="font-sans text-[13px] font-semibold text-[#FAF9F5] tracking-[0.18em] uppercase mb-5">
                 YOUR DESTINATION
-              </div>
-              <ul className="space-y-3">
-                {[
-                  "Best local restaurants",
-                  "Beaches and natural attractions",
-                  "Activities and surf schools",
-                  "Pharmacies and essentials",
-                  "Markets and shopping",
-                  "Hidden local favorites",
-                ].map((item) => (
-                  <li key={item} className="font-sans text-[16px] font-light text-[#A8A099]">
+              </p>
+              <div className="space-y-3">
+                {DESTINATION_KNOWLEDGE.map((item) => (
+                  <p key={item} className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "16px" }}>
                     {item}
-                  </li>
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
-          <p className="font-sans text-[15px] text-[#6B6560] mt-12">
+
+          <p className="font-sans text-[16px] text-[#9C9A93] mt-12 text-center">
             One assistant. Complete knowledge.
           </p>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="py-16 lg:py-32 text-center">
-        <div className="max-w-6xl mx-auto px-6">
-          <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
-            fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
-            className="mx-auto mb-6"
-          >
-            <circle cx="10" cy="22" r="5" />
-            <line x1="15" y1="22" x2="17" y2="22" />
-            <circle cx="22" cy="22" r="5" />
-            <line x1="27" y1="22" x2="29" y2="22" />
-            <circle cx="34" cy="22" r="5" />
+      {/* ── HOW IT WORKS ─────────────────────────────────── */}
+      <section id="how-it-works" className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
+            <circle cx="12" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
+            <circle cx="44" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
+            <circle cx="28" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="18" y1="28" x2="22" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
+            <line x1="34" y1="28" x2="38" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "clamp(30px, 5vw, 56px)" }}
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             Live in minutes.
           </h2>
-          <div className="grid md:grid-cols-3 gap-12 mt-16 text-left">
+
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto mt-16 text-left">
             {[
               {
-                step: "01",
+                num: "01",
                 title: "Share your hotel",
                 desc: "Paste your website or guest guide. The AI reads it automatically.",
               },
               {
-                step: "02",
+                num: "02",
                 title: "Your assistant is built",
                 desc: "Every service, amenity, and local experience — structured and ready.",
               },
               {
-                step: "03",
+                num: "03",
                 title: "Guests start asking",
                 desc: "QR codes, your website, or a shareable link. No app required.",
               },
-            ].map((s) => (
-              <div key={s.step}>
-                <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest">
-                  {s.step}
-                </div>
-                <div className="font-sans text-[18px] font-normal text-[#E8E3DC] mt-3">
-                  {s.title}
-                </div>
-                <div className="font-sans text-[16px] font-light text-[#A8A099] mt-2 leading-[1.75]">
-                  {s.desc}
-                </div>
+            ].map((step) => (
+              <div key={step.num}>
+                <p className="font-sans tracking-widest" style={{ fontSize: "11px", color: "#2D9E6B" }}>
+                  {step.num}
+                </p>
+                <p className="font-sans font-normal text-[#FAF9F5] mt-3" style={{ fontSize: "18px" }}>
+                  {step.title}
+                </p>
+                <p className="font-sans font-light text-[#9C9A93] mt-2" style={{ fontSize: "16px" }}>
+                  {step.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FOUNDING PARTNERS ── */}
-      <section id="founding-partners" className="py-16 lg:py-32 text-center">
-        <div className="max-w-6xl mx-auto px-6">
-          <svg
-            width="44"
-            height="44"
-            viewBox="0 0 44 44"
-            fill="none"
-            stroke="#E8E3DC"
-            strokeWidth="1.25"
-            className="mx-auto mb-6"
-          >
-            <polygon points="22,6 26,17 38,17 28,24 32,36 22,29 12,36 16,24 6,17 18,17" />
+      {/* ── FOUNDING PARTNERS ────────────────────────────── */}
+      <section id="founding-partners" className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
+            <path
+              d="M28 6l5.5 11 12 1.75-8.75 8.5 2 12L28 34l-10.75 5.25 2-12L10.5 18.75l12-1.75L28 6z"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
           </svg>
+
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1]"
-            style={{ fontSize: "clamp(30px, 5vw, 56px)" }}
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
           >
             Founding partners.
           </h2>
-          <p className="font-sans text-[18px] text-[#A8A099] mt-5">
+          <p className="font-sans text-[#9C9A93] mt-5" style={{ fontSize: "18px" }}>
             We&apos;re selecting 10 hotels to build this with.
           </p>
+
           <a
-            href="mailto:hola@placecompanion.com"
-            className="inline-flex items-center bg-[#2D9E6B] text-[#E8E3DC] h-12 px-6 rounded-md font-sans font-medium text-sm hover:bg-[#3DC47F] transition-colors mt-10"
+            href="mailto:hola@placecompanion.com?subject=Founding Partner Application"
+            className="font-sans text-[14px] font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white h-11 px-8 rounded-md transition-colors mt-8 inline-flex items-center"
           >
             Apply for Founding Partner Access
           </a>
-          <p className="font-sans text-[13px] text-[#6B6560] mt-4">
+
+          <p className="font-sans text-[14px] text-[#FAF9F5]/60 mt-4">
             4 of 10 spots remaining
           </p>
         </div>
       </section>
 
-      {/* ── PRICING ── */}
-      <section id="pricing" className="py-16 lg:py-32 text-center">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="font-sans text-[11px] text-[#2D9E6B] tracking-widest uppercase">
+      {/* ── PRICING ──────────────────────────────────────── */}
+      <section id="pricing" className="py-32 text-center" style={{ background: "#0F0E0D" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <p
+            className="font-sans uppercase tracking-widest"
+            style={{ fontSize: "11px", color: "#9C9A93" }}
+          >
             PRICING
-          </div>
+          </p>
           <h2
-            className="font-serif font-normal text-[#E8E3DC] leading-[1.1] max-w-2xl mx-auto mt-4"
-            style={{ fontSize: "clamp(26px, 4.5vw, 52px)" }}
+            className="font-serif font-normal text-[#FAF9F5] max-w-2xl mx-auto mt-4"
+            style={{ fontSize: "56px", lineHeight: 1.05 }}
           >
             Less than the cost of one missed booking per day.
           </h2>
-          <p className="font-sans text-[18px] font-light text-[#A8A099] mt-4">
+          <p className="font-sans font-light text-[#9C9A93] mt-4" style={{ fontSize: "18px" }}>
             Simple, transparent pricing. No contracts. Cancel anytime.
           </p>
 
-          <div className="grid md:grid-cols-2 max-w-3xl mx-auto mt-12 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mt-12">
+
             {/* Card 1 — Single Property */}
-            <div className="bg-[#242019] rounded-2xl p-6 lg:p-12 border border-white/[0.06] flex flex-col text-left">
-              <div className="font-sans text-[11px] text-[#6B6560] tracking-widest">
+            <div
+              className="rounded-2xl p-10 flex flex-col text-left"
+              style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.08)" }}
+            >
+              <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">
                 SINGLE PROPERTY
-              </div>
-              <div className="mt-4 flex items-end gap-1">
-                <span
-                  className="font-serif font-light text-[#E8E3DC] leading-none"
-                  style={{ fontSize: "72px" }}
-                >
+              </p>
+              <div className="flex items-baseline gap-1 mt-4">
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "72px", lineHeight: 1 }}>
                   $249
                 </span>
-                <span className="font-sans text-[24px] text-[#6B6560] mb-2">/mo</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
               </div>
-              <div className="font-sans text-[13px] text-[#6B6560] mt-1">
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: "13px" }}>
                 billed annually — or $299/mo monthly
-              </div>
-              <div className="border-t border-white/[0.08] my-6" />
+              </p>
+              <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {[
                   "AI assistant for your property",
@@ -350,44 +395,61 @@ export default function HomePage() {
                   "Guest conversation analytics",
                   "Email support",
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-2 font-sans text-[15px] text-[#E8E3DC]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2D9E6B] flex-shrink-0" />
+                  <li key={f} className="flex items-center gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "15px" }}>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-white/40" />
                     {f}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/onboarding"
-                className="w-full flex items-center justify-center bg-[#2D9E6B] text-[#E8E3DC] h-12 rounded-md font-sans font-medium text-sm hover:bg-[#3DC47F] transition-colors mt-8"
+                className="font-sans text-[15px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center"
+                style={{ backgroundColor: '#FAF9F5', color: '#141413' }}
               >
                 Start Free Trial
               </Link>
-              <p className="font-sans text-[12px] text-[#6B6560] text-center mt-3">
+              <p className="font-sans text-[#53525D] text-center mt-3" style={{ fontSize: "12px" }}>
                 14-day free trial · No credit card required
               </p>
             </div>
 
             {/* Card 2 — Small Group */}
-            <div className="bg-[#242019] rounded-2xl p-6 lg:p-12 border border-white/[0.06] border-t-2 border-t-[#2D9E6B] flex flex-col text-left">
-              <div className="inline-flex items-center self-start bg-[#2D9E6B] text-[#E8E3DC] text-[10px] font-sans px-2.5 py-1 rounded-full mb-3">
+            <div
+              className="rounded-2xl p-10 flex flex-col text-left"
+              style={{
+                background: "#1F1E1D",
+                borderTop: "2px solid rgba(250,249,245,0.4)",
+                borderLeft: "1px solid rgba(250,249,245,0.08)",
+                borderRight: "1px solid rgba(250,249,245,0.08)",
+                borderBottom: "1px solid rgba(250,249,245,0.08)",
+              }}
+            >
+              <span
+                className="font-sans font-medium inline-block mb-4"
+                style={{
+                  background: "#FAF9F5",
+                  color: "#141413",
+                  fontSize: "10px",
+                  padding: "4px 10px",
+                  borderRadius: "9999px",
+                  width: "fit-content",
+                }}
+              >
                 RECOMMENDED
-              </div>
-              <div className="font-sans text-[11px] text-[#6B6560] tracking-widest">
+              </span>
+              <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">
                 SMALL GROUP · 2–5 PROPERTIES
-              </div>
-              <div className="mt-4 flex items-end gap-1">
-                <span
-                  className="font-serif font-light text-[#E8E3DC] leading-none"
-                  style={{ fontSize: "72px" }}
-                >
+              </p>
+              <div className="flex items-baseline gap-1 mt-4">
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "72px", lineHeight: 1 }}>
                   $449
                 </span>
-                <span className="font-sans text-[24px] text-[#6B6560] mb-2">/mo</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
               </div>
-              <div className="font-sans text-[13px] text-[#6B6560] mt-1">
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: "13px" }}>
                 billed annually — or $549/mo monthly
-              </div>
-              <div className="border-t border-white/[0.08] my-6" />
+              </p>
+              <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {[
                   "Everything in Single Property",
@@ -397,29 +459,31 @@ export default function HomePage() {
                   "Staff notification routing",
                   "Priority support",
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-2 font-sans text-[15px] text-[#E8E3DC]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2D9E6B] flex-shrink-0" />
+                  <li key={f} className="flex items-center gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "15px" }}>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-white/40" />
                     {f}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/onboarding"
-                className="w-full flex items-center justify-center bg-[#2D9E6B] text-[#E8E3DC] h-12 rounded-md font-sans font-medium text-sm hover:bg-[#3DC47F] transition-colors mt-8"
+                className="font-sans text-[15px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center"
+                style={{ backgroundColor: '#FAF9F5', color: '#141413' }}
               >
                 Start Free Trial
               </Link>
-              <p className="font-sans text-[12px] text-[#6B6560] mt-3">
+              <p className="font-sans text-[#53525D] text-center mt-3" style={{ fontSize: "12px" }}>
                 14-day free trial · No credit card required
               </p>
             </div>
+
           </div>
 
-          <p className="font-sans text-[14px] text-[#6B6560] mt-10">
-            Founding Partners lock in lifetime rates at 40% off.{" "}
+          <p className="font-sans text-[15px] mt-10">
+            <span className="text-[#53525D]">Founding Partners lock in lifetime rates at 40% off. </span>
             <a
-              href="mailto:hola@placecompanion.com"
-              className="text-[#2D9E6B] hover:underline"
+              href="mailto:hola@placecompanion.com?subject=Founding Partner Application"
+              className="text-[#FAF9F5] hover:text-white transition-colors duration-200"
             >
               Apply →
             </a>
@@ -427,7 +491,73 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FinalCTA />
+      {/* ── FAQ ──────────────────────────────────────────── */}
+      <section id="faq" className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
+            <circle cx="28" cy="28" r="20" stroke="#FAF9F5" strokeWidth="1.5" />
+            <path
+              d="M22 22c0-3.3 2.7-6 6-6s6 2.7 6 6c0 3-2.2 5.2-5.2 6.7V30"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <circle cx="28" cy="37" r="1.25" fill="#FAF9F5" />
+          </svg>
+
+          <h2
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
+          >
+            Common questions.
+          </h2>
+
+          <FaqSection />
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ────────────────────────────────────── */}
+      <section className="py-32 text-center" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto px-8">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
+            <path
+              d="M10 28a18 18 0 0136 0"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <circle cx="28" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
+            <path
+              d="M28 34v10M24 40l4 4 4-4"
+              stroke="#FAF9F5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          <h2
+            className="font-serif font-normal text-[#FAF9F5]"
+            style={{ fontSize: "68px", lineHeight: 1.05 }}
+          >
+            Create your hotel assistant.
+          </h2>
+          <p
+            className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-5"
+            style={{ fontSize: "18px", lineHeight: 1.75 }}
+          >
+            See how guests experience your property when every question has an
+            instant answer.
+          </p>
+          <Link
+            href="/onboarding"
+            className="font-sans text-[15px] font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white h-12 px-10 rounded-md transition-colors mt-8 inline-flex items-center"
+          >
+            Create Your Hotel Assistant
+          </Link>
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   );
