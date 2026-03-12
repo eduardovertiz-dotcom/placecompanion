@@ -6,11 +6,7 @@
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(gh auth:*)",
-      "Bash(git init:*)",
-      "Bash(npx next:*)",
-      "Bash(node_modules/.bin/next build:*)",
-      "Skill(claude-api)",
-      "Bash(git add:*)"
+      "Bash(git init:*)"
     ]
   }
 }
