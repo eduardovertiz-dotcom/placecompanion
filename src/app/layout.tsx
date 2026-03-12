@@ -1,26 +1,34 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Place Companion — AI Companion for Physical Spaces",
+  title: "Place Companion — The AI that knows your hotel.",
   description:
-    "Deploy an AI companion for any physical space in minutes. Hotels, hospitals, airports, residences, retail, and universities — in 6 languages, worldwide.",
+    "An intelligent guest assistant for hotels. Multilingual, available 24/7, live in minutes.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geist.variable} font-sans antialiased`}>
+      <body
+        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
+        style={{ background: "#1C1917", color: "#E8E3DC" }}
+      >
         {children}
       </body>
     </html>
