@@ -11,6 +11,15 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 export default function HomePage() {
   const { t } = useLang();
 
+  const heroChatConfig = {
+    ...marazulChatConfig,
+    suggestionChips: [
+      marazulChatConfig.suggestionChips![0],
+      marazulChatConfig.suggestionChips![1],
+      marazulChatConfig.suggestionChips![4],
+    ],
+  };
+
   const howItWorksSteps = [
     { num: "01", title: t.howItWorks.step1Title, desc: t.howItWorks.step1Desc },
     { num: "02", title: t.howItWorks.step2Title, desc: t.howItWorks.step2Desc },
@@ -60,7 +69,7 @@ export default function HomePage() {
                   <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">Part of the MarAzul Collection</p>
                   <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">Your 24/7 AI Guest Companion</p>
                 </div>
-                <ChatInterface config={marazulChatConfig} />
+                <ChatInterface config={heroChatConfig} />
               </div>
             </div>
 
@@ -118,7 +127,7 @@ export default function HomePage() {
                       border: "1px solid rgba(250,249,245,0.06)",
                       borderRadius: msg.role === 'assistant' ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
                       padding: "12px 16px",
-                      fontSize: "15px",
+                      fontSize: "16px",
                       maxWidth: "85%",
                     }}
                   >
@@ -126,7 +135,7 @@ export default function HomePage() {
                   </div>
                 </div>
               ))}
-              <p className="font-sans font-medium text-center mt-5" style={{ fontSize: "13px", letterSpacing: "0.06em", color: "#9C9A93" }}>
+              <p className="font-sans font-medium text-center mt-5" style={{ fontSize: "16px", color: "#E8E3DC", fontWeight: 500 }}>
                 {t.revenue.outcome}
               </p>
             </div>

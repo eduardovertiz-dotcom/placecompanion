@@ -216,6 +216,7 @@ export const translations = {
         { q: 'Can I customize what the assistant knows?', a: 'Yes. You control all property information — menus, policies, amenities, local recommendations. Update it anytime from your dashboard.' },
         { q: 'Is there a free trial?', a: "Yes. 14 days free, no credit card required. You'll have a fully working assistant for your property within minutes of signing up." },
         { q: 'What if I have multiple properties?', a: 'The Small Group plan covers 2–5 properties under one dashboard. For larger portfolios, contact us for enterprise pricing.' },
+        { q: 'Can guests ask in any language?', a: "Yes. Place Companion detects the guest's language automatically and responds in kind — Spanish, French, German, Portuguese, and more. No setup required." },
       ],
     },
     demo: {
@@ -515,6 +516,7 @@ export const translations = {
         { q: '¿Puedo personalizar lo que el asistente sabe?', a: 'Sí. Tú controlas toda la información de la propiedad — menús, políticas, amenidades, recomendaciones locales. Actualízala en cualquier momento desde tu panel.' },
         { q: '¿Hay una prueba gratuita?', a: 'Sí. 14 días gratis, sin tarjeta de crédito. Tendrás un asistente completamente funcional para tu propiedad en minutos después de registrarte.' },
         { q: '¿Qué pasa si tengo varias propiedades?', a: 'El plan Grupo Pequeño cubre 2–5 propiedades en un solo panel. Para portafolios más grandes, contáctanos para precios empresariales.' },
+        { q: '¿Pueden los huéspedes preguntar en cualquier idioma?', a: 'Sí. Place Companion detecta el idioma del huésped automáticamente y responde en consecuencia — español, francés, alemán, portugués y más. Sin configuración previa.' },
       ],
     },
     demo: {
