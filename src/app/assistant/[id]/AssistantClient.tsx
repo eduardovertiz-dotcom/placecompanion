@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useLang } from '@/lib/i18n/LanguageContext'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,12 +16,21 @@ interface ChatMessage {
 }
 
 export default function AssistantClient({ property }: Props) {
+  const { lang } = useLang()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
   const [streamingText, setStreamingText] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const sessionId = useRef(Math.random().toString(36).slice(2))
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getSession().then(({ data }) => {
+      setIsLoggedIn(!!data.session)
+    })
+  }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -65,6 +76,18 @@ export default function AssistantClient({ property }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start px-4 py-8" style={{ background: '#1C1917' }}>
+      {/* Back to dashboard — only for logged-in hotel owners */}
+      {isLoggedIn && (
+        <div className="w-full" style={{ maxWidth: '512px', marginBottom: '12px' }}>
+          <Link
+            href="/dashboard"
+            className="font-sans transition-colors"
+            style={{ fontSize: '13px', color: '#6B6560', textDecoration: 'none' }}
+          >
+            {lang === 'es' ? '← Volver al panel' : '← Back to dashboard'}
+          </Link>
+        </div>
+      )}
       {/* Card */}
       <div
         className="w-full mx-auto rounded-2xl overflow-hidden shadow-2xl flex flex-col"

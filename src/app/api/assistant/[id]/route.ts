@@ -45,6 +45,11 @@ function sendIssueAlert(
   guestMessage: string,
   roomNumber: string | null
 ) {
+  if (!process.env.RESEND_API_KEY) {
+    console.error('[alert] RESEND_API_KEY is not set — cannot send alert')
+    return
+  }
+  console.log('[alert] sending to:', alertEmail, '| hotel:', hotelName, '| room:', roomNumber)
   const resend = new Resend(process.env.RESEND_API_KEY)
   const room = roomNumber ?? 'Not provided — assistant is asking'
   const time = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: true })
@@ -62,7 +67,11 @@ function sendIssueAlert(
       </table>
       <p style="font-family:sans-serif;font-size:13px;color:#999;margin-top:24px">Sent by Place Companion · placecompanion.com</p>
     `,
-  }).catch(() => {/* fire and forget */})
+  }).then(r => {
+    console.log('[alert] Resend response:', JSON.stringify(r))
+  }).catch(err => {
+    console.error('[alert] Resend error:', err)
+  })
 }
 
 function detectRevenueSignal(message: string): string | null {
@@ -156,9 +165,14 @@ export async function POST(
         })
       }
       // Issue alert — fire and forget
-      if (property.alert_email && lastUserMessage?.role === 'user' && detectIssue(lastUserMessage.content)) {
-        const roomNumber = extractRoomNumber(messages as Array<{ role: string; content: string }>)
-        sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
+      console.log('[alert] onFinish — alert_email:', property.alert_email, '| last msg role:', lastUserMessage?.role)
+      if (lastUserMessage?.role === 'user') {
+        const issueDetected = detectIssue(lastUserMessage.content)
+        console.log('[alert] issue detected:', issueDetected, '| message:', lastUserMessage.content.slice(0, 100))
+        if (property.alert_email && issueDetected) {
+          const roomNumber = extractRoomNumber(messages as Array<{ role: string; content: string }>)
+          sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
+        }
       }
     }
   })
