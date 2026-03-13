@@ -97,16 +97,16 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.72)' }}
+      style={{ background: 'rgba(0,0,0,0.75)' }}
       onClick={onClose}
     >
       <div
         className="relative w-full max-w-2xl rounded-2xl overflow-hidden"
-        style={{ background: '#1C1917', border: '1px solid rgba(250,249,245,0.08)' }}
+        style={{ background: '#1C1917', border: '1px solid rgba(232,227,220,0.08)' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-8 pt-8 pb-6" style={{ borderBottom: '1px solid rgba(250,249,245,0.06)' }}>
+        <div className="flex items-center justify-between px-8 pt-8 pb-6" style={{ borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
           <div>
             <h2 className="font-serif font-normal text-[#E8E3DC]" style={{ fontSize: '28px' }}>
               Upgrade your assistant.
@@ -136,16 +136,16 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 className="rounded-xl flex flex-col"
                 style={{
                   background: '#242019',
-                  border: '1px solid rgba(250,249,245,0.08)',
+                  border: '1px solid rgba(232,227,220,0.06)',
                   padding: '24px',
                 }}
               >
-                <p className="font-sans font-medium tracking-widest text-[#FAF9F5]/60 uppercase" style={{ fontSize: '11px' }}>
+                <p className="font-sans font-medium tracking-widest text-[#6B6560] uppercase" style={{ fontSize: '11px' }}>
                   {plan.name}
                 </p>
 
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: '40px', lineHeight: 1 }}>
+                  <span className="font-serif font-light text-[#E8E3DC]" style={{ fontSize: '40px', lineHeight: 1 }}>
                     {discounted
                       ? '$' + Math.round(parseInt(plan.price.replace('$', '')) * 0.6)
                       : plan.price}
@@ -161,7 +161,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
 
                 <ul className="flex-1 space-y-2 mt-5">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 font-sans text-[#9C9A93]" style={{ fontSize: '13px' }}>
+                    <li key={f} className="flex items-start gap-2 font-sans text-[#A8A099]" style={{ fontSize: '13px' }}>
                       <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0 bg-[#2D9E6B]" />
                       {f}
                     </li>
@@ -191,7 +191,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
         {/* Founding partner coupon */}
         <div
           className="mx-6 md:mx-8 mb-8 rounded-xl p-5"
-          style={{ background: '#242019', border: '1px solid rgba(250,249,245,0.06)' }}
+          style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)' }}
         >
           <p className="font-sans text-[#A8A099]" style={{ fontSize: '13px' }}>
             Have a founding partner code?
@@ -205,12 +205,12 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 setCouponError('')
               }}
               placeholder="Enter code"
-              className="font-sans flex-1 rounded-lg px-4 outline-none"
+              className="font-sans flex-1 rounded-lg px-4 outline-none placeholder:text-[#6B6560]"
               style={{
                 height: '40px',
                 fontSize: '14px',
-                background: '#1C1917',
-                border: '1px solid rgba(250,249,245,0.12)',
+                background: '#2C2720',
+                border: '1px solid rgba(232,227,220,0.08)',
                 color: '#E8E3DC',
               }}
               onKeyDown={(e) => { if (e.key === 'Enter') handleApplyCoupon() }}
@@ -222,7 +222,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 height: '40px',
                 fontSize: '14px',
                 background: 'transparent',
-                border: '1px solid rgba(250,249,245,0.25)',
+                border: '1px solid rgba(232,227,220,0.25)',
                 color: '#E8E3DC',
                 cursor: 'pointer',
               }}
