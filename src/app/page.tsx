@@ -56,7 +56,7 @@ export default function HomePage() {
             {/* Right — demo window */}
             <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
               <div
-                className="flex flex-col min-h-[280px] max-h-[420px] md:min-h-[400px] md:max-h-[580px]"
+                className="flex flex-col h-[420px] md:h-[580px]"
                 style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D' }}
               >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
