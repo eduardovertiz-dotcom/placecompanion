@@ -18,7 +18,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: "#141413" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "#141413" }}>
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
@@ -47,8 +47,8 @@ export default function HomePage() {
             {/* Right — demo window */}
             <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
               <div
-                className="flex flex-col"
-                style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D', minHeight: '400px', maxHeight: '580px' }}
+                className="flex flex-col min-h-[280px] max-h-[420px] md:min-h-[400px] md:max-h-[580px]"
+                style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D' }}
               >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
@@ -122,7 +122,7 @@ export default function HomePage() {
       </section>
 
       {/* ── INTELLIGENCE ─────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center" style={{ background: "#141413" }}>
+      <section className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <rect x="10" y="20" width="36" height="28" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
@@ -165,7 +165,7 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────── */}
-      <section id="how-it-works" className="py-20 md:py-32 text-center" style={{ background: "#141413" }}>
+      <section id="how-it-works" className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <circle cx="12" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
@@ -227,7 +227,7 @@ export default function HomePage() {
             {t.pricing.subhead}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 max-w-3xl mx-auto mt-12">
 
             {/* Card 1 — Single Property */}
             <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.08)" }}>
@@ -322,7 +322,7 @@ export default function HomePage() {
           <h2 className="heading-section font-serif font-normal text-[#E8E3DC]">
             {t.finalCta.headline}
           </h2>
-          <p className="font-sans text-[#A8A099] max-w-xl mx-auto mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+          <p className="font-sans text-[#A8A099] max-w-xl mx-auto mt-5 break-words" style={{ fontSize: "18px", lineHeight: 1.75 }}>
             {t.finalCta.body}
           </p>
           <Link
