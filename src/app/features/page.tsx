@@ -88,6 +88,49 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      {/* ── PERSONALITY ──────────────────────────────────── */}
+      <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" className="mx-auto mb-6">
+            <path d="M6 8h32a2 2 0 012 2v18a2 2 0 01-2 2H14l-8 6V10a2 2 0 012-2z" stroke="#E8E3DC" strokeWidth="1.25" strokeLinejoin="round" />
+            <path d="M22 18l1.5 3h3l-2.5 2 1 3-3-2-3 2 1-3-2.5-2h3z" stroke="#E8E3DC" strokeWidth="1.25" strokeLinejoin="round" />
+          </svg>
+
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: "11px", color: "#6B6560" }}>
+            {t.features.personality.label}
+          </p>
+          <h2 className="heading-section font-serif font-normal text-[#E8E3DC] mt-4">
+            {t.features.personality.headline}
+          </h2>
+          <p className="font-sans font-light text-[#A8A099] max-w-2xl mx-auto mt-4" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+            {t.features.personality.body}
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto mt-12">
+            {t.features.personality.styles.map((style, i) => {
+              const icons = [
+                <svg key="warm" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="12" cy="16" r="7" stroke="#E8E3DC" strokeWidth="1.25"/><circle cx="20" cy="16" r="7" stroke="#E8E3DC" strokeWidth="1.25"/></svg>,
+                <svg key="refined" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 6 C10 6 8 11 8 16 H24 C24 11 22 6 16 6Z" stroke="#E8E3DC" strokeWidth="1.25"/><line x1="12" y1="24" x2="20" y2="24" stroke="#E8E3DC" strokeWidth="1.25"/><line x1="8" y1="20" x2="24" y2="20" stroke="#E8E3DC" strokeWidth="1.25"/></svg>,
+                <svg key="barefoot" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16 C7 12 10 20 13 16 C16 12 19 20 22 16 C25 12 28 20 28 16" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round"/></svg>,
+                <svg key="playful" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" stroke="#E8E3DC" strokeWidth="1.25"/><polygon points="16,8 19,16 16,14 13,16" stroke="#E8E3DC" strokeWidth="1.25"/><polygon points="16,24 13,16 16,18 19,16" stroke="#E8E3DC" strokeWidth="1.25"/></svg>,
+                <svg key="zen" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M8 20 C8 12 24 12 24 20" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round"/><circle cx="16" cy="22" r="1.5" stroke="#E8E3DC" strokeWidth="1.25"/></svg>,
+              ]
+              return (
+                <div
+                  key={style.name}
+                  className={`flex flex-col items-center rounded-xl p-6 text-center${i === 4 ? ' col-span-2 md:col-span-1' : ''}`}
+                  style={{ background: "#242019", border: "1px solid rgba(232,227,220,0.06)" }}
+                >
+                  {icons[i]}
+                  <p className="font-sans font-medium text-[#E8E3DC] mt-3" style={{ fontSize: "14px" }}>{style.name}</p>
+                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "12px", lineHeight: 1.5 }}>{style.tagline}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ── DEPLOYMENT ───────────────────────────────────── */}
       <section className="py-20 md:py-32 text-center" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">

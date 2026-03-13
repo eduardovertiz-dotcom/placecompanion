@@ -158,6 +158,18 @@ export const translations = {
         { stage: 'DURING STAY', title: "While they're there", desc: 'QR codes in rooms, lobby, pool, spa, restaurant. Every question answered instantly, in any language, at any hour.' },
         { stage: 'AFTER STAY', title: 'After they leave', desc: 'A warm follow-up with a direct link to leave a review. Happy guests become public advocates.' },
       ],
+      personality: {
+        label: 'PERSONALITY',
+        headline: 'Your assistant. Your voice.',
+        body: "Every hotel has a personality. Now your AI assistant does too. Choose from five distinct styles and your assistant will speak to every guest in your hotel's authentic voice.",
+        styles: [
+          { name: 'Warm & Local', tagline: 'Feels like a friend who knows the area' },
+          { name: 'Refined Concierge', tagline: 'Polished, precise, always professional' },
+          { name: 'Barefoot Luxury', tagline: 'Relaxed but impeccable — like the hotel itself' },
+          { name: 'Playful Explorer', tagline: 'Adventurous, fun, emoji-friendly' },
+          { name: 'Zen & Mindful', tagline: 'Calm, unhurried, present' },
+        ],
+      },
       deploymentHeadline: 'Three ways guests reach your assistant.',
       deployment: [
         { title: 'QR Codes', desc: 'Print and place anywhere — rooms, lobby, pool deck, restaurant menus, key card sleeves. Guests scan and the assistant opens instantly.' },
@@ -445,6 +457,18 @@ export const translations = {
         { stage: 'DURANTE LA ESTANCIA', title: 'Mientras están aquí', desc: 'Códigos QR en habitaciones, lobby, alberca, spa, restaurante. Cada pregunta respondida al instante, en cualquier idioma, a cualquier hora.' },
         { stage: 'DESPUÉS DE LA ESTANCIA', title: 'Después de que se van', desc: 'Un seguimiento cálido con un enlace directo para dejar una reseña. Los huéspedes felices se convierten en promotores públicos.' },
       ],
+      personality: {
+        label: 'PERSONALIDAD',
+        headline: 'Tu asistente. Tu voz.',
+        body: 'Cada hotel tiene una personalidad. Ahora tu asistente de IA también. Elige entre cinco estilos distintos y tu asistente hablará con cada huésped en la voz auténtica de tu hotel.',
+        styles: [
+          { name: 'Cálido & Local', tagline: 'Como un amigo que conoce bien el destino' },
+          { name: 'Concierge Refinado', tagline: 'Pulido, preciso, siempre profesional' },
+          { name: 'Lujo Sin Zapatos', tagline: 'Relajado pero impecable — como el hotel mismo' },
+          { name: 'Explorador Juguetón', tagline: 'Aventurero, divertido, lleno de energía' },
+          { name: 'Zen & Consciente', tagline: 'Tranquilo, pausado, presente' },
+        ],
+      },
       deploymentHeadline: 'Tres formas en que los huéspedes llegan a tu asistente.',
       deployment: [
         { title: 'Códigos QR', desc: 'Imprime y coloca en cualquier lugar — habitaciones, lobby, área de alberca, menús del restaurante, portadores de llaves. Los huéspedes escanean y el asistente se abre al instante.' },
