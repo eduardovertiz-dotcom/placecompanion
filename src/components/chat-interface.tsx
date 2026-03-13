@@ -287,7 +287,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           style={{
             width: "40px",
             height: "40px",
-            background: isLoading || !input.trim() ? "rgba(232,130,58,0.35)" : "#E8823A",
+            background: isLoading || !input.trim() ? "rgba(201,106,58,0.35)" : "#C96A3A",
             borderRadius: "12px",
             border: "none",
             cursor: isLoading || !input.trim() ? "not-allowed" : "pointer",

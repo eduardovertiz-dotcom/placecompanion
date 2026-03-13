@@ -93,17 +93,16 @@ export default function OnboardingPage() {
       console.log('[onboarding] extract status:', res.status)
       const data = await res.json()
       console.log('[onboarding] extract data:', data)
-      if (data.error) {
-        setExtractError(data.error)
-        setStep(1)
+      if (!res.ok || data.error) {
+        // Stay on step 2 so the error is visible — don't bounce back to step 1
+        setExtractError(data.error || `Request failed (${res.status})`)
       } else {
         setExtracted(data.extracted)
         animateIntelligence(data.extracted)
       }
     } catch (err) {
       console.error('[onboarding] extract fetch error:', err)
-      setExtractError('Something went wrong. Please try again.')
-      setStep(1)
+      setExtractError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setIsExtracting(false)
     }
@@ -404,10 +403,34 @@ export default function OnboardingPage() {
             })}
           </div>
 
-          {animatedItems.length > 0 && (
+          {animatedItems.length > 0 && !extractError && (
             <p className="font-sans mt-8" style={{ fontSize: '14px', color: '#A8A099' }}>
               {t.onboarding.building}
             </p>
+          )}
+
+          {extractError && (
+            <div className="mt-10 text-center">
+              <p className="font-sans" style={{ fontSize: '15px', color: '#F87171' }}>
+                {extractError}
+              </p>
+              <button
+                onClick={() => { setExtractError(''); setStep(1); }}
+                className="font-sans font-medium mt-4 inline-block transition-colors"
+                style={{
+                  height: '44px',
+                  padding: '0 24px',
+                  borderRadius: '6px',
+                  fontSize: '15px',
+                  background: '#2D9E6B',
+                  color: 'white',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                Try Again
+              </button>
+            </div>
           )}
         </div>
       )}

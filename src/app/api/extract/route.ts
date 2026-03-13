@@ -30,9 +30,11 @@ async function fetchUrlText(url: string): Promise<string> {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log("[extract] request:", { hasText: !!body.text, textLen: body.text?.length, hasUrl: !!body.url, url: body.url });
     const { text, url } = body as { text?: string; url?: string };
 
     if (!text && !url) {
+      console.log("[extract] error: missing text and url");
       return Response.json({ error: "Provide either text or url" }, { status: 400 });
     }
 
@@ -57,6 +59,7 @@ export async function POST(req: Request) {
       );
     }
 
+    console.log("[extract] calling AI, sourceText length:", sourceText.length);
     const { text: raw } = await generateText({
       model: anthropic("claude-haiku-4-5-20251001"),
       system: `You are a hotel information extractor. Given raw hotel text or website content, extract structured information and return ONLY valid JSON with no markdown, no explanation, no code fences.`,
@@ -82,6 +85,7 @@ ${sourceText}`,
       maxOutputTokens: 1024,
     });
 
+    console.log("[extract] AI response (first 500):", raw.slice(0, 500));
     // Strip markdown code fences if present
     const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
 
@@ -130,9 +134,11 @@ ${sourceText}`,
 
     extracted.systemPrompt = lines.join("\n");
 
+    console.log("[extract] success, hotelName:", extracted.hotelName);
     return Response.json({ extracted });
   } catch (err) {
-    console.error("[extract/route]", err);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    console.error("[extract/route] unhandled error:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return Response.json({ error: `Internal server error: ${message}` }, { status: 500 });
   }
 }

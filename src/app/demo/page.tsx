@@ -54,7 +54,7 @@ export default function DemoPage() {
             </p>
             <Link
               href="/onboarding"
-              className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#E8823A] hover:bg-[#D4733A] h-11 px-6 rounded-md transition-colors mt-6 inline-flex items-center"
+              className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors mt-6 inline-flex items-center"
             >
               Create Your Hotel Assistant
             </Link>

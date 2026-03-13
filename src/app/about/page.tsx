@@ -151,7 +151,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="/onboarding"
-            className="font-sans font-medium text-[#FAF9F5] bg-[#E8823A] hover:bg-[#D4733A] h-12 px-8 rounded-md inline-flex items-center transition-colors duration-200 mt-10"
+            className="font-sans font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-12 px-8 rounded-md inline-flex items-center transition-colors duration-200 mt-10"
             style={{ fontSize: "15px" }}
           >
             {t.finalCta.button}

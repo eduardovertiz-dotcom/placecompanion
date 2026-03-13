@@ -266,7 +266,7 @@ export default function DashboardClient({ user, properties }: Props) {
                       style={{
                         fontSize: '14px',
                         color: '#FAF9F5',
-                        background: '#E8823A',
+                        background: '#C96A3A',
                         borderRadius: '8px',
                         padding: '10px 16px',
                         border: 'none',
