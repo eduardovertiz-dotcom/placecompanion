@@ -168,7 +168,8 @@ export async function POST(
       console.log('[alert] onFinish — alert_email:', property.alert_email, '| last msg role:', lastUserMessage?.role)
       if (lastUserMessage?.role === 'user') {
         const issueDetected = detectIssue(lastUserMessage.content)
-        console.log('[alert] issue detected:', issueDetected, '| message:', lastUserMessage.content.slice(0, 100))
+        console.log(`[alert] keyword check — message: ${lastUserMessage.content} | detected: ${issueDetected}`)
+        console.log('[alert] keywords checked:', ISSUE_KEYWORDS.join(', '))
         if (property.alert_email && issueDetected) {
           const roomNumber = extractRoomNumber(messages as Array<{ role: string; content: string }>)
           sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
