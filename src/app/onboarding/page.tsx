@@ -8,6 +8,16 @@ import { useLang } from '@/lib/i18n/LanguageContext'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Extracted = Record<string, any> | null
 
+type StyleKey = 'warm_local' | 'refined_concierge' | 'barefoot_luxury' | 'playful_explorer' | 'zen_mindful'
+
+const STYLES: { key: StyleKey; emoji: string }[] = [
+  { key: 'warm_local', emoji: '🤝' },
+  { key: 'refined_concierge', emoji: '🎩' },
+  { key: 'barefoot_luxury', emoji: '🌴' },
+  { key: 'playful_explorer', emoji: '🧭' },
+  { key: 'zen_mindful', emoji: '🧘' },
+]
+
 interface ChatMessage {
   role: string
   content: string
@@ -48,6 +58,7 @@ export default function OnboardingPage() {
   const [password, setPassword] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
+  const [conversationalStyle, setConversationalStyle] = useState<StyleKey>('warm_local')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -94,7 +105,6 @@ export default function OnboardingPage() {
       const data = await res.json()
       console.log('[onboarding] extract data:', data)
       if (!res.ok || data.error) {
-        // Stay on step 2 so the error is visible — don't bounce back to step 1
         setExtractError(data.error || `Request failed (${res.status})`)
       } else {
         setExtracted(data.extracted)
@@ -122,7 +132,7 @@ export default function OnboardingPage() {
       const res = await fetch('/api/preview-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, extracted })
+        body: JSON.stringify({ messages: newMessages, extracted, conversationalStyle })
       })
 
       const reader = res.body!.getReader()
@@ -155,7 +165,6 @@ export default function OnboardingPage() {
 
     const supabase = createClient()
 
-    // Create account
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
@@ -168,10 +177,8 @@ export default function OnboardingPage() {
       return
     }
 
-    // Build system prompt from extracted data
     const systemPrompt = buildSystemPromptFromExtracted(extracted)
 
-    // Save property to database
     const { error: propertyError } = await supabase
       .from('properties')
       .insert({
@@ -181,6 +188,7 @@ export default function OnboardingPage() {
         room_count: extracted?.roomCount || null,
         extracted_data: extracted,
         system_prompt: systemPrompt,
+        conversational_style: conversationalStyle,
         is_active: true
       })
       .select()
@@ -192,10 +200,7 @@ export default function OnboardingPage() {
       return
     }
 
-    // Clear localStorage
     localStorage.removeItem('pc_lead')
-
-    // Redirect to dashboard
     window.location.href = '/dashboard'
   }
 
@@ -242,7 +247,7 @@ export default function OnboardingPage() {
 
       {/* STEP 1 */}
       {step === 1 && (
-        <div className="max-w-2xl mx-auto px-4 md:px-6 pt-16 md:pt-24">
+        <div className="max-w-2xl mx-auto px-4 md:px-6 pt-16 md:pt-24 pb-16">
           <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
             {t.onboarding.step1Headline}
           </h1>
@@ -329,6 +334,50 @@ export default function OnboardingPage() {
               onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)' }}
             />
           )}
+
+          {/* Style selector */}
+          <div className="mt-8">
+            <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+              {t.onboarding.chooseStyle}
+            </p>
+            <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#6B6560' }}>
+              {t.onboarding.styleSubhead}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+              {STYLES.map(({ key, emoji }) => {
+                const styleData = t.onboarding.styles[key]
+                const isSelected = conversationalStyle === key
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setConversationalStyle(key)}
+                    className="text-left transition-all"
+                    style={{
+                      background: isSelected ? '#2C2720' : '#242019',
+                      border: `1px solid ${isSelected ? '#2D9E6B' : 'rgba(232,227,220,0.06)'}`,
+                      borderRadius: '10px',
+                      padding: '14px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      gap: '10px',
+                      alignItems: 'flex-start',
+                    }}
+                  >
+                    <span style={{ fontSize: '20px', lineHeight: '1.2', flexShrink: 0 }}>{emoji}</span>
+                    <div>
+                      <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+                        {styleData.name}
+                      </p>
+                      <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560', lineHeight: 1.4 }}>
+                        {styleData.tagline}
+                      </p>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
 
           <button
             onClick={handleExtract}
@@ -483,7 +532,6 @@ export default function OnboardingPage() {
               className="p-6 space-y-4 overflow-y-auto"
               style={{ minHeight: '320px', maxHeight: 'min(400px, 50vh)', background: '#0F0D0B' }}
             >
-              {/* Initial greeting */}
               {messages.length === 0 && !streamingText && (
                 <div>
                   <div

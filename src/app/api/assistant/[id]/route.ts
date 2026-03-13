@@ -5,6 +5,16 @@ import { NextRequest } from 'next/server'
 
 const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
+const HALLUCINATION_GUARDRAIL = `Only recommend specific restaurants, businesses, attractions or services if they are explicitly mentioned in the hotel's knowledge base. For general destination questions, provide helpful guidance about the area but never invent or assume specific business names, addresses, hours, or prices that are not in your knowledge base.`
+
+const STYLE_INSTRUCTIONS: Record<string, string> = {
+  warm_local: 'Speak like a warm, genuine local friend. Personal, conversational, use the guest\'s name when known.',
+  refined_concierge: 'Speak with the polish of a five-star concierge. Precise, professional, impeccable.',
+  barefoot_luxury: 'Relaxed and warm but never casual to a fault. Think luxury beach resort — effortlessly refined.',
+  playful_explorer: 'Fun, enthusiastic, and adventurous. Use occasional emojis. Make guests excited to explore.',
+  zen_mindful: 'Calm, unhurried, thoughtful. Every response feels considered and serene.',
+}
+
 function detectRevenueSignal(message: string): string | null {
   const lower = message.toLowerCase()
   if (lower.includes('spa') || lower.includes('massage') || lower.includes('treatment')) return 'spa'
@@ -27,7 +37,7 @@ export async function POST(
   // Fetch property
   const { data: property } = await supabase
     .from('properties')
-    .select('system_prompt, hotel_name, is_active')
+    .select('system_prompt, hotel_name, is_active, conversational_style')
     .eq('id', id)
     .eq('is_active', true)
     .single()
@@ -35,6 +45,10 @@ export async function POST(
   if (!property) {
     return new Response('Property not found', { status: 404 })
   }
+
+  const styleKey = (property.conversational_style as string) || 'warm_local'
+  const styleInstruction = STYLE_INSTRUCTIONS[styleKey] ?? STYLE_INSTRUCTIONS.warm_local
+  const composedPrompt = `${property.system_prompt}\n\nCOMMUNICATION STYLE: ${styleInstruction}\n\nGUARANTEED ACCURACY: ${HALLUCINATION_GUARDRAIL}`
 
   // Find or create conversation
   let conversationId: string | null = null
@@ -79,7 +93,7 @@ export async function POST(
 
   const result = streamText({
     model: anthropic('claude-haiku-4-5-20251001'),
-    system: property.system_prompt,
+    system: composedPrompt,
     messages: normalized,
     maxOutputTokens: 1024,
     onFinish: async ({ text }) => {

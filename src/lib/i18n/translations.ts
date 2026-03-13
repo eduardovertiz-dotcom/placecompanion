@@ -138,6 +138,15 @@ export const translations = {
       step3HeadlineDefault: 'Meet your hotel assistant.',
       aiCompanionLabel: 'AI Guest Companion',
       step3Greeting: "Hello! I'm your AI Guest Companion for {hotelName}. I've been trained on your property's information. Ask me anything your guests would want to know.",
+      chooseStyle: "Choose your assistant's personality",
+      styleSubhead: 'This shapes how your assistant speaks to every guest',
+      styles: {
+        warm_local: { name: 'Warm & Local', tagline: 'Feels like a friend who knows the area' },
+        refined_concierge: { name: 'Refined Concierge', tagline: 'Polished, precise, always professional' },
+        barefoot_luxury: { name: 'Barefoot Luxury', tagline: 'Relaxed but impeccable — like the hotel itself' },
+        playful_explorer: { name: 'Playful Explorer', tagline: 'Adventurous, fun, emoji-friendly' },
+        zen_mindful: { name: 'Zen & Mindful', tagline: 'Calm, unhurried, present' },
+      },
     },
     features: {
       heroHeadline: 'Everything your guests will ever ask.',
@@ -264,6 +273,9 @@ export const translations = {
       noRevenue: 'No revenue signals yet. Share your assistant link to start tracking guest intent.',
       inquiries: 'guest inquiries',
       settingsHeadline: 'Settings.',
+      assistantPersonality: 'Assistant Personality',
+      saving: 'Saving...',
+      saved: 'Saved!',
       deleteProperty: 'Delete Property',
       deleting: 'Deleting...',
       signals: {
@@ -413,6 +425,15 @@ export const translations = {
       step3HeadlineDefault: 'Conoce a tu asistente de hotel.',
       aiCompanionLabel: 'Asistente de Huéspedes con IA',
       step3Greeting: '¡Hola! Soy tu Asistente de Huéspedes con IA para {hotelName}. He sido entrenado con la información de tu propiedad. Pregúntame lo que tus huéspedes quisieran saber.',
+      chooseStyle: 'Elige la personalidad de tu asistente',
+      styleSubhead: 'Esto define cómo tu asistente habla con cada huésped',
+      styles: {
+        warm_local: { name: 'Cálido & Local', tagline: 'Como un amigo que conoce bien el destino' },
+        refined_concierge: { name: 'Concierge Refinado', tagline: 'Pulido, preciso, siempre profesional' },
+        barefoot_luxury: { name: 'Lujo Sin Zapatos', tagline: 'Relajado pero impecable — como el hotel mismo' },
+        playful_explorer: { name: 'Explorador Juguetón', tagline: 'Aventurero, divertido, lleno de energía' },
+        zen_mindful: { name: 'Zen & Consciente', tagline: 'Tranquilo, pausado, presente' },
+      },
     },
     features: {
       heroHeadline: 'Todo lo que tus huéspedes querrán preguntar.',
@@ -539,6 +560,9 @@ export const translations = {
       noRevenue: 'Sin señales de ingresos aún. Comparte tu enlace para comenzar a rastrear la intención de los huéspedes.',
       inquiries: 'consultas de huéspedes',
       settingsHeadline: 'Configuración.',
+      assistantPersonality: 'Personalidad del Asistente',
+      saving: 'Guardando...',
+      saved: '¡Guardado!',
       deleteProperty: 'Eliminar Propiedad',
       deleting: 'Eliminando...',
       signals: {

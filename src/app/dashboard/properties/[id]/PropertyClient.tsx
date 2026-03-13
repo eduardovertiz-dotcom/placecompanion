@@ -25,6 +25,9 @@ export default function PropertyClient({ property, conversations }: Props) {
   const [copiedEmbed, setCopiedEmbed] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [revenueSignals, setRevenueSignals] = useState<Record<string, number>>({})
+  const [selectedStyle, setSelectedStyle] = useState<string>(property.conversational_style || 'warm_local')
+  const [isSavingStyle, setIsSavingStyle] = useState(false)
+  const [styleSaved, setStyleSaved] = useState(false)
 
   useEffect(() => {
     async function fetchSignals() {
@@ -74,6 +77,19 @@ export default function PropertyClient({ property, conversations }: Props) {
     a.download = `${property.hotel_name}-qr-code.png`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  async function handleStyleSave(newStyle: string) {
+    setSelectedStyle(newStyle)
+    setIsSavingStyle(true)
+    const supabase = createClient()
+    await supabase
+      .from('properties')
+      .update({ conversational_style: newStyle })
+      .eq('id', property.id)
+    setIsSavingStyle(false)
+    setStyleSaved(true)
+    setTimeout(() => setStyleSaved(false), 2000)
   }
 
   async function handleDelete() {
@@ -300,7 +316,44 @@ export default function PropertyClient({ property, conversations }: Props) {
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
             {t.property.settingsHeadline}
           </h2>
-          <div className="flex gap-4 mt-6">
+
+          {/* Personality selector */}
+          <div className="mt-6 max-w-sm">
+            <label className="font-sans block mb-2" style={{ fontSize: '13px', color: '#A8A099', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              {t.property.assistantPersonality}
+            </label>
+            <div className="flex items-center gap-3">
+              <select
+                value={selectedStyle}
+                onChange={e => handleStyleSave(e.target.value)}
+                className="font-sans"
+                style={{
+                  background: '#242019',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '8px',
+                  padding: '10px 16px',
+                  fontSize: '14px',
+                  color: '#E8E3DC',
+                  cursor: 'pointer',
+                  appearance: 'auto',
+                }}
+              >
+                {(Object.keys(t.onboarding.styles) as Array<keyof typeof t.onboarding.styles>).map(key => (
+                  <option key={key} value={key}>
+                    {t.onboarding.styles[key].name}
+                  </option>
+                ))}
+              </select>
+              {isSavingStyle && (
+                <span className="font-sans" style={{ fontSize: '12px', color: '#6B6560' }}>{t.property.saving}</span>
+              )}
+              {styleSaved && (
+                <span className="font-sans" style={{ fontSize: '12px', color: '#2D9E6B' }}>{t.property.saved}</span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex gap-4 mt-8">
             <button
               onClick={handleDelete}
               disabled={isDeleting}
