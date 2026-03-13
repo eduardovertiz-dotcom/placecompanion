@@ -9,7 +9,11 @@ export default async function DashboardPage() {
 
   const { data: properties } = await supabase
     .from('properties')
-    .select('*')
+    .select(`
+      *,
+      conversations(count),
+      messages(count)
+    `)
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
 

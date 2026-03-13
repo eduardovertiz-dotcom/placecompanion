@@ -105,16 +105,16 @@ export default function DashboardClient({ user, properties }: Props) {
                   key={property.id}
                   className="transition-all cursor-pointer"
                   style={{
-                    background: '#242019',
+                    background: '#1F1E1D',
                     borderRadius: '16px',
                     padding: '32px',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(250,249,245,0.08)',
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.12)' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.06)' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.16)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.08)' }}
                 >
                   <div className="flex justify-between items-start">
-                    <p className="font-serif" style={{ fontSize: '24px', color: '#E8E3DC' }}>
+                    <p className="font-serif" style={{ fontSize: '24px', color: '#FAF9F5' }}>
                       {property.hotel_name}
                     </p>
                     {trialActive && (
@@ -134,26 +134,26 @@ export default function DashboardClient({ user, properties }: Props) {
                   </div>
 
                   {property.location && (
-                    <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#A8A099' }}>
+                    <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#9C9A93' }}>
                       {property.location}
                     </p>
                   )}
 
-                  <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#6B6560' }}>
+                  <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#9C9A93' }}>
                     Trial ends {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </p>
 
-                  <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(250,249,245,0.08)' }}>
                     {[
-                      { label: 'CONVERSATIONS', value: '0' },
-                      { label: 'QUESTIONS', value: '0' },
+                      { label: 'CONVERSATIONS', value: String(property.conversations?.[0]?.count ?? 0) },
+                      { label: 'QUESTIONS', value: String(property.messages?.[0]?.count ?? 0) },
                       { label: 'DAYS LEFT', value: String(daysLeft) },
                     ].map(({ label, value }) => (
                       <div key={label}>
-                        <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#6B6560' }}>
+                        <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#9C9A93' }}>
                           {label}
                         </p>
-                        <p className="font-serif mt-1" style={{ fontSize: '28px', color: '#E8E3DC' }}>
+                        <p className="font-serif mt-1" style={{ fontSize: '28px', color: '#FAF9F5' }}>
                           {value}
                         </p>
                       </div>
@@ -166,8 +166,8 @@ export default function DashboardClient({ user, properties }: Props) {
                       className="font-sans transition-colors"
                       style={{
                         fontSize: '14px',
-                        color: '#A8A099',
-                        border: '1px solid rgba(255,255,255,0.12)',
+                        color: '#9C9A93',
+                        border: '1px solid rgba(250,249,245,0.08)',
                         borderRadius: '8px',
                         padding: '10px 16px',
                         textDecoration: 'none',

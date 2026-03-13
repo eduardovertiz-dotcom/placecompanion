@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 interface Props {
@@ -22,6 +22,29 @@ export default function PropertyClient({ property, conversations }: Props) {
   const [copiedLink, setCopiedLink] = useState(false)
   const [copiedEmbed, setCopiedEmbed] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [revenueSignals, setRevenueSignals] = useState<Record<string, number>>({})
+
+  useEffect(() => {
+    async function fetchSignals() {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      const { data } = await supabase
+        .from('messages')
+        .select('revenue_signal')
+        .eq('property_id', property.id)
+        .eq('role', 'user')
+        .not('revenue_signal', 'is', null)
+
+      if (data) {
+        const tally: Record<string, number> = {}
+        data.forEach(m => {
+          if (m.revenue_signal) tally[m.revenue_signal] = (tally[m.revenue_signal] || 0) + 1
+        })
+        setRevenueSignals(tally)
+      }
+    }
+    fetchSignals()
+  }, [property.id])
 
   const publicUrl = `https://placecompanion.com/assistant/${property.id}`
   const embedCode = `<script src="https://placecompanion.com/widget.js" data-property="${property.id}"></script>`
@@ -40,13 +63,15 @@ export default function PropertyClient({ property, conversations }: Props) {
     setTimeout(() => setter(false), 2000)
   }
 
-  function downloadQR() {
+  async function handleDownloadQR() {
+    const response = await fetch(qrUrl)
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
-    a.href = qrUrl
-    a.target = '_blank'
-    document.body.appendChild(a)
+    a.href = url
+    a.download = `${property.hotel_name}-qr-code.png`
     a.click()
-    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   async function handleDelete() {
@@ -173,7 +198,7 @@ export default function PropertyClient({ property, conversations }: Props) {
               <img src={qrUrl} alt="QR Code" width={150} height={150} className="mt-2" />
               <button
                 style={{ ...ghostBtn, marginTop: '16px' }}
-                onClick={downloadQR}
+                onClick={handleDownloadQR}
               >
                 Download QR
               </button>
@@ -227,29 +252,60 @@ export default function PropertyClient({ property, conversations }: Props) {
           )}
         </div>
 
+        {/* Revenue Signals */}
+        <div className="mt-16">
+          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
+            Revenue signals.
+          </h2>
+          {Object.keys(revenueSignals).length === 0 ? (
+            <p className="font-sans mt-4" style={{ fontSize: '16px', color: '#6B6560' }}>
+              No revenue signals yet. Share your assistant link to start tracking guest intent.
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-4 mt-6">
+              {Object.entries(revenueSignals).map(([signal, count]) => {
+                const labels: Record<string, string> = {
+                  spa: 'SPA & WELLNESS',
+                  restaurant: 'DINING',
+                  activity: 'ACTIVITIES',
+                  transport: 'TRANSPORT',
+                  late_checkout: 'LATE CHECKOUT',
+                  room_upgrade: 'ROOM UPGRADE',
+                }
+                return (
+                  <div
+                    key={signal}
+                    className="inline-flex flex-col"
+                    style={{
+                      background: '#242019',
+                      borderRadius: '12px',
+                      padding: '24px',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      minWidth: '140px',
+                    }}
+                  >
+                    <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
+                      {labels[signal] ?? signal.toUpperCase()}
+                    </p>
+                    <p className="font-serif mt-2" style={{ fontSize: '40px', color: '#E8E3DC' }}>
+                      {count}
+                    </p>
+                    <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#6B6560' }}>
+                      guest inquiries
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+
         {/* Settings / Danger */}
         <div className="mt-16">
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
             Settings.
           </h2>
           <div className="flex gap-4 mt-6">
-            <Link
-              href={`/onboarding?edit=${property.id}`}
-              className="font-sans transition-colors"
-              style={{
-                height: '48px',
-                padding: '0 24px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                border: '1px solid rgba(255,255,255,0.12)',
-                borderRadius: '8px',
-                fontSize: '14px',
-                color: '#A8A099',
-                textDecoration: 'none',
-              }}
-            >
-              Edit Hotel Information
-            </Link>
             <button
               onClick={handleDelete}
               disabled={isDeleting}
