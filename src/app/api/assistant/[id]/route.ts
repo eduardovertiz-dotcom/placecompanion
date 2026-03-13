@@ -34,12 +34,18 @@ function detectIssue(message: string): boolean {
   return ISSUE_KEYWORDS.some(kw => lower.includes(kw))
 }
 
-const ROOM_PATTERN = /room\s*[#:]?\s*(\d+)|habitaci[oó]n\s*[#:]?\s*(\d+)|#\s*(\d+)/i
+const ROOM_PATTERN = /room\s*[#:]?\s*(\d+)|habitaci[oó]n\s*[#:]?\s*(\d+)|cuarto\s*[#:]?\s*(\d+)|#\s*(\d+)|\b(\d{1,4})\b/i
+
+function extractRoomNumberFromMessage(content: string): string | null {
+  const match = content.match(ROOM_PATTERN)
+  if (!match) return null
+  return match[1] ?? match[2] ?? match[3] ?? match[4] ?? match[5] ?? null
+}
 
 function extractRoomNumber(messages: Array<{ role: string; content: string }>): string | null {
   for (const m of messages) {
-    const match = m.content.match(ROOM_PATTERN)
-    if (match) return match[1] ?? match[2] ?? match[3] ?? null
+    const found = extractRoomNumberFromMessage(m.content)
+    if (found) return found
   }
   return null
 }
@@ -74,6 +80,35 @@ function sendIssueAlert(
     `,
   }).then(r => console.log('[alert] Resend response:', JSON.stringify(r)))
   .catch(e => console.log('[alert] Resend error:', e.message, JSON.stringify(e)))
+}
+
+function sendRoomUpdateAlert(
+  alertEmail: string,
+  hotelName: string,
+  roomNumber: string
+) {
+  if (!process.env.RESEND_API_KEY) {
+    console.error('[alert] RESEND_API_KEY is not set — cannot send room update alert')
+    return
+  }
+  console.log('[alert] sending room UPDATE alert to:', alertEmail, '| room confirmed:', roomNumber)
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const time = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: true })
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: alertEmail,
+    subject: `Guest Issue UPDATE — Room ${roomNumber} confirmed — ${hotelName}`,
+    html: `
+      <h2 style="font-family:sans-serif;color:#1a1a1a">Guest Issue UPDATE — Room Confirmed</h2>
+      <table style="font-family:sans-serif;font-size:15px;border-collapse:collapse;width:100%">
+        <tr><td style="padding:8px 0;color:#666;width:140px">Property</td><td style="padding:8px 0"><strong>${hotelName}</strong></td></tr>
+        <tr><td style="padding:8px 0;color:#666">Room Number</td><td style="padding:8px 0"><strong>${roomNumber}</strong></td></tr>
+        <tr><td style="padding:8px 0;color:#666">Time</td><td style="padding:8px 0">${time} UTC</td></tr>
+      </table>
+      <p style="font-family:sans-serif;font-size:13px;color:#999;margin-top:24px">Sent by Place Companion · placecompanion.com</p>
+    `,
+  }).then(r => console.log('[alert] room update Resend response:', JSON.stringify(r)))
+  .catch(e => console.log('[alert] room update Resend error:', e.message, JSON.stringify(e)))
 }
 
 function detectRevenueSignal(message: string): string | null {
@@ -168,13 +203,27 @@ export async function POST(
       }
       // Issue alert — fire and forget
       console.log('[alert] onFinish — alert_email:', property.alert_email, '| last msg role:', lastUserMessage?.role)
-      if (lastUserMessage?.role === 'user') {
+      if (lastUserMessage?.role === 'user' && property.alert_email) {
+        const allMessages = messages as Array<{ role: string; content: string }>
         const issueDetected = detectIssue(lastUserMessage.content)
         console.log(`[alert] keyword check — message: ${lastUserMessage.content} | detected: ${issueDetected}`)
         console.log('[alert] keywords checked:', ISSUE_KEYWORDS.join(', '))
-        if (property.alert_email && issueDetected) {
-          const roomNumber = extractRoomNumber(messages as Array<{ role: string; content: string }>)
+
+        if (issueDetected) {
+          // First alert — send immediately, include room number if already known
+          const roomNumber = extractRoomNumber(allMessages)
           sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
+        } else {
+          // Check if this follow-up message contains a room number and a prior message had an issue
+          const roomInThisMessage = extractRoomNumberFromMessage(lastUserMessage.content)
+          if (roomInThisMessage) {
+            const priorMessages = allMessages.slice(0, -1)
+            const priorIssue = priorMessages.some(m => m.role === 'user' && detectIssue(m.content))
+            console.log('[alert] room number in follow-up:', roomInThisMessage, '| prior issue:', priorIssue)
+            if (priorIssue) {
+              sendRoomUpdateAlert(property.alert_email, property.hotel_name, roomInThisMessage)
+            }
+          }
         }
       }
     }
