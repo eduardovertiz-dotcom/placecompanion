@@ -8,7 +8,8 @@ import LanguageToggle from "@/components/LanguageToggle";
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const navLinkStyle = { fontSize: '15px', color: '#A8A099' };
 
   return (
     <nav className="sticky top-0 z-50 bg-[rgba(28,25,23,0.92)] backdrop-blur-xl border-b border-[rgba(232,227,220,0.06)]">
@@ -19,22 +20,23 @@ export function SiteNav() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/features" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">{t.nav.features}</Link>
-          <Link href="/#how-it-works" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">{t.nav.howItWorks}</Link>
-          <Link href="/#pricing" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">{t.nav.pricing}</Link>
-          <Link href="/demo" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">{t.nav.demo}</Link>
-          <Link href="/about" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">{t.nav.about}</Link>
+          <Link href="/features" className="font-sans hover:text-[#E8E3DC] transition-colors" style={navLinkStyle}>{t.nav.features}</Link>
+          <Link href="/#how-it-works" className="font-sans hover:text-[#E8E3DC] transition-colors" style={navLinkStyle}>{t.nav.howItWorks}</Link>
+          <Link href="/#pricing" className="font-sans hover:text-[#E8E3DC] transition-colors" style={navLinkStyle}>{t.nav.pricing}</Link>
+          <Link href="/about" className="font-sans hover:text-[#E8E3DC] transition-colors" style={navLinkStyle}>{t.nav.about}</Link>
         </div>
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/demo" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
-            {t.nav.seeDemo}
-          </Link>
-          <Link href="/auth/login" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
-            {t.nav.signIn}
-          </Link>
           <LanguageToggle />
+          <Link href="/demo" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
+            Live Demo
+          </Link>
+          {lang === 'en' && (
+            <Link href="/auth/login" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
+              {t.nav.signIn}
+            </Link>
+          )}
           <Link href="/onboarding" className="font-sans text-sm bg-[#C96A3A] text-[#FAF9F5] h-10 px-5 rounded-md flex items-center hover:bg-[#D4784A] transition-colors">
             {t.nav.createAssistant}
           </Link>
@@ -57,7 +59,6 @@ export function SiteNav() {
             [t.nav.features, "/features"],
             [t.nav.howItWorks, "/#how-it-works"],
             [t.nav.pricing, "/#pricing"],
-            [t.nav.demo, "/demo"],
             [t.nav.about, "/about"],
           ].map(([label, href]) => (
             <Link
@@ -70,15 +71,17 @@ export function SiteNav() {
             </Link>
           ))}
           <div className="flex flex-col gap-3 mt-4">
-            <Link href="/demo" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
-              {t.nav.seeDemo}
-            </Link>
-            <Link href="/auth/login" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
-              {t.nav.signIn}
-            </Link>
             <div className="flex justify-center">
               <LanguageToggle />
             </div>
+            <Link href="/demo" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
+              Live Demo
+            </Link>
+            {lang === 'en' && (
+              <Link href="/auth/login" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
+                {t.nav.signIn}
+              </Link>
+            )}
             <Link href="/onboarding" onClick={() => setOpen(false)} className="font-sans text-sm bg-[#C96A3A] text-[#FAF9F5] h-12 px-5 rounded-md flex items-center justify-center hover:bg-[#D4784A] transition-colors">
               {t.nav.createAssistant}
             </Link>
