@@ -79,7 +79,7 @@ Hotel text:
 ${sourceText}`,
         },
       ],
-      maxTokens: 1024,
+      maxOutputTokens: 1024,
     });
 
     // Strip markdown code fences if present
