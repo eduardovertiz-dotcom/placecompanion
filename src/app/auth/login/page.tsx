@@ -3,8 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { useLang } from '@/lib/i18n/LanguageContext'
 
 export default function LoginPage() {
+  const { t } = useLang()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -26,18 +28,18 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen" style={{ background: '#1C1917' }}>
       {/* Top bar */}
-      <header className="px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <header className="px-4 md:px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
           Place Companion
         </Link>
       </header>
 
-      <div className="max-w-md mx-auto px-6 py-24">
-        <h1 className="font-serif font-normal text-center" style={{ fontSize: '56px', lineHeight: 1.05, color: '#E8E3DC' }}>
-          Welcome back.
+      <div className="max-w-md mx-auto px-4 md:px-6 py-16 md:py-24">
+        <h1 className="heading-section font-serif font-normal text-center" style={{ color: '#E8E3DC' }}>
+          {t.auth.loginHeadline}
         </h1>
         <p className="font-sans text-center mt-3" style={{ fontSize: '18px', color: '#A8A099' }}>
-          Sign in to your Place Companion account.
+          {t.auth.loginSubhead}
         </p>
 
         <div className="mt-10 space-y-4">
@@ -46,7 +48,7 @@ export default function LoginPage() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
-            placeholder="your@email.com"
+            placeholder={t.auth.email}
             className="w-full font-sans focus:outline-none transition-colors"
             style={{
               height: '56px',
@@ -65,7 +67,7 @@ export default function LoginPage() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
-            placeholder="Password"
+            placeholder={t.auth.password}
             className="w-full font-sans focus:outline-none transition-colors"
             style={{
               height: '56px',
@@ -99,14 +101,14 @@ export default function LoginPage() {
               opacity: isLoading ? 0.7 : 1,
             }}
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? t.auth.signingIn : t.auth.signIn}
           </button>
         </div>
 
         <p className="font-sans text-center mt-6" style={{ fontSize: '14px', color: '#A8A099' }}>
-          Don&apos;t have an account?{' '}
+          {t.auth.noAccount}{' '}
           <Link href="/auth/signup" style={{ color: '#2D9E6B' }}>
-            Create one →
+            {t.auth.createOne}
           </Link>
         </p>
       </div>

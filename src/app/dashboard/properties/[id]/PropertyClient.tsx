@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { useLang } from '@/lib/i18n/LanguageContext'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +20,7 @@ function formatDate(iso: string) {
 }
 
 export default function PropertyClient({ property, conversations }: Props) {
+  const { t } = useLang()
   const [copiedLink, setCopiedLink] = useState(false)
   const [copiedEmbed, setCopiedEmbed] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -96,23 +98,23 @@ export default function PropertyClient({ property, conversations }: Props) {
   return (
     <div className="min-h-screen" style={{ background: '#1C1917' }}>
       {/* Nav */}
-      <header className="px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <header className="px-4 md:px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
           Place Companion
         </Link>
       </header>
 
-      <div className="max-w-6xl mx-auto px-8 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
         <Link
           href="/dashboard"
           className="font-sans transition-colors"
           style={{ fontSize: '14px', color: '#A8A099', textDecoration: 'none' }}
         >
-          ← Dashboard
+          {t.property.backDashboard}
         </Link>
 
         <div className="mt-8">
-          <h1 className="font-serif font-normal" style={{ fontSize: '64px', color: '#E8E3DC', lineHeight: 1.05 }}>
+          <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
             {property.hotel_name}
           </h1>
           {property.location && (
@@ -123,12 +125,12 @@ export default function PropertyClient({ property, conversations }: Props) {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-4 mt-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
           {[
-            { label: 'TOTAL CONVERSATIONS', value: String(totalConversations) },
-            { label: 'TOTAL QUESTIONS', value: String(totalMessages) },
-            { label: 'DAYS REMAINING', value: String(daysLeft) },
-            { label: 'LANGUAGES DETECTED', value: String(uniqueLangs || 0) },
+            { label: t.property.totalConversations, value: String(totalConversations) },
+            { label: t.property.totalQuestions, value: String(totalMessages) },
+            { label: t.property.daysRemaining, value: String(daysLeft) },
+            { label: t.property.languages, value: String(uniqueLangs || 0) },
           ].map(({ label, value }) => (
             <div
               key={label}
@@ -152,13 +154,13 @@ export default function PropertyClient({ property, conversations }: Props) {
         {/* Deploy */}
         <div className="mt-12">
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
-            Deploy your assistant.
+            {t.property.deployHeadline}
           </h2>
-          <div className="grid grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             {/* Public URL */}
             <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
-                PUBLIC URL
+                {t.property.publicUrl}
               </p>
               <p className="font-sans mt-2 break-all" style={{ fontSize: '14px', color: '#A8A099' }}>
                 {publicUrl}
@@ -167,14 +169,14 @@ export default function PropertyClient({ property, conversations }: Props) {
                 style={{ ...ghostBtn, marginTop: '16px' }}
                 onClick={() => copyToClipboard(publicUrl, setCopiedLink)}
               >
-                {copiedLink ? 'Copied!' : 'Copy Link'}
+                {copiedLink ? t.property.copied : t.property.copyLink}
               </button>
             </div>
 
             {/* Embed Widget */}
             <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
-                EMBED WIDGET
+                {t.property.embedWidget}
               </p>
               <div style={{ background: '#0F0D0B', borderRadius: '8px', padding: '16px', marginTop: '8px' }}>
                 <code className="font-mono break-all" style={{ fontSize: '12px', color: '#A8A099' }}>
@@ -185,14 +187,14 @@ export default function PropertyClient({ property, conversations }: Props) {
                 style={{ ...ghostBtn, marginTop: '16px' }}
                 onClick={() => copyToClipboard(embedCode, setCopiedEmbed)}
               >
-                {copiedEmbed ? 'Copied!' : 'Copy Code'}
+                {copiedEmbed ? t.property.copied : t.property.copyCode}
               </button>
             </div>
 
             {/* QR Code */}
             <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
-                QR CODE
+                {t.property.qrCode}
               </p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={qrUrl} alt="QR Code" width={150} height={150} className="mt-2" />
@@ -200,7 +202,7 @@ export default function PropertyClient({ property, conversations }: Props) {
                 style={{ ...ghostBtn, marginTop: '16px' }}
                 onClick={handleDownloadQR}
               >
-                Download QR
+                {t.property.downloadQr}
               </button>
             </div>
           </div>
@@ -209,18 +211,18 @@ export default function PropertyClient({ property, conversations }: Props) {
         {/* Conversations */}
         <div className="mt-12">
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
-            Recent conversations.
+            {t.property.conversationsHeadline}
           </h2>
           {conversations.length === 0 ? (
             <p className="font-sans mt-4" style={{ fontSize: '16px', color: '#6B6560' }}>
-              No conversations yet. Share your assistant link to get started.
+              {t.property.noConversations}
             </p>
           ) : (
             <div className="mt-4 space-y-3">
               {conversations.map((conv) => (
                 <div
                   key={conv.id}
-                  className="flex items-center justify-between"
+                  className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
                   style={{
                     background: '#242019',
                     borderRadius: '12px',
@@ -244,7 +246,7 @@ export default function PropertyClient({ property, conversations }: Props) {
                     {conv.language_detected || 'en'}
                   </span>
                   <span className="font-sans" style={{ fontSize: '14px', color: '#6B6560' }}>
-                    {conv.message_count || 0} messages
+                    {conv.message_count || 0} {t.property.messages}
                   </span>
                 </div>
               ))}
@@ -255,23 +257,16 @@ export default function PropertyClient({ property, conversations }: Props) {
         {/* Revenue Signals */}
         <div className="mt-16">
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
-            Revenue signals.
+            {t.property.revenueHeadline}
           </h2>
           {Object.keys(revenueSignals).length === 0 ? (
             <p className="font-sans mt-4" style={{ fontSize: '16px', color: '#6B6560' }}>
-              No revenue signals yet. Share your assistant link to start tracking guest intent.
+              {t.property.noRevenue}
             </p>
           ) : (
             <div className="flex flex-wrap gap-4 mt-6">
               {Object.entries(revenueSignals).map(([signal, count]) => {
-                const labels: Record<string, string> = {
-                  spa: 'SPA & WELLNESS',
-                  restaurant: 'DINING',
-                  activity: 'ACTIVITIES',
-                  transport: 'TRANSPORT',
-                  late_checkout: 'LATE CHECKOUT',
-                  room_upgrade: 'ROOM UPGRADE',
-                }
+                const labels: Record<string, string> = t.property.signals
                 return (
                   <div
                     key={signal}
@@ -291,7 +286,7 @@ export default function PropertyClient({ property, conversations }: Props) {
                       {count}
                     </p>
                     <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#6B6560' }}>
-                      guest inquiries
+                      {t.property.inquiries}
                     </p>
                   </div>
                 )
@@ -303,7 +298,7 @@ export default function PropertyClient({ property, conversations }: Props) {
         {/* Settings / Danger */}
         <div className="mt-16">
           <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
-            Settings.
+            {t.property.settingsHeadline}
           </h2>
           <div className="flex gap-4 mt-6">
             <button
@@ -322,7 +317,7 @@ export default function PropertyClient({ property, conversations }: Props) {
                 opacity: isDeleting ? 0.6 : 1,
               }}
             >
-              {isDeleting ? 'Deleting...' : 'Delete Property'}
+              {isDeleting ? t.property.deleting : t.property.deleteProperty}
             </button>
           </div>
         </div>

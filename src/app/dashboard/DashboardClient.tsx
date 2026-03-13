@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { useLang } from '@/lib/i18n/LanguageContext'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function DashboardClient({ user, properties }: Props) {
+  const { t } = useLang()
+
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -20,12 +23,12 @@ export default function DashboardClient({ user, properties }: Props) {
   return (
     <div className="min-h-screen" style={{ background: '#1C1917' }}>
       {/* Nav */}
-      <header className="px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <header className="px-4 md:px-8 py-5 flex flex-wrap justify-between items-center gap-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
           Place Companion
         </Link>
         <div className="flex items-center gap-4">
-          <span className="font-sans" style={{ fontSize: '14px', color: '#A8A099' }}>
+          <span className="font-sans hidden sm:inline" style={{ fontSize: '14px', color: '#A8A099' }}>
             {user.email}
           </span>
           <button
@@ -41,16 +44,16 @@ export default function DashboardClient({ user, properties }: Props) {
               cursor: 'pointer',
             }}
           >
-            Sign Out
+            {t.dashboard.signOut}
           </button>
         </div>
       </header>
 
       {/* Main */}
-      <div className="max-w-6xl mx-auto px-8 py-16">
-        <div className="flex justify-between items-start">
-          <h1 className="font-serif font-normal" style={{ fontSize: '56px', color: '#E8E3DC' }}>
-            Your properties.
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
+        <div className="flex flex-wrap justify-between items-start gap-4">
+          <h1 className="heading-section font-serif font-normal" style={{ color: '#E8E3DC' }}>
+            {t.dashboard.yourProperties}
           </h1>
           <Link
             href="/onboarding"
@@ -65,17 +68,17 @@ export default function DashboardClient({ user, properties }: Props) {
               textDecoration: 'none',
             }}
           >
-            Add Property
+            {t.dashboard.addProperty}
           </Link>
         </div>
 
         {properties.length === 0 ? (
           <div className="text-center py-24">
             <p className="font-serif" style={{ fontSize: '32px', color: '#A8A099' }}>
-              No properties yet.
+              {t.dashboard.noProperties}
             </p>
             <p className="font-sans mt-4" style={{ fontSize: '18px', color: '#6B6560' }}>
-              Configure your first hotel assistant to get started.
+              {t.dashboard.noPropertiesSubhead}
             </p>
             <Link
               href="/onboarding"
@@ -90,7 +93,7 @@ export default function DashboardClient({ user, properties }: Props) {
                 textDecoration: 'none',
               }}
             >
-              Configure Your First Hotel
+              {t.dashboard.configureFirst}
             </Link>
           </div>
         ) : (
@@ -128,7 +131,7 @@ export default function DashboardClient({ user, properties }: Props) {
                           borderRadius: '999px',
                         }}
                       >
-                        TRIAL
+                        {t.dashboard.trial}
                       </span>
                     )}
                   </div>
@@ -140,14 +143,14 @@ export default function DashboardClient({ user, properties }: Props) {
                   )}
 
                   <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#9C9A93' }}>
-                    Trial ends {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {t.dashboard.trialEnds} {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </p>
 
                   <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(250,249,245,0.08)' }}>
                     {[
-                      { label: 'CONVERSATIONS', value: String(property.conversations?.[0]?.count ?? 0) },
-                      { label: 'QUESTIONS', value: String(property.messages?.[0]?.count ?? 0) },
-                      { label: 'DAYS LEFT', value: String(daysLeft) },
+                      { label: t.dashboard.conversations, value: String(property.conversations?.[0]?.count ?? 0) },
+                      { label: t.dashboard.questions, value: String(property.messages?.[0]?.count ?? 0) },
+                      { label: t.dashboard.daysLeft, value: String(daysLeft) },
                     ].map(({ label, value }) => (
                       <div key={label}>
                         <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#9C9A93' }}>
@@ -173,7 +176,7 @@ export default function DashboardClient({ user, properties }: Props) {
                         textDecoration: 'none',
                       }}
                     >
-                      View Assistant →
+                      {t.dashboard.viewAssistant}
                     </Link>
                     <Link
                       href={`/dashboard/properties/${property.id}`}
@@ -187,7 +190,7 @@ export default function DashboardClient({ user, properties }: Props) {
                         textDecoration: 'none',
                       }}
                     >
-                      Manage
+                      {t.dashboard.manage}
                     </Link>
                   </div>
                 </div>
