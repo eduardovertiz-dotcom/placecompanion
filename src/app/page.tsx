@@ -113,14 +113,14 @@ export default function HomePage() {
 
             {/* Right — conversation */}
             <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-              <p className="font-sans mb-4" style={{ fontSize: "13px", color: "#4A4540" }}>{t.revenue.timestamp}</p>
+              <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>{t.revenue.timestamp}</p>
               <div className="flex flex-col gap-3">
                 {t.revenue.conversation.map((msg, i) => (
                   <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
                     <div
                       className="font-sans rounded-2xl"
                       style={{
-                        background: msg.role === 'guest' ? "#0F0D0B" : "#2C2720",
+                        background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835",
                         color: "#E8E3DC",
                         padding: "12px 16px",
                         fontSize: "16px",
