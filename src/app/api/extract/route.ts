@@ -1,5 +1,7 @@
 import { generateText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const pdfParse = require("pdf-parse") as (buffer: Buffer) => Promise<{ text: string }>;
 
 function stripHtml(html: string): string {
   return html
@@ -32,36 +34,65 @@ export async function POST(req: Request) {
     });
 
     const body = await req.json();
-    console.log("[extract] request:", { hasText: !!body.text, textLen: body.text?.length, hasUrl: !!body.url, url: body.url });
-    const { text, url } = body as { text?: string; url?: string };
+    const { text, url, files } = body as {
+      text?: string;
+      url?: string;
+      files?: Array<{ name: string; base64: string }>;
+    };
+    console.log("[extract] request:", { hasUrl: !!url, hasText: !!text, fileCount: files?.length ?? 0 });
 
-    if (!text && !url) {
-      console.log("[extract] error: missing text and url");
-      return Response.json({ error: "Provide either text or url" }, { status: 400 });
+    if (!text && !url && (!files || files.length === 0)) {
+      return Response.json({ error: "Provide a website URL, documents, or text description" }, { status: 400 });
     }
 
-    let sourceText: string;
+    let combinedText = "";
+
+    // Source 1: URL
     if (url) {
       try {
-        sourceText = await fetchUrlText(url);
+        const scraped = await fetchUrlText(url);
+        combinedText += `\n\n[WEBSITE CONTENT]\n${scraped}`;
+        console.log("[extract] scraped URL, length:", scraped.length);
       } catch {
-        return Response.json(
-          { error: "Could not fetch that URL. Try pasting your hotel text instead." },
-          { status: 422 },
-        );
+        console.warn("[extract] URL fetch failed, continuing with other sources");
+        if (!text && (!files || files.length === 0)) {
+          return Response.json(
+            { error: "Could not fetch that URL. Try uploading a document or pasting your hotel text instead." },
+            { status: 422 },
+          );
+        }
       }
-    } else {
-      sourceText = (text as string).slice(0, 12000);
     }
 
-    if (sourceText.trim().length < 30) {
+    // Source 2: PDF files
+    if (files && files.length > 0) {
+      for (const file of files) {
+        try {
+          const buffer = Buffer.from(file.base64, "base64");
+          const parsed = await pdfParse(buffer);
+          combinedText += `\n\n[DOCUMENT: ${file.name}]\n${parsed.text.slice(0, 8000)}`;
+          console.log("[extract] parsed PDF:", file.name, "length:", parsed.text.length);
+        } catch (e) {
+          console.warn("[extract] failed to parse PDF:", file.name, e);
+        }
+      }
+    }
+
+    // Source 3: Additional text
+    if (text) {
+      combinedText += `\n\n[ADDITIONAL INFO]\n${text.slice(0, 6000)}`;
+    }
+
+    const sourceText = combinedText.trim().slice(0, 20000);
+
+    if (sourceText.length < 30) {
       return Response.json(
-        { error: "Not enough content found. Try pasting your hotel text instead." },
+        { error: "Not enough content found. Try adding more detail or uploading a document." },
         { status: 422 },
       );
     }
 
-    console.log("[extract] calling AI, sourceText length:", sourceText.length);
+    console.log("[extract] calling AI, combined length:", sourceText.length);
     const { text: raw } = await generateText({
       model: anthropic("claude-haiku-4-5-20251001"),
       system: `You are a hotel information extractor. Given raw hotel text or website content, extract structured information and return ONLY valid JSON with no markdown, no explanation, no code fences.`,

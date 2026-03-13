@@ -42,9 +42,9 @@ function buildSystemPromptFromExtracted(extracted: any): string {
 export default function OnboardingPage() {
   const { t } = useLang()
   const [step, setStep] = useState<1|2|3|4>(1)
-  const [inputMode, setInputMode] = useState<'text'|'url'>('text')
   const [hotelText, setHotelText] = useState('')
   const [hotelUrl, setHotelUrl] = useState('')
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [isExtracting, setIsExtracting] = useState(false)
   const [extracted, setExtracted] = useState<Extracted>(null)
   const [extractError, setExtractError] = useState('')
@@ -86,20 +86,25 @@ export default function OnboardingPage() {
   }
 
   async function handleExtract() {
-    console.log('[onboarding] handleExtract called, inputMode:', inputMode, 'textLen:', hotelText.trim().length)
+    console.log('[onboarding] handleExtract called, url:', !!hotelUrl, 'files:', uploadedFiles.length, 'textLen:', hotelText.trim().length)
     setIsExtracting(true)
     setExtractError('')
     setStep(2)
 
     try {
+      // Read PDF files as base64
+      const fileData = await Promise.all(
+        uploadedFiles.map(file => new Promise<{ name: string; base64: string }>((resolve) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve({ name: file.name, base64: (reader.result as string).split(',')[1] })
+          reader.readAsDataURL(file)
+        }))
+      )
+
       const res = await fetch('/api/extract', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          inputMode === 'text'
-            ? { text: hotelText }
-            : { url: hotelUrl }
-        )
+        body: JSON.stringify({ url: hotelUrl || undefined, text: hotelText || undefined, files: fileData.length > 0 ? fileData : undefined })
       })
       console.log('[onboarding] extract status:', res.status)
       const data = await res.json()
@@ -218,8 +223,7 @@ export default function OnboardingPage() {
   const itemLabels: Record<string, string> = t.onboarding.items
 
   const isStep1Disabled =
-    (inputMode === 'text' && hotelText.trim().length < 50) ||
-    (inputMode === 'url' && !hotelUrl.includes('http'))
+    hotelUrl.trim() === '' && uploadedFiles.length === 0 && hotelText.trim() === ''
 
   return (
     <div className="onboarding-page min-h-screen" style={{ backgroundColor: '#1C1917' }}>
@@ -251,89 +255,162 @@ export default function OnboardingPage() {
           <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
             {t.onboarding.step1Headline}
           </h1>
-          <p
-            className="font-sans font-light mt-4"
-            style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.7 }}
-          >
+          <p className="font-sans font-light mt-4" style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.7 }}>
             {t.onboarding.step1Subhead}
           </p>
 
-          {/* Tab switcher */}
-          <div className="mt-8 inline-flex p-1 rounded-lg" style={{ background: '#242019' }}>
-            <button
-              onClick={() => setInputMode('text')}
-              className="font-sans transition-all"
-              style={{
-                fontSize: '14px',
-                fontWeight: inputMode === 'text' ? 500 : 400,
-                padding: '8px 20px',
-                borderRadius: '6px',
-                background: inputMode === 'text' ? '#2C2720' : 'transparent',
-                color: inputMode === 'text' ? '#E8E3DC' : '#6B6560',
-                boxShadow: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              {t.onboarding.pasteText}
-            </button>
-            <button
-              onClick={() => setInputMode('url')}
-              className="font-sans transition-all"
-              style={{
-                fontSize: '14px',
-                fontWeight: inputMode === 'url' ? 500 : 400,
-                padding: '8px 20px',
-                borderRadius: '6px',
-                background: inputMode === 'url' ? '#2C2720' : 'transparent',
-                color: inputMode === 'url' ? '#E8E3DC' : '#6B6560',
-                boxShadow: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              {t.onboarding.enterUrl}
-            </button>
+          <div className="mt-10 flex flex-col gap-6">
+            {/* Block 1 — Website */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="#E8E3DC" strokeWidth="1.25" />
+                  <ellipse cx="12" cy="12" rx="3.5" ry="9" stroke="#E8E3DC" strokeWidth="1.25" />
+                  <line x1="3" y1="12" x2="21" y2="12" stroke="#E8E3DC" strokeWidth="1.25" />
+                </svg>
+                <label className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+                  {t.onboarding.websiteLabel}
+                </label>
+              </div>
+              <input
+                type="url"
+                value={hotelUrl}
+                onChange={e => setHotelUrl(e.target.value)}
+                placeholder="https://yourhotel.com"
+                className="w-full font-sans focus:outline-none transition-colors placeholder-[#6B6560]"
+                style={{
+                  background: '#242019',
+                  border: '1px solid rgba(232,227,220,0.08)',
+                  borderRadius: '12px',
+                  padding: '12px 16px',
+                  fontSize: '15px',
+                  color: '#E8E3DC',
+                }}
+                onFocus={e => { e.target.style.borderColor = 'rgba(232,227,220,0.25)' }}
+                onBlur={e => { e.target.style.borderColor = 'rgba(232,227,220,0.08)' }}
+              />
+              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#6B6560' }}>
+                {t.onboarding.websiteHelper}
+              </p>
+            </div>
+
+            {/* Block 2 — Documents */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="#E8E3DC" strokeWidth="1.25" strokeLinejoin="round" />
+                  <path d="M14 3v5h5" stroke="#E8E3DC" strokeWidth="1.25" strokeLinejoin="round" />
+                  <line x1="9" y1="13" x2="15" y2="13" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round" />
+                  <line x1="9" y1="17" x2="13" y2="17" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round" />
+                </svg>
+                <label className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+                  {t.onboarding.documentsLabel}
+                </label>
+              </div>
+              <div
+                onClick={() => document.getElementById('pdf-upload')?.click()}
+                onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(232,227,220,0.25)' }}
+                onDragLeave={e => { e.currentTarget.style.borderColor = 'rgba(232,227,220,0.15)' }}
+                onDrop={e => {
+                  e.preventDefault()
+                  e.currentTarget.style.borderColor = 'rgba(232,227,220,0.15)'
+                  const dropped = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf')
+                  setUploadedFiles(prev => [...prev, ...dropped])
+                }}
+                style={{
+                  background: '#242019',
+                  border: '1px dashed rgba(232,227,220,0.15)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s',
+                }}
+              >
+                <p className="font-sans" style={{ fontSize: '14px', color: '#6B6560' }}>
+                  Drag PDFs here, or <span style={{ color: '#A8A099' }}>click to browse</span>
+                </p>
+              </div>
+              <input
+                id="pdf-upload"
+                type="file"
+                accept=".pdf"
+                multiple
+                className="hidden"
+                onChange={e => {
+                  const newFiles = Array.from(e.target.files || [])
+                  setUploadedFiles(prev => [...prev, ...newFiles])
+                  e.target.value = ''
+                }}
+              />
+              {uploadedFiles.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {uploadedFiles.map((file, i) => (
+                    <span
+                      key={i}
+                      className="font-sans flex items-center gap-1.5 rounded-full px-3 py-1"
+                      style={{ background: '#2C2720', border: '1px solid rgba(232,227,220,0.06)', color: '#A8A099', fontSize: '13px' }}
+                    >
+                      {file.name}
+                      <button
+                        type="button"
+                        onClick={() => setUploadedFiles(prev => prev.filter((_, idx) => idx !== i))}
+                        style={{ color: '#6B6560', lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 0 2px', fontSize: '16px' }}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#6B6560' }}>
+                {t.onboarding.documentsHelper}
+              </p>
+            </div>
+
+            {/* Block 3 — Additional info */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#E8E3DC" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <label className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+                  {t.onboarding.additionalLabel}
+                </label>
+              </div>
+              <textarea
+                value={hotelText}
+                onChange={e => setHotelText(e.target.value)}
+                placeholder={t.onboarding.additionalPlaceholder}
+                rows={6}
+                className="w-full font-sans resize-none focus:outline-none transition-colors placeholder-[#6B6560]"
+                style={{
+                  background: '#242019',
+                  border: '1px solid rgba(232,227,220,0.08)',
+                  borderRadius: '12px',
+                  padding: '12px 16px',
+                  fontSize: '15px',
+                  color: '#E8E3DC',
+                  lineHeight: 1.6,
+                }}
+                onFocus={e => { e.target.style.borderColor = 'rgba(232,227,220,0.25)' }}
+                onBlur={e => { e.target.style.borderColor = 'rgba(232,227,220,0.08)' }}
+              />
+            </div>
           </div>
 
-          {inputMode === 'text' ? (
-            <textarea
-              value={hotelText}
-              onChange={e => setHotelText(e.target.value)}
-              placeholder={t.onboarding.textPlaceholder}
-              className="w-full mt-4 font-sans resize-none focus:outline-none transition-colors placeholder-[#6B6560]"
-              style={{
-                minHeight: '240px',
-                background: '#242019',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '12px',
-                padding: '20px',
-                fontSize: '16px',
-                color: '#E8E3DC',
-              }}
-              onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
-              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)' }}
-            />
-          ) : (
-            <input
-              type="url"
-              value={hotelUrl}
-              onChange={e => setHotelUrl(e.target.value)}
-              placeholder={t.onboarding.urlPlaceholder}
-              className="w-full mt-4 font-sans focus:outline-none transition-colors placeholder-[#6B6560]"
-              style={{
-                height: '56px',
-                background: '#242019',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '12px',
-                padding: '0 20px',
-                fontSize: '16px',
-                color: '#E8E3DC',
-              }}
-              onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
-              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)' }}
-            />
-          )}
+          {/* Pro tip */}
+          <div className="flex gap-3 mt-6 items-start">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0 mt-0.5">
+              <circle cx="12" cy="12" r="9" stroke="#2D9E6B" strokeWidth="1.25" />
+              <line x1="12" y1="8" x2="12" y2="12" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" />
+              <circle cx="12" cy="16" r="0.75" fill="#2D9E6B" />
+            </svg>
+            <p className="font-sans font-light" style={{ fontSize: '14px', color: '#6B6560', lineHeight: 1.65 }}>
+              {t.onboarding.proTip}
+            </p>
+          </div>
 
           {/* Style selector */}
           <div className="mt-8">
@@ -387,7 +464,7 @@ export default function OnboardingPage() {
               cursor: isStep1Disabled ? 'not-allowed' : 'pointer',
             }}
           >
-            {t.onboarding.analyzeBtn}
+            {t.onboarding.analyzeButton}
           </button>
 
           <p className="font-sans text-center mt-3" style={{ fontSize: '13px', color: '#6B6560' }}>
