@@ -59,7 +59,7 @@ function sendIssueAlert(
   const room = roomNumber ?? 'Not provided — assistant is asking'
   const time = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: true })
   resend.emails.send({
-    from: 'alerts@placecompanion.com',
+    from: 'onboarding@resend.dev',
     to: alertEmail,
     subject: `Guest Issue — ${hotelName} — Room ${room}`,
     html: `
@@ -72,11 +72,8 @@ function sendIssueAlert(
       </table>
       <p style="font-family:sans-serif;font-size:13px;color:#999;margin-top:24px">Sent by Place Companion · placecompanion.com</p>
     `,
-  }).then(r => {
-    console.log('[alert] Resend response:', JSON.stringify(r))
-  }).catch(err => {
-    console.error('[alert] Resend error:', err)
-  })
+  }).then(r => console.log('[alert] Resend response:', JSON.stringify(r)))
+  .catch(e => console.log('[alert] Resend error:', e.message, JSON.stringify(e)))
 }
 
 function detectRevenueSignal(message: string): string | null {
