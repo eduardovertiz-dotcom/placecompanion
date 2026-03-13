@@ -137,17 +137,18 @@ export default function AssistantClient({ property }: Props) {
           </div>
 
           {messages.map((m, i) => (
-            <div key={i} className={m.role === 'user' ? 'flex justify-end' : ''}>
+            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className="font-sans"
+                className="font-sans rounded-2xl"
                 style={{
-                  background: m.role === 'user' ? '#2D9E6B' : '#242019',
-                  color: m.role === 'user' ? 'white' : '#E8E3DC',
-                  borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                  background: m.role === 'user' ? '#0F0D0B' : '#242019',
+                  color: '#E8E3DC',
                   padding: '12px 16px',
-                  maxWidth: '85%',
+                  maxWidth: '80%',
                   fontSize: '15px',
                   lineHeight: 1.6,
+                  marginLeft: m.role === 'user' ? 'auto' : undefined,
+                  marginRight: m.role === 'assistant' ? 'auto' : undefined,
                 }}
               >
                 {m.content}
@@ -156,16 +157,17 @@ export default function AssistantClient({ property }: Props) {
           ))}
 
           {streamingText && (
-            <div style={{ maxWidth: '85%' }}>
+            <div className="flex justify-start">
               <div
-                className="font-sans"
+                className="font-sans rounded-2xl"
                 style={{
                   background: '#242019',
-                  borderRadius: '16px 16px 16px 4px',
                   padding: '12px 16px',
+                  maxWidth: '80%',
                   fontSize: '15px',
                   color: '#E8E3DC',
                   lineHeight: 1.6,
+                  marginRight: 'auto',
                 }}
               >
                 {streamingText}
@@ -197,7 +199,7 @@ export default function AssistantClient({ property }: Props) {
               color: '#E8E3DC',
               border: '1px solid transparent',
             }}
-            onFocus={e => { e.target.style.borderColor = '#2D9E6B' }}
+            onFocus={e => { e.target.style.borderColor = 'rgba(250,249,245,0.2)' }}
             onBlur={e => { e.target.style.borderColor = 'transparent' }}
           />
           <button
@@ -206,9 +208,9 @@ export default function AssistantClient({ property }: Props) {
             style={{
               width: '40px',
               height: '40px',
-              borderRadius: '50%',
-              background: '#2D9E6B',
-              opacity: isStreaming || !inputValue.trim() ? 0.4 : 1,
+              borderRadius: '12px',
+              background: isStreaming || !inputValue.trim() ? 'rgba(201,106,58,0.35)' : '#C96A3A',
+              opacity: 1,
               border: 'none',
               cursor: isStreaming || !inputValue.trim() ? 'not-allowed' : 'pointer',
               display: 'flex',

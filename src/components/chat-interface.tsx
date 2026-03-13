@@ -173,10 +173,10 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     padding: "12px 16px",
                     fontSize: "15px",
                     lineHeight: 1.6,
-                    color: "#FAF9F5",
-                    background: "#1F1E1D",
-                    border: "1px solid rgba(250,249,245,0.06)",
-                    borderRadius: "12px 12px 3px 12px",
+                    color: "#E8E3DC",
+                    background: "#242019",
+                    borderRadius: "16px",
+                    marginRight: "auto",
                   }}
                 >
                   <p>You&apos;ve experienced Place Companion. Ready to create your own?</p>
@@ -195,12 +195,11 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     padding: "12px 16px",
                     fontSize: "15px",
                     lineHeight: 1.6,
-                    color: "#FAF9F5",
-                    background: "#1F1E1D",
-                    border: "1px solid rgba(250,249,245,0.06)",
-                    ...(m.role === "user"
-                      ? { borderRadius: "12px 12px 12px 3px" }
-                      : { borderRadius: "12px 12px 3px 12px" }),
+                    color: "#E8E3DC",
+                    background: m.role === "user" ? "#0F0D0B" : "#242019",
+                    borderRadius: "16px",
+                    marginLeft: m.role === "user" ? "auto" : undefined,
+                    marginRight: m.role === "assistant" ? "auto" : undefined,
                   }}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(m.text) }}
                 />
@@ -214,9 +213,8 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             <div
               style={{
                 padding: "12px 16px",
-                background: "#1F1E1D",
-                border: "1px solid rgba(250,249,245,0.06)",
-                borderRadius: "12px 12px 3px 12px",
+                background: "#242019",
+                borderRadius: "16px",
               }}
             >
               <Loader2 className="w-4 h-4 animate-spin" style={{ color: "#9C9A93" }} />
