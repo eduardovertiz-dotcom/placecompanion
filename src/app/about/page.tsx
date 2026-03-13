@@ -16,10 +16,10 @@ export default function AboutPage() {
       <section className="min-h-screen flex items-center justify-center text-center px-4 md:px-8" style={{ background: "#141413" }}>
         <div>
           <h1 className="heading-page font-serif font-light text-[#FAF9F5] max-w-4xl mx-auto">
-            Hotels are the most human business in the world.
+            {t.about.heroHeadline}
           </h1>
           <p className="font-sans text-[#9C9A93] mt-16" style={{ fontSize: "clamp(1.1rem, 3vw, 1.375rem)" }}>
-            We built the most human AI for them.
+            {t.about.heroSubhead}
           </p>
         </div>
       </section>
@@ -34,15 +34,15 @@ export default function AboutPage() {
               <rect x="23" y="28" width="10" height="8" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
             </svg>
             <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-              Why hotels.
+              {t.about.whyHotelsHeadline}
             </h2>
           </div>
           <div className="space-y-6 mt-8">
             <p className="font-sans text-[#9C9A93]" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-              A hotel is not a product. It&apos;s a promise — that someone will be cared for, that the experience will feel seamless, that every question will have a thoughtful answer. But the tools hotels use were built for operations, not conversation. PMS systems manage rooms. Booking engines capture reservations. Nothing was ever designed to simply talk to guests.
+              {t.about.whyHotelsPara1}
             </p>
             <p className="font-sans text-[#9C9A93]" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-              That gap — between the guest&apos;s question and the answer they need — costs hotels more than they realize. In revenue missed. In trust eroded. In staff energy spent on questions that deserved a better system.
+              {t.about.whyHotelsPara2}
             </p>
           </div>
         </div>
@@ -56,13 +56,13 @@ export default function AboutPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5] max-w-3xl mx-auto">
-            Generic AI knows everything about everywhere.
+            {t.about.genericAiHeadline}
           </h2>
           <p className="font-serif italic text-[#9C9A93] mt-4" style={{ fontSize: "clamp(1.2rem, 3vw, 1.75rem)" }}>
-            Which means it knows nothing about your hotel.
+            {t.about.genericAiSubhead}
           </p>
           <p className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-8" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-            Ask any general-purpose AI about your spa hours. It will guess, hallucinate, or tell the guest to check your website. The guest was already on your website. They needed a conversation, not a redirect.
+            {t.about.genericAiDesc}
           </p>
         </div>
       </section>
@@ -76,10 +76,10 @@ export default function AboutPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            Your guests don&apos;t just ask about your hotel.
+            {t.about.destinationHeadline}
           </h2>
           <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-            They ask where to watch the sunset. Which beach has no seaweed this week. Where the locals actually eat. Whether the pharmacy is open on Sunday. These questions don&apos;t live in any PMS. They live in local knowledge — and until now, that knowledge lived only in your best staff member&apos;s head.
+            {t.about.destinationDesc}
           </p>
         </div>
       </section>
@@ -97,16 +97,11 @@ export default function AboutPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            What Place Companion is not.
+            {t.about.whatWeAreNotHeadline}
           </h2>
 
           <div className="space-y-8 mt-12 max-w-2xl mx-auto text-left">
-            {[
-              "Not a PMS. Your PMS manages your operations.",
-              "Not a chatbot. Chatbots follow scripts. We understand context.",
-              "Not a WhatsApp tool. We don't push — we answer.",
-              "Not an integration. There's nothing to connect.",
-            ].map((s) => (
+            {t.about.whatWeAreNotItems.map((s) => (
               <p key={s} className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", lineHeight: 1.3 }}>
                 {s}
               </p>
@@ -114,7 +109,7 @@ export default function AboutPage() {
           </div>
 
           <p className="font-sans text-[#9C9A93] mt-12 text-center" style={{ fontSize: "18px" }}>
-            We&apos;re the conversation layer your stack was never designed to have.
+            {t.about.conversationLayer}
           </p>
         </div>
       </section>
@@ -127,10 +122,10 @@ export default function AboutPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            The vision.
+            {t.about.visionHeadline}
           </h2>
           <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-            Every independent hotel deserves a guest experience that feels personal and complete — not because of their budget, but because of their knowledge. Place Companion exists to give every boutique property, every family-run hotel, every carefully curated collection of rooms — the same intelligence that the largest hospitality brands in the world are only beginning to build.
+            {t.about.visionDesc}
           </p>
         </div>
       </section>

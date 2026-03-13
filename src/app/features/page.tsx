@@ -15,10 +15,10 @@ export default function FeaturesPage() {
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="py-32 md:py-40 text-center px-4 md:px-8" style={{ background: "#141413" }}>
         <h1 className="heading-hero font-serif font-normal text-[#FAF9F5] max-w-5xl mx-auto">
-          Everything your guests will ever ask.
+          {t.features.heroHeadline}
         </h1>
         <p className="font-sans text-[#9C9A93] mt-6 max-w-2xl mx-auto" style={{ fontSize: "20px", lineHeight: 1.75 }}>
-          Place Companion knows your hotel and your destination — completely.
+          {t.features.heroSubhead}
         </p>
       </section>
 
@@ -35,7 +35,7 @@ export default function FeaturesPage() {
             {t.intelligence.headline}
           </h2>
           <p className="font-sans text-[#9C9A93] max-w-2xl mx-auto mt-6" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-            Your guests don&apos;t just ask about your services. They ask about beach conditions, where to eat after midnight, which pharmacy is open Sunday.
+            {t.features.intelligenceDesc}
           </p>
 
           <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-12 md:mt-16 text-left">
@@ -72,16 +72,12 @@ export default function FeaturesPage() {
               <path d="M10 13h36a2 2 0 012 2v22a2 2 0 01-2 2H18l-10 8V15a2 2 0 012-2z" stroke="#FAF9F5" strokeWidth="1.5" strokeLinejoin="round" />
             </svg>
             <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-              With your guests from arrival to review.
+              {t.features.guestJourneyHeadline}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
-            {[
-              { stage: "PRE-ARRIVAL", title: "Before they arrive", desc: "The assistant link arrives in their booking confirmation. Guests explore the property, plan meals, book treatments — before they pack their bags." },
-              { stage: "DURING STAY", title: "While they're there", desc: "QR codes in rooms, lobby, pool, spa, restaurant. Every question answered instantly, in any language, at any hour." },
-              { stage: "AFTER STAY", title: "After they leave", desc: "A warm follow-up with a direct link to leave a review. Happy guests become public advocates." },
-            ].map((s) => (
+            {t.features.guestJourney.map((s) => (
               <div key={s.stage}>
                 <p className="font-sans uppercase tracking-widest text-[#9C9A93]" style={{ fontSize: "11px" }}>{s.stage}</p>
                 <p className="font-sans font-normal text-[#FAF9F5] mt-3" style={{ fontSize: "20px" }}>{s.title}</p>
@@ -105,15 +101,11 @@ export default function FeaturesPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            Three ways guests reach your assistant.
+            {t.features.deploymentHeadline}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto mt-12 md:mt-16 text-left">
-            {[
-              { title: "QR Codes", desc: "Print and place anywhere — rooms, lobby, pool deck, restaurant menus, key card sleeves. Guests scan and the assistant opens instantly." },
-              { title: "Hotel Website", desc: "Embed the assistant widget on your site. Guests get answers before they've even booked." },
-              { title: "Shareable Link", desc: "Send a link in booking confirmations, pre-arrival emails, or WhatsApp. One tap and the conversation begins." },
-            ].map((item) => (
+            {t.features.deployment.map((item) => (
               <div key={item.title}>
                 <p className="font-sans font-normal text-[#FAF9F5]" style={{ fontSize: "18px" }}>{item.title}</p>
                 <p className="font-sans font-light text-[#9C9A93] mt-2" style={{ fontSize: "16px", lineHeight: 1.75 }}>{item.desc}</p>
@@ -136,20 +128,15 @@ export default function FeaturesPage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5] max-w-3xl mx-auto">
-            It works alongside everything you already have.
+            {t.features.whereFitsHeadline}
           </h2>
 
           <p className="font-serif italic text-[#FAF9F5] max-w-2xl mx-auto mt-10" style={{ fontSize: "clamp(1.1rem, 3vw, 1.75rem)", lineHeight: 1.4 }}>
-            &ldquo;Your PMS manages your operations. Place Companion talks to your guests. Two different jobs. Zero conflict. Nothing to integrate.&rdquo;
+            &ldquo;{t.features.whereFitsQuote}&rdquo;
           </p>
 
           <div className="space-y-4 mt-10">
-            {[
-              "Not a PMS — doesn't touch reservations or payments.",
-              "Not a chatbot — understands context, not just keywords.",
-              "Not an app — guests scan a QR, no download required.",
-              "Not an integration — connect nothing, configure nothing.",
-            ].map((s) => (
+            {t.features.whereFitsItems.map((s) => (
               <p key={s} className="font-sans text-[#9C9A93] text-center" style={{ fontSize: "17px" }}>{s}</p>
             ))}
           </div>

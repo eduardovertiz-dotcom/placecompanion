@@ -428,7 +428,7 @@ export default function OnboardingPage() {
                   cursor: 'pointer',
                 }}
               >
-                Try Again
+                {t.onboarding.tryAgain}
               </button>
             </div>
           )}
@@ -443,8 +443,8 @@ export default function OnboardingPage() {
           </p>
           <h1 className="heading-section font-serif font-normal text-center mt-4" style={{ color: '#E8E3DC' }}>
             {extracted?.hotelName
-              ? `Meet your ${extracted.hotelName} assistant.`
-              : 'Meet your hotel assistant.'}
+              ? t.onboarding.step3HeadlineWith.replace('{hotelName}', extracted.hotelName)
+              : t.onboarding.step3HeadlineDefault}
           </h1>
           <p className="font-sans text-center mt-3" style={{ fontSize: '18px', color: '#A8A099' }}>
             {t.onboarding.step3Subhead}
@@ -469,7 +469,7 @@ export default function OnboardingPage() {
                   {extracted?.hotelName || 'Your Hotel'}
                 </p>
                 <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560' }}>
-                  AI Guest Companion
+                  {t.onboarding.aiCompanionLabel}
                 </p>
               </div>
               <div
@@ -498,7 +498,7 @@ export default function OnboardingPage() {
                       lineHeight: 1.6,
                     }}
                   >
-                    Hello! I&apos;m your AI Guest Companion for {extracted?.hotelName || 'your hotel'}. I&apos;ve been trained on your property&apos;s information. Ask me anything your guests would want to know.
+                    {t.onboarding.step3Greeting.replace('{hotelName}', extracted?.hotelName || 'your hotel')}
                   </div>
                 </div>
               )}
