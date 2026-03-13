@@ -28,6 +28,9 @@ export default function PropertyClient({ property, conversations }: Props) {
   const [selectedStyle, setSelectedStyle] = useState<string>(property.conversational_style || 'warm_local')
   const [isSavingStyle, setIsSavingStyle] = useState(false)
   const [styleSaved, setStyleSaved] = useState(false)
+  const [alertEmail, setAlertEmail] = useState<string>(property.alert_email || '')
+  const [isSavingAlert, setIsSavingAlert] = useState(false)
+  const [alertSaved, setAlertSaved] = useState(false)
 
   useEffect(() => {
     async function fetchSignals() {
@@ -90,6 +93,18 @@ export default function PropertyClient({ property, conversations }: Props) {
     setIsSavingStyle(false)
     setStyleSaved(true)
     setTimeout(() => setStyleSaved(false), 2000)
+  }
+
+  async function handleAlertEmailSave() {
+    setIsSavingAlert(true)
+    const supabase = createClient()
+    await supabase
+      .from('properties')
+      .update({ alert_email: alertEmail || null })
+      .eq('id', property.id)
+    setIsSavingAlert(false)
+    setAlertSaved(true)
+    setTimeout(() => setAlertSaved(false), 2000)
   }
 
   async function handleDelete() {
@@ -349,6 +364,49 @@ export default function PropertyClient({ property, conversations }: Props) {
               )}
               {styleSaved && (
                 <span className="font-sans" style={{ fontSize: '12px', color: '#2D9E6B' }}>{t.property.saved}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Alert Email */}
+          <div className="mt-8 max-w-sm">
+            <label className="font-sans block mb-1" style={{ fontSize: '13px', color: '#A8A099', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Staff Alert Email
+            </label>
+            <p className="font-sans mb-3" style={{ fontSize: '13px', color: '#6B6560', lineHeight: 1.5 }}>
+              Receive instant email alerts when guests report issues or maintenance problems.
+            </p>
+            <div className="flex items-center gap-3">
+              <input
+                type="email"
+                value={alertEmail}
+                onChange={e => setAlertEmail(e.target.value)}
+                placeholder="manager@yourhotel.com"
+                className="font-sans flex-1"
+                style={{
+                  background: '#242019',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '8px',
+                  padding: '10px 16px',
+                  fontSize: '14px',
+                  color: '#E8E3DC',
+                  outline: 'none',
+                }}
+              />
+              <button
+                onClick={handleAlertEmailSave}
+                disabled={isSavingAlert}
+                className="font-sans"
+                style={{
+                  ...ghostBtn,
+                  opacity: isSavingAlert ? 0.6 : 1,
+                  cursor: isSavingAlert ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {isSavingAlert ? 'Saving…' : 'Save'}
+              </button>
+              {alertSaved && (
+                <span className="font-sans" style={{ fontSize: '12px', color: '#2D9E6B' }}>Saved</span>
               )}
             </div>
           </div>

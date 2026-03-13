@@ -2,6 +2,7 @@ import { streamText } from 'ai'
 import { createAnthropic } from '@ai-sdk/anthropic'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest } from 'next/server'
+import { Resend } from 'resend'
 
 const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
@@ -15,6 +16,53 @@ const STYLE_INSTRUCTIONS: Record<string, string> = {
   barefoot_luxury: 'Relaxed and warm but never casual to a fault. Think luxury beach resort — effortlessly refined.',
   playful_explorer: 'Fun, enthusiastic, and adventurous. Use occasional emojis. Make guests excited to explore.',
   zen_mindful: 'Calm, unhurried, thoughtful. Every response feels considered and serene.',
+}
+
+const ISSUE_KEYWORDS = [
+  'broken', 'not working', 'issue', 'problem', 'maintenance', 'leak',
+  'no hot water', 'no water', 'no electricity', 'no wifi', 'wifi not working',
+  'air conditioning', ' ac ', 'toilet', 'emergency', 'help', 'stuck', 'locked out',
+]
+
+function detectIssue(message: string): boolean {
+  const lower = message.toLowerCase()
+  return ISSUE_KEYWORDS.some(kw => lower.includes(kw))
+}
+
+const ROOM_PATTERN = /room\s*[#:]?\s*(\d+)|habitaci[oó]n\s*[#:]?\s*(\d+)|#\s*(\d+)/i
+
+function extractRoomNumber(messages: Array<{ role: string; content: string }>): string | null {
+  for (const m of messages) {
+    const match = m.content.match(ROOM_PATTERN)
+    if (match) return match[1] ?? match[2] ?? match[3] ?? null
+  }
+  return null
+}
+
+function sendIssueAlert(
+  alertEmail: string,
+  hotelName: string,
+  guestMessage: string,
+  roomNumber: string | null
+) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const room = roomNumber ?? 'Not provided — assistant is asking'
+  const time = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: true })
+  resend.emails.send({
+    from: 'alerts@placecompanion.com',
+    to: alertEmail,
+    subject: `Guest Issue — ${hotelName} — Room ${room}`,
+    html: `
+      <h2 style="font-family:sans-serif;color:#1a1a1a">Guest Issue Alert</h2>
+      <table style="font-family:sans-serif;font-size:15px;border-collapse:collapse;width:100%">
+        <tr><td style="padding:8px 0;color:#666;width:140px">Property</td><td style="padding:8px 0"><strong>${hotelName}</strong></td></tr>
+        <tr><td style="padding:8px 0;color:#666">Room Number</td><td style="padding:8px 0"><strong>${room}</strong></td></tr>
+        <tr><td style="padding:8px 0;color:#666">Time</td><td style="padding:8px 0">${time} UTC</td></tr>
+        <tr><td style="padding:8px 0;color:#666;vertical-align:top">Guest Message</td><td style="padding:8px 0">${guestMessage}</td></tr>
+      </table>
+      <p style="font-family:sans-serif;font-size:13px;color:#999;margin-top:24px">Sent by Place Companion · placecompanion.com</p>
+    `,
+  }).catch(() => {/* fire and forget */})
 }
 
 function detectRevenueSignal(message: string): string | null {
@@ -39,7 +87,7 @@ export async function POST(
   // Fetch property
   const { data: property } = await supabase
     .from('properties')
-    .select('system_prompt, hotel_name, is_active, conversational_style')
+    .select('system_prompt, hotel_name, is_active, conversational_style, alert_email')
     .eq('id', id)
     .eq('is_active', true)
     .single()
@@ -106,6 +154,11 @@ export async function POST(
           role: 'assistant',
           content: text
         })
+      }
+      // Issue alert — fire and forget
+      if (property.alert_email && lastUserMessage?.role === 'user' && detectIssue(lastUserMessage.content)) {
+        const roomNumber = extractRoomNumber(messages as Array<{ role: string; content: string }>)
+        sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
       }
     }
   })
