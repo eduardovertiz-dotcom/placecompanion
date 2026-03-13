@@ -1,8 +1,6 @@
 import { generateText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 
-const anthropic = createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 function stripHtml(html: string): string {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -29,6 +27,10 @@ async function fetchUrlText(url: string): Promise<string> {
 
 export async function POST(req: Request) {
   try {
+    const anthropic = createAnthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+
     const body = await req.json();
     console.log("[extract] request:", { hasText: !!body.text, textLen: body.text?.length, hasUrl: !!body.url, url: body.url });
     const { text, url } = body as { text?: string; url?: string };
