@@ -3,6 +3,8 @@
 body {
   background-color: #141413;
   color: #FAF9F5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .heading-hero {
