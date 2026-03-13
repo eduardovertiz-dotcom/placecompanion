@@ -113,7 +113,7 @@ export default function HomePage() {
 
             {/* Right — conversation */}
             <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-              <p className="font-sans text-[#4F4D4A] mb-4" style={{ fontSize: "11px" }}>{t.revenue.timestamp}</p>
+              <p className="font-sans mb-4" style={{ fontSize: "13px", color: "#4A4540" }}>{t.revenue.timestamp}</p>
               <div className="flex flex-col gap-3">
                 {t.revenue.conversation.map((msg, i) => (
                   <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
@@ -133,9 +133,11 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <p className="font-sans font-medium text-center mt-5" style={{ fontSize: "16px", color: "#E8E3DC", fontWeight: 500 }}>
-                {t.revenue.outcome}
-              </p>
+              <div className="flex justify-center mt-6">
+                <span className="font-sans font-medium text-white rounded-full" style={{ background: '#C96A3A', padding: '12px 24px', fontSize: '15px', fontWeight: 500 }}>
+                  {t.revenue.outcome}
+                </span>
+              </div>
             </div>
 
           </div>

@@ -344,7 +344,7 @@ export default function OnboardingPage() {
               {t.onboarding.styleSubhead}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
-              {STYLES.map(({ key, emoji }) => {
+              {STYLES.map(({ key }) => {
                 const styleData = t.onboarding.styles[key]
                 const isSelected = conversationalStyle === key
                 return (
@@ -359,20 +359,14 @@ export default function OnboardingPage() {
                       borderRadius: '10px',
                       padding: '14px',
                       cursor: 'pointer',
-                      display: 'flex',
-                      gap: '10px',
-                      alignItems: 'flex-start',
                     }}
                   >
-                    <span style={{ fontSize: '20px', lineHeight: '1.2', flexShrink: 0 }}>{emoji}</span>
-                    <div>
-                      <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
-                        {styleData.name}
-                      </p>
-                      <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560', lineHeight: 1.4 }}>
-                        {styleData.tagline}
-                      </p>
-                    </div>
+                    <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+                      {styleData.name}
+                    </p>
+                    <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560', lineHeight: 1.4 }}>
+                      {styleData.tagline}
+                    </p>
                   </button>
                 )
               })}

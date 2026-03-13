@@ -131,7 +131,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center" style={{ background: "#141413" }}>
+      <section className="py-20 md:py-32 text-center" style={{ background: "#2A2725" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <path d="M10 28a18 18 0 0136 0" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" />

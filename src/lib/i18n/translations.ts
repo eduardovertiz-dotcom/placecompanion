@@ -217,6 +217,7 @@ export const translations = {
         { q: 'Is there a free trial?', a: "Yes. 14 days free, no credit card required. You'll have a fully working assistant for your property within minutes of signing up." },
         { q: 'What if I have multiple properties?', a: 'The Small Group plan covers 2–5 properties under one dashboard. For larger portfolios, contact us for enterprise pricing.' },
         { q: 'Can guests ask in any language?', a: "Yes. Place Companion detects the guest's language automatically and responds in kind — Spanish, French, German, Portuguese, and more. No setup required." },
+        { q: "Can the assistant match my hotel's personality?", a: "Absolutely. You choose from five distinct conversational styles — from Barefoot Luxury to Refined Concierge — and your assistant speaks in your hotel's authentic voice from day one. No training required." },
       ],
     },
     demo: {
@@ -517,6 +518,7 @@ export const translations = {
         { q: '¿Hay una prueba gratuita?', a: 'Sí. 14 días gratis, sin tarjeta de crédito. Tendrás un asistente completamente funcional para tu propiedad en minutos después de registrarte.' },
         { q: '¿Qué pasa si tengo varias propiedades?', a: 'El plan Grupo Pequeño cubre 2–5 propiedades en un solo panel. Para portafolios más grandes, contáctanos para precios empresariales.' },
         { q: '¿Pueden los huéspedes preguntar en cualquier idioma?', a: 'Sí. Place Companion detecta el idioma del huésped automáticamente y responde en consecuencia — español, francés, alemán, portugués y más. Sin configuración previa.' },
+        { q: '¿Puede el asistente reflejar la personalidad de mi hotel?', a: 'Por supuesto. Eliges entre cinco estilos conversacionales distintos — desde Lujo Sin Zapatos hasta Concierge Refinado — y tu asistente habla con la voz auténtica de tu hotel desde el primer día. Sin entrenamiento adicional.' },
       ],
     },
     demo: {
