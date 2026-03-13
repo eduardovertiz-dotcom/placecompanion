@@ -131,6 +131,43 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      {/* ── ALWAYS ON DUTY ───────────────────────────────── */}
+      <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#0F0E0D" }}>
+        <div className="max-w-7xl mx-auto">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" className="mx-auto mb-6">
+            <rect x="6" y="10" width="32" height="24" rx="2" stroke="#E8E3DC" strokeWidth="1.25" />
+            <path d="M6 15l16 11 16-11" stroke="#E8E3DC" strokeWidth="1.25" strokeLinejoin="round" />
+            <path d="M30 28l4-4" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="34" cy="24" r="3" stroke="#C96A3A" strokeWidth="1.25" />
+          </svg>
+
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: "11px", color: "#6B6560" }}>
+            {t.features.alwaysOn.label}
+          </p>
+          <h2 className="heading-section font-serif font-normal text-[#E8E3DC] mt-4">
+            {t.features.alwaysOn.headline}
+          </h2>
+          <p className="font-sans font-light text-[#A8A099] max-w-2xl mx-auto mt-4" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+            {t.features.alwaysOn.body}
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mt-12 text-left">
+            {t.features.alwaysOn.items.map((item) => (
+              <div key={item.title} className="flex gap-4 items-start rounded-xl p-6" style={{ background: "#2A2725", border: "1px solid rgba(232,227,220,0.06)" }}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0 mt-0.5">
+                  <circle cx="10" cy="10" r="9" stroke="#C96A3A" strokeWidth="1.25" />
+                  <path d="M6 10l3 3 5-5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div>
+                  <p className="font-sans font-medium text-[#E8E3DC]" style={{ fontSize: "15px" }}>{item.title}</p>
+                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "14px", lineHeight: 1.6 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── DEPLOYMENT ───────────────────────────────────── */}
       <section className="py-20 md:py-32 text-center" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">

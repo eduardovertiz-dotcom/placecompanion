@@ -76,8 +76,8 @@ export const translations = {
       foundingApply: 'Apply →',
       perMonth: '/mo',
       features: {
-        single: ['AI assistant for your property', 'Full destination intelligence', 'Multilingual by default', 'Website widget + QR codes', 'Guest conversation analytics', 'Email support'],
-        group: ['Everything in Single Property', 'All properties on one dashboard', 'Advanced guest intent analytics', 'Revenue opportunity signals', 'Staff notification routing', 'Priority support'],
+        single: ['AI assistant for your property', 'Full destination intelligence', 'Multilingual by default', 'Website widget + QR codes', 'Guest conversation analytics', 'Instant staff alerts for guest issues', 'Email support'],
+        group: ['Everything in Single Property', 'All properties on one dashboard', 'Advanced guest intent analytics', 'Revenue opportunity signals', 'Instant staff alerts for guest issues', 'Staff notification routing', 'Priority support'],
       },
     },
     finalCta: {
@@ -170,6 +170,17 @@ export const translations = {
           { name: 'Zen & Mindful', tagline: 'Calm, unhurried, present' },
         ],
       },
+      alwaysOn: {
+        label: 'ALWAYS ON DUTY',
+        headline: 'Never miss a guest issue.',
+        body: "When a guest reports a problem — a leak, broken AC, no hot water — your staff gets an instant email alert with the room number and the guest's message. No issue falls through the cracks at 2 AM.",
+        items: [
+          { title: 'Instant alerts', desc: 'Issue detected → staff email in seconds.' },
+          { title: 'Room number captured', desc: 'The assistant asks the guest if not provided.' },
+          { title: 'Any issue type', desc: 'Maintenance, AC, wifi, locked out — all covered.' },
+          { title: 'Works while you sleep', desc: '24/7 coverage with zero additional staff.' },
+        ],
+      },
       deploymentHeadline: 'Three ways guests reach your assistant.',
       deployment: [
         { title: 'QR Codes', desc: 'Print and place anywhere — rooms, lobby, pool deck, restaurant menus, key card sleeves. Guests scan and the assistant opens instantly.' },
@@ -213,6 +224,7 @@ export const translations = {
         { q: 'How long does setup take?', a: 'Most hotels are live in under 30 minutes. Paste your website or guest guide and the AI builds your assistant automatically.' },
         { q: 'What languages does it support?', a: "Place Companion responds in the guest's language automatically. No configuration needed — it detects and matches the conversation language." },
         { q: "Can the assistant match my hotel's personality?", a: "Absolutely. You choose from five distinct conversational styles — from Barefoot Luxury to Refined Concierge — and your assistant speaks in your hotel's authentic voice from day one. No training required." },
+        { q: 'What happens when a guest reports an issue?', a: "Place Companion detects maintenance and issue reports automatically — broken AC, no hot water, wifi problems — and sends an instant email alert to your staff with the room number and the guest's message. No issue slips through at 3 AM." },
         { q: 'How do guests access the assistant?', a: 'Via QR code, a link on your website, or embedded as a chat widget. No app download required.' },
         { q: 'Can I customize what the assistant knows?', a: 'Yes. You control all property information — menus, policies, amenities, local recommendations. Update it anytime from your dashboard.' },
         { q: 'Is there a free trial?', a: "Yes. 14 days free, no credit card required. You'll have a fully working assistant for your property within minutes of signing up." },
@@ -377,8 +389,8 @@ export const translations = {
       foundingApply: 'Aplicar →',
       perMonth: '/mes',
       features: {
-        single: ['Asistente IA para tu propiedad', 'Inteligencia de destino completa', 'Multilingüe por defecto', 'Widget para sitio web + códigos QR', 'Análisis de conversaciones', 'Soporte por email'],
-        group: ['Todo lo de Propiedad Individual', 'Todas las propiedades en un panel', 'Análisis avanzado de intención de huéspedes', 'Señales de oportunidad de ingresos', 'Notificaciones al equipo', 'Soporte prioritario'],
+        single: ['Asistente IA para tu propiedad', 'Inteligencia de destino completa', 'Multilingüe por defecto', 'Widget para sitio web + códigos QR', 'Análisis de conversaciones', 'Alertas instantáneas al personal por incidencias', 'Soporte por email'],
+        group: ['Todo lo de Propiedad Individual', 'Todas las propiedades en un panel', 'Análisis avanzado de intención de huéspedes', 'Señales de oportunidad de ingresos', 'Alertas instantáneas al personal por incidencias', 'Notificaciones al equipo', 'Soporte prioritario'],
       },
     },
     finalCta: {
@@ -471,6 +483,17 @@ export const translations = {
           { name: 'Zen & Consciente', tagline: 'Tranquilo, pausado, presente' },
         ],
       },
+      alwaysOn: {
+        label: 'SIEMPRE DE GUARDIA',
+        headline: 'Nunca pierdas una incidencia.',
+        body: 'Cuando un huésped reporta un problema — una fuga, el aire roto, sin agua caliente — tu personal recibe un alerta de email instantáneo con el número de habitación y el mensaje del huésped. Ninguna incidencia se pierde a las 2 AM.',
+        items: [
+          { title: 'Alertas instantáneas', desc: 'Incidencia detectada → email al personal en segundos.' },
+          { title: 'Número de habitación registrado', desc: 'El asistente pregunta al huésped si no se proporcionó.' },
+          { title: 'Cualquier tipo de incidencia', desc: 'Mantenimiento, aire, wifi, llave — todo cubierto.' },
+          { title: 'Trabaja mientras duermes', desc: 'Cobertura 24/7 sin personal adicional.' },
+        ],
+      },
       deploymentHeadline: 'Tres formas en que los huéspedes llegan a tu asistente.',
       deployment: [
         { title: 'Códigos QR', desc: 'Imprime y coloca en cualquier lugar — habitaciones, lobby, área de alberca, menús del restaurante, portadores de llaves. Los huéspedes escanean y el asistente se abre al instante.' },
@@ -514,6 +537,7 @@ export const translations = {
         { q: '¿Cuánto tiempo tarda la configuración?', a: 'La mayoría de los hoteles están en vivo en menos de 30 minutos. Pega tu sitio web o guía de huéspedes y la IA construye tu asistente automáticamente.' },
         { q: '¿Qué idiomas soporta?', a: 'Place Companion responde en el idioma del huésped automáticamente. Sin configuración — detecta y coincide con el idioma de la conversación.' },
         { q: '¿Puede el asistente reflejar la personalidad de mi hotel?', a: 'Por supuesto. Eliges entre cinco estilos conversacionales distintos — desde Lujo Sin Zapatos hasta Concierge Refinado — y tu asistente habla con la voz auténtica de tu hotel desde el primer día. Sin entrenamiento adicional.' },
+        { q: '¿Qué pasa cuando un huésped reporta una incidencia?', a: 'Place Companion detecta automáticamente reportes de mantenimiento e incidencias — aire acondicionado roto, sin agua caliente, problemas de wifi — y envía un alerta por email instantáneo a tu personal con el número de habitación y el mensaje del huésped. Ninguna incidencia se escapa a las 3 AM.' },
         { q: '¿Cómo acceden los huéspedes al asistente?', a: 'Mediante código QR, un enlace en tu sitio web o integrado como widget de chat. No se requiere descargar ninguna app.' },
         { q: '¿Puedo personalizar lo que el asistente sabe?', a: 'Sí. Tú controlas toda la información de la propiedad — menús, políticas, amenidades, recomendaciones locales. Actualízala en cualquier momento desde tu panel.' },
         { q: '¿Hay una prueba gratuita?', a: 'Sí. 14 días gratis, sin tarjeta de crédito. Tendrás un asistente completamente funcional para tu propiedad en minutos después de registrarte.' },
