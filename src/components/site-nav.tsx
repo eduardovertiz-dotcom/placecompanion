@@ -12,7 +12,7 @@ export function SiteNav() {
   const navLinkStyle = { fontSize: '15px', color: '#A8A099' };
 
   return (
-    <nav className="sticky top-0 z-50 bg-[rgba(28,25,23,0.92)] backdrop-blur-xl border-b border-[rgba(232,227,220,0.06)]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[rgba(28,25,23,0.92)] backdrop-blur-xl border-b border-[rgba(232,227,220,0.06)]">
       <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="font-serif text-[#E8E3DC] text-lg">
           Place Companion

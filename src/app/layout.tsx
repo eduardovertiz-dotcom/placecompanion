@@ -31,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${cormorantGaramond.variable} ${dmSans.variable} font-sans antialiased`}>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <div className="pt-16">{children}</div>
+        </LanguageProvider>
       </body>
     </html>
   );

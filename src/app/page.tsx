@@ -31,7 +31,7 @@ export default function HomePage() {
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 pt-20 md:pt-28 flex items-center" style={{ background: "#141413" }}>
+      <section className="py-12 md:py-20 flex items-center" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
@@ -113,28 +113,26 @@ export default function HomePage() {
 
             {/* Right — conversation */}
             <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-              <p className="font-sans text-[#4F4D4A] mb-3" style={{ fontSize: "11px" }}>{t.revenue.timestamp}</p>
-              {t.revenue.conversation.map((msg, i) => (
-                <div key={i} className={i > 0 ? 'mt-2' : ''}>
-                  {msg.role === 'assistant' && (
-                    <p className="font-sans text-right mb-1" style={{ fontSize: "11px", color: "#9C9A93" }}>{t.revenue.attribution}</p>
-                  )}
-                  <div
-                    className={`font-sans text-[#FAF9F5] ${msg.role === 'assistant' ? 'ml-auto' : 'inline-block'}`}
-                    style={{
-                      display: msg.role === 'assistant' ? 'block' : 'inline-block',
-                      background: "#141413",
-                      border: "1px solid rgba(250,249,245,0.06)",
-                      borderRadius: msg.role === 'assistant' ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
-                      padding: "12px 16px",
-                      fontSize: "16px",
-                      maxWidth: "85%",
-                    }}
-                  >
-                    {msg.text}
+              <p className="font-sans text-[#4F4D4A] mb-4" style={{ fontSize: "11px" }}>{t.revenue.timestamp}</p>
+              <div className="flex flex-col gap-3">
+                {t.revenue.conversation.map((msg, i) => (
+                  <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
+                    <div
+                      className="font-sans rounded-2xl"
+                      style={{
+                        background: msg.role === 'guest' ? "#0F0D0B" : "#2C2720",
+                        color: "#E8E3DC",
+                        padding: "12px 16px",
+                        fontSize: "16px",
+                        lineHeight: 1.6,
+                        maxWidth: "80%",
+                      }}
+                    >
+                      {msg.text}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
               <p className="font-sans font-medium text-center mt-5" style={{ fontSize: "16px", color: "#E8E3DC", fontWeight: 500 }}>
                 {t.revenue.outcome}
               </p>
