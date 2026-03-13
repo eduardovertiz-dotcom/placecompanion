@@ -45,6 +45,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
   const [appliedCoupon, setAppliedCoupon] = useState('')
   const [couponError, setCouponError] = useState('')
   const [loadingPriceId, setLoadingPriceId] = useState<string | null>(null)
+  const [checkoutError, setCheckoutError] = useState('')
 
   // Close on ESC
   useEffect(() => {
@@ -70,6 +71,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
 
   async function handleSubscribe(priceId: string) {
     setLoadingPriceId(priceId)
+    setCheckoutError('')
     try {
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
@@ -86,10 +88,12 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
         window.location.href = data.url
       } else {
         console.error('No checkout URL returned', data)
+        setCheckoutError(data.error || 'Could not start checkout. Please try again.')
         setLoadingPriceId(null)
       }
     } catch (err) {
       console.error('[UpgradeModal] checkout error', err)
+      setCheckoutError('Could not start checkout. Please try again.')
       setLoadingPriceId(null)
     }
   }
@@ -187,6 +191,12 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
             )
           })}
         </div>
+
+        {checkoutError && (
+          <p className="font-sans px-6 md:px-8 -mt-2 mb-2" style={{ fontSize: '13px', color: '#F87171' }}>
+            {checkoutError}
+          </p>
+        )}
 
         {/* Founding partner coupon */}
         <div

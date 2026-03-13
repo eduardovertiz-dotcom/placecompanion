@@ -10,13 +10,17 @@ export async function POST(req: Request) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
+    const host = req.headers.get('host') ?? ''
+    const proto = host.startsWith('localhost') ? 'http' : 'https'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || `${proto}://${host}`
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      discounts: coupon ? [{ coupon }] : [],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?canceled=true`,
+      ...(coupon ? { discounts: [{ coupon }] } : {}),
+      success_url: `${siteUrl}/dashboard?success=true`,
+      cancel_url: `${siteUrl}/dashboard?canceled=true`,
       metadata: { propertyId, userId, priceId },
       subscription_data: {
         metadata: { propertyId, userId },

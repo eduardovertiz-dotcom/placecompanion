@@ -75,6 +75,7 @@ export default function OnboardingPage() {
   }
 
   async function handleExtract() {
+    console.log('[onboarding] handleExtract called, inputMode:', inputMode, 'textLen:', hotelText.trim().length)
     setIsExtracting(true)
     setExtractError('')
     setStep(2)
@@ -89,7 +90,9 @@ export default function OnboardingPage() {
             : { url: hotelUrl }
         )
       })
+      console.log('[onboarding] extract status:', res.status)
       const data = await res.json()
+      console.log('[onboarding] extract data:', data)
       if (data.error) {
         setExtractError(data.error)
         setStep(1)
@@ -97,7 +100,8 @@ export default function OnboardingPage() {
         setExtracted(data.extracted)
         animateIntelligence(data.extracted)
       }
-    } catch {
+    } catch (err) {
+      console.error('[onboarding] extract fetch error:', err)
       setExtractError('Something went wrong. Please try again.')
       setStep(1)
     } finally {

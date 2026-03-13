@@ -265,11 +265,11 @@ export default function DashboardClient({ user, properties }: Props) {
                       className="font-sans font-medium w-full transition-colors mt-3"
                       style={{
                         fontSize: '14px',
-                        color: '#E8E3DC',
-                        background: 'transparent',
+                        color: '#FAF9F5',
+                        background: '#E8823A',
                         borderRadius: '8px',
                         padding: '10px 16px',
-                        border: '1px solid rgba(232,227,220,0.25)',
+                        border: 'none',
                         cursor: 'pointer',
                       }}
                     >

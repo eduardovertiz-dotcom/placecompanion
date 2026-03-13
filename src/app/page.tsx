@@ -318,7 +318,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/onboarding"
-            className="font-sans text-[15px] font-medium text-[#E8E3DC] bg-[#2D9E6B] hover:bg-[#34B47A] h-12 px-10 rounded-md transition-colors mt-8 inline-flex items-center"
+            className="font-sans text-[15px] font-medium text-[#FAF9F5] bg-[#E8823A] hover:bg-[#D4733A] h-12 px-10 rounded-md transition-colors mt-8 inline-flex items-center"
           >
             {t.finalCta.button}
           </Link>

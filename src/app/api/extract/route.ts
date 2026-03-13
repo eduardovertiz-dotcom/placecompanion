@@ -79,13 +79,17 @@ Hotel text:
 ${sourceText}`,
         },
       ],
-      maxOutputTokens: 1024,
+      maxTokens: 1024,
     });
+
+    // Strip markdown code fences if present
+    const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
 
     let extracted: Record<string, unknown>;
     try {
-      extracted = JSON.parse(raw.trim());
-    } catch {
+      extracted = JSON.parse(cleaned);
+    } catch (e) {
+      console.error("[extract] JSON parse failed. Raw response:", raw.slice(0, 500), e);
       return Response.json(
         { error: "Could not parse hotel information. Please try again." },
         { status: 422 },

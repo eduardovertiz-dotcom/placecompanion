@@ -19,7 +19,7 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className="bg-[#2A2725] border-t border-[rgba(232,227,220,0.06)]">
+    <footer className="bg-[#161310] border-t border-[rgba(232,227,220,0.06)]">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-14">
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
           <div>
