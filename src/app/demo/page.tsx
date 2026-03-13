@@ -12,7 +12,11 @@ export default function DemoPage() {
   const demoChatConfig: ChatConfig = {
     ...marazulChatConfig,
     placeholder: t.demo.chatPlaceholder,
-    suggestionChips: t.demo.suggestionChips,
+    suggestionChips: [
+      t.demo.suggestionChips[0],
+      t.demo.suggestionChips[1],
+      t.demo.suggestionChips[4],
+    ],
   };
 
   return (

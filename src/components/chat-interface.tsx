@@ -162,7 +162,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
         className="flex-1 overflow-y-auto min-h-0 px-5 py-5 flex flex-col gap-3"
         style={{ overscrollBehavior: "contain" }}
       >
-        {messages.map((m, idx) => (
+        {messages.map((m) => (
           <div key={m.id}>
             <div className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
               {m.text === "__rate_limited__" ? (
@@ -206,40 +206,6 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                 />
               ) : null}
             </div>
-
-            {idx === 0 && showSuggestions && (
-              <div className="flex flex-wrap mt-3 gap-2">
-                {config.suggestionChips!.map((s, chipIdx) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => sendMessage(s)}
-                    className={`font-sans transition-all duration-200${config.mobileChipsLimit !== undefined && chipIdx >= config.mobileChipsLimit ? ' hidden sm:inline-flex' : ''}`}
-                    style={{
-                      background: "#1F1E1D",
-                      border: "1px solid rgba(250,249,245,0.08)",
-                      borderRadius: "9999px",
-                      padding: "8px 16px",
-                      fontSize: "13px",
-                      color: "#9C9A93",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget;
-                      el.style.color = "#FAF9F5";
-                      el.style.borderColor = "rgba(250,249,245,0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget;
-                      el.style.color = "#9C9A93";
-                      el.style.borderColor = "rgba(250,249,245,0.08)";
-                    }}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         ))}
 
@@ -258,6 +224,44 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           </div>
         )}
       </div>
+
+      {/* Suggestion chips — below scroll area, above input */}
+      {showSuggestions && (
+        <div className="flex-shrink-0 px-5 pt-4 pb-1 flex flex-wrap gap-2">
+          {config.suggestionChips!.map((s, chipIdx) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => sendMessage(s)}
+              className={`font-sans transition-all duration-200${config.mobileChipsLimit !== undefined && chipIdx >= config.mobileChipsLimit ? ' hidden sm:inline-flex' : ''}`}
+              style={{
+                background: "#1F1E1D",
+                border: "1px solid rgba(250,249,245,0.08)",
+                borderRadius: "9999px",
+                padding: "8px 16px",
+                fontSize: "13px",
+                color: "#9C9A93",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.color = "#FAF9F5";
+                el.style.borderColor = "rgba(250,249,245,0.2)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.color = "#9C9A93";
+                el.style.borderColor = "rgba(250,249,245,0.08)";
+              }}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Breathing room spacer between chips and input */}
+      <div className="flex-1" style={{ maxHeight: '32px' }} />
 
       <form
         onSubmit={handleSubmit}
