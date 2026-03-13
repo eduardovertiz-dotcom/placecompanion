@@ -1,7 +1,5 @@
 import { generateText } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const pdfParse = require("pdf-parse") as (buffer: Buffer) => Promise<{ text: string }>;
 
 function stripHtml(html: string): string {
   return html
@@ -64,17 +62,10 @@ export async function POST(req: Request) {
       }
     }
 
-    // Source 2: PDF files
+    // Source 2: PDF files (parsing not available — skipped)
     if (files && files.length > 0) {
       for (const file of files) {
-        try {
-          const buffer = Buffer.from(file.base64, "base64");
-          const parsed = await pdfParse(buffer);
-          combinedText += `\n\n[DOCUMENT: ${file.name}]\n${parsed.text.slice(0, 8000)}`;
-          console.log("[extract] parsed PDF:", file.name, "length:", parsed.text.length);
-        } catch (e) {
-          console.warn("[extract] failed to parse PDF:", file.name, e);
-        }
+        combinedText += `\n\n[PDF UPLOAD: ${file.name} — processing not available]`;
       }
     }
 
