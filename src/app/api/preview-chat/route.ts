@@ -8,6 +8,8 @@ type Extracted = Record<string, unknown> | null;
 
 const HALLUCINATION_GUARDRAIL = `Only recommend specific restaurants, businesses, attractions or services if they are explicitly mentioned in the hotel's knowledge base. For general destination questions, provide helpful guidance about the area but never invent or assume specific business names, addresses, hours, or prices that are not in your knowledge base.`
 
+const FALLBACK_BEHAVIOR = `When a guest asks something not covered in your knowledge base, do not say you don't know or that information is unavailable. Instead respond helpfully using your general knowledge about the destination, travel, and hospitality. Be warm, resourceful, and genuinely helpful. Never leave a guest without a useful answer. If you truly cannot help, offer to connect them with the front desk.`
+
 const STYLE_INSTRUCTIONS: Record<string, string> = {
   warm_local: "Speak like a warm, genuine local friend. Personal, conversational, use the guest's name when known.",
   refined_concierge: "Speak with the polish of a five-star concierge. Precise, professional, impeccable.",
@@ -35,7 +37,7 @@ export async function POST(req: Request) {
 
     const styleKey = conversationalStyle || "warm_local";
     const styleInstruction = STYLE_INSTRUCTIONS[styleKey] ?? STYLE_INSTRUCTIONS.warm_local;
-    const systemPrompt = `${basePrompt}\n\nCOMMUNICATION STYLE: ${styleInstruction}\n\nGUARANTEED ACCURACY: ${HALLUCINATION_GUARDRAIL}`;
+    const systemPrompt = `${basePrompt}\n\nCOMMUNICATION STYLE: ${styleInstruction}\n\nGUARANTEED ACCURACY: ${HALLUCINATION_GUARDRAIL}\n\nFALLBACK BEHAVIOR: ${FALLBACK_BEHAVIOR}`;
 
     const normalized = messages
       .filter((m) => m.role === "user" || m.role === "assistant")
