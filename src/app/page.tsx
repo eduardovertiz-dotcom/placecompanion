@@ -9,7 +9,7 @@ import { marazulChatConfig } from "@/lib/marazul-config";
 import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function HomePage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   const heroChatConfig = {
     ...marazulChatConfig,
@@ -133,11 +133,12 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-center mt-6">
-                <span className="font-sans font-medium text-white rounded-full" style={{ background: '#C96A3A', padding: '12px 24px', fontSize: '15px', fontWeight: 500 }}>
-                  {t.revenue.outcome}
-                </span>
-              </div>
+              <p className="font-sans text-center mt-6" style={{ fontSize: '18px', color: '#A8A099' }}>
+                {lang === 'es'
+                  ? <>Un upgrade. Inversión = <span style={{ color: '#C96A3A', fontWeight: 600 }}>cubierta.</span></>
+                  : <>One upgrade. Investment = <span style={{ color: '#C96A3A', fontWeight: 600 }}>covered.</span></>
+                }
+              </p>
             </div>
 
           </div>
