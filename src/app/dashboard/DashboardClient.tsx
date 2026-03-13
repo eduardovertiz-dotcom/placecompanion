@@ -229,7 +229,7 @@ export default function DashboardClient({ user, properties }: Props) {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-3 mt-6 flex-wrap">
+                  <div className="flex gap-3 mt-6">
                     <Link
                       href={`/assistant/${property.id}`}
                       className="font-sans transition-colors"
@@ -258,24 +258,24 @@ export default function DashboardClient({ user, properties }: Props) {
                     >
                       {t.dashboard.manage}
                     </Link>
-                    {showUpgrade && (
-                      <button
-                        onClick={() => setUpgradeTarget({ propertyId: property.id, userId: user.id })}
-                        className="font-sans font-medium transition-colors"
-                        style={{
-                          fontSize: '14px',
-                          color: '#FAF9F5',
-                          background: '#2D9E6B',
-                          borderRadius: '8px',
-                          padding: '10px 16px',
-                          border: 'none',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Upgrade
-                      </button>
-                    )}
                   </div>
+                  {showUpgrade && (
+                    <button
+                      onClick={() => setUpgradeTarget({ propertyId: property.id, userId: user.id })}
+                      className="font-sans font-medium w-full transition-colors mt-3"
+                      style={{
+                        fontSize: '14px',
+                        color: '#E8E3DC',
+                        background: 'transparent',
+                        borderRadius: '8px',
+                        padding: '10px 16px',
+                        border: '1px solid rgba(232,227,220,0.25)',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Upgrade
+                    </button>
+                  )}
                 </div>
               )
             })}

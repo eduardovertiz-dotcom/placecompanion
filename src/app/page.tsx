@@ -236,9 +236,6 @@ export default function HomePage() {
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$249</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
               </div>
-              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: "13px" }}>
-                {t.pricing.annual} — {t.pricing.monthly}
-              </p>
               <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {t.pricing.features.single.map((f) => (
@@ -255,18 +252,12 @@ export default function HomePage() {
             </div>
 
             {/* Card 2 — Small Group */}
-            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#1F1E1D", borderTop: "2px solid rgba(250,249,245,0.4)", borderLeft: "1px solid rgba(250,249,245,0.08)", borderRight: "1px solid rgba(250,249,245,0.08)", borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
-              <span className="font-sans font-medium inline-block mb-4" style={{ background: "#FAF9F5", color: "#141413", fontSize: "10px", padding: "4px 10px", borderRadius: "9999px", width: "fit-content" }}>
-                {t.pricing.recommended}
-              </span>
+            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.08)" }}>
               <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.group}</p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$449</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
               </div>
-              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: "13px" }}>
-                {t.pricing.annual} — {t.pricing.monthlyGroup}
-              </p>
               <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {t.pricing.features.group.map((f) => (
@@ -311,7 +302,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center" style={{ background: "#242019" }}>
+      <section className="py-20 md:py-32 text-center" style={{ background: "#2A2725" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <path d="M10 28a18 18 0 0136 0" stroke="#E8E3DC" strokeWidth="1.5" strokeLinecap="round" />
