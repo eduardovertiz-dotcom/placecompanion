@@ -104,14 +104,28 @@ export default function HomePage() {
 
             {/* Right — conversation */}
             <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-              <p className="font-sans text-[#4F4D4A] mb-3" style={{ fontSize: "11px" }}>10:14 PM</p>
-              <div className="font-sans text-[#FAF9F5] inline-block" style={{ background: "#141413", border: "1px solid rgba(250,249,245,0.06)", borderRadius: "12px 12px 12px 3px", padding: "12px 16px", fontSize: "15px", maxWidth: "85%" }}>
-                Do you have any spa treatments available tomorrow morning?
-              </div>
-              <p className="font-sans text-right mt-4" style={{ fontSize: "11px", color: "#9C9A93" }}>Marina · Place Companion</p>
-              <div className="font-sans text-[#FAF9F5] ml-auto mt-2" style={{ background: "#141413", border: "1px solid rgba(250,249,245,0.06)", borderRadius: "12px 12px 3px 12px", padding: "12px 16px", fontSize: "15px", maxWidth: "85%" }}>
-                Good evening. Spa Ixchel opens at 9 AM. Deep tissue 60min · $85. Mayan stone therapy · $120. Shall I note a reservation?
-              </div>
+              <p className="font-sans text-[#4F4D4A] mb-3" style={{ fontSize: "11px" }}>{t.revenue.timestamp}</p>
+              {t.revenue.conversation.map((msg, i) => (
+                <div key={i} className={i > 0 ? 'mt-2' : ''}>
+                  {msg.role === 'assistant' && (
+                    <p className="font-sans text-right mb-1" style={{ fontSize: "11px", color: "#9C9A93" }}>{t.revenue.attribution}</p>
+                  )}
+                  <div
+                    className={`font-sans text-[#FAF9F5] ${msg.role === 'assistant' ? 'ml-auto' : 'inline-block'}`}
+                    style={{
+                      display: msg.role === 'assistant' ? 'block' : 'inline-block',
+                      background: "#141413",
+                      border: "1px solid rgba(250,249,245,0.06)",
+                      borderRadius: msg.role === 'assistant' ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
+                      padding: "12px 16px",
+                      fontSize: "15px",
+                      maxWidth: "85%",
+                    }}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
               <p className="font-sans font-medium text-center mt-5" style={{ fontSize: "13px", letterSpacing: "0.06em", color: "#9C9A93" }}>
                 {t.revenue.outcome}
               </p>
@@ -234,7 +248,7 @@ export default function HomePage() {
               <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.single}</p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$249</span>
-                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>{t.pricing.perMonth}</span>
               </div>
               <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
@@ -256,7 +270,7 @@ export default function HomePage() {
               <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.group}</p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$449</span>
-                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>/mo</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>{t.pricing.perMonth}</span>
               </div>
               <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
@@ -294,7 +308,7 @@ export default function HomePage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            Common questions.
+            {t.faq.headline}
           </h2>
 
           <FaqSection />

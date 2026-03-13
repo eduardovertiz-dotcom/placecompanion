@@ -1,8 +1,20 @@
+'use client'
+
 import Link from "next/link";
 import { ChatInterface } from "@/components/chat-interface";
 import { marazulChatConfig } from "@/lib/marazul-config";
+import { useLang } from "@/lib/i18n/LanguageContext";
+import type { ChatConfig } from "@/components/chat-interface";
 
 export default function DemoPage() {
+  const { t } = useLang();
+
+  const demoChatConfig: ChatConfig = {
+    ...marazulChatConfig,
+    placeholder: t.demo.chatPlaceholder,
+    suggestionChips: t.demo.suggestionChips,
+  };
+
   return (
     <div className="min-h-screen" style={{ background: "#141413" }}>
       {/* Minimal nav */}
@@ -17,7 +29,7 @@ export default function DemoPage() {
           href="/onboarding"
           className="inline-flex items-center font-sans text-[13px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-9 px-4 rounded-md transition-colors"
         >
-          Create Your Hotel Assistant
+          {t.demo.createCta}
         </Link>
       </div>
 
@@ -30,39 +42,37 @@ export default function DemoPage() {
               className="font-sans uppercase tracking-widest text-[#9C9A93] mb-6"
               style={{ fontSize: "11px" }}
             >
-              LIVE DEMO
+              {t.demo.label}
             </p>
             <h1
               className="font-serif font-normal text-[#FAF9F5]"
               style={{ fontSize: "56px", lineHeight: 1.05 }}
             >
-              Meet Marina, the AI Guest Companion of MarAzul Riviera Maya.
+              {t.demo.headline}
             </h1>
             <p
               className="font-sans font-light text-[#9C9A93] mt-5"
               style={{ fontSize: "18px", lineHeight: 1.75 }}
             >
-              A live Place Companion assistant configured for a boutique coastal
-              hotel. Ask anything a guest might want to know — dining hours, spa
-              treatments, nearby experiences, check-in policies.
+              {t.demo.description}
             </p>
             <p
               className="font-sans text-[#9C9A93] mt-4"
               style={{ fontSize: "16px" }}
             >
-              Ask in any language. Your question, your language.
+              {t.demo.langNote}
             </p>
             <Link
               href="/onboarding"
               className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors mt-6 inline-flex items-center"
             >
-              Create Your Hotel Assistant
+              {t.demo.createCta}
             </Link>
             <p
               className="font-sans text-[#53525D] mt-3"
               style={{ fontSize: "12px" }}
             >
-              No credit card required · Live in minutes
+              {t.demo.trialNote}
             </p>
           </div>
 
@@ -87,13 +97,13 @@ export default function DemoPage() {
                 />
               </div>
               <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
-                Part of the MarAzul Collection
+                {t.demo.collectionLabel}
               </p>
               <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
-                Your 24/7 AI Guest Companion
+                {t.demo.aiCompanion}
               </p>
             </div>
-            <ChatInterface config={marazulChatConfig} />
+            <ChatInterface config={demoChatConfig} />
           </div>
           </div>
         </div>

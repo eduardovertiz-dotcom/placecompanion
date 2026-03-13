@@ -74,4 +74,5 @@ export const marazulChatConfig: ChatConfig = {
   collection: "MarAzul Collection",
   systemPrompt: marazulConfig.companion.personality,
   suggestionChips: marazulConfig.suggestions,
+  mobileChipsLimit: 2,
 };

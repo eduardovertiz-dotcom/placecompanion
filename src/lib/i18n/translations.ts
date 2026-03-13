@@ -28,7 +28,14 @@ export const translations = {
     revenue: {
       headline: 'Turn guest questions into revenue.',
       body: 'Every question is an intent signal. Place Companion captures the ones your team never had time to act on.',
-      outcome: 'One booking. $85. Monthly investment: covered.',
+      outcome: 'One upgrade. $250. Monthly investment: covered.',
+      timestamp: '10:14 PM',
+      attribution: 'Marina · Place Companion',
+      conversation: [
+        { role: 'guest', text: 'Is it possible to upgrade to an ocean view suite for the rest of my stay?' },
+        { role: 'assistant', text: 'Great news — an Ocean View Suite is available. $250/night, includes a private terrace with direct sea views. Shall I let the front desk know to confirm the upgrade?' },
+        { role: 'guest', text: 'Yes, please go ahead.' },
+      ],
     },
     intelligence: {
       headline: 'It knows your hotel. And your destination.',
@@ -67,6 +74,7 @@ export const translations = {
       startTrial: 'Start Free Trial',
       foundingNote: 'Founding Partners lock in lifetime rates at 40% off.',
       foundingApply: 'Apply →',
+      perMonth: '/mo',
       features: {
         single: ['AI assistant for your property', 'Full destination intelligence', 'Multilingual by default', 'Website widget + QR codes', 'Guest conversation analytics', 'Email support'],
         group: ['Everything in Single Property', 'All properties on one dashboard', 'Advanced guest intent analytics', 'Revenue opportunity signals', 'Staff notification routing', 'Priority support'],
@@ -178,6 +186,29 @@ export const translations = {
       visionHeadline: 'The vision.',
       visionDesc: 'Every independent hotel deserves a guest experience that feels personal and complete — not because of their budget, but because of their knowledge. Place Companion exists to give every boutique property, every family-run hotel, every carefully curated collection of rooms — the same intelligence that the largest hospitality brands in the world are only beginning to build.',
     },
+    faq: {
+      headline: 'Common questions.',
+      items: [
+        { q: 'How long does setup take?', a: 'Most hotels are live in under 30 minutes. Paste your website or guest guide and the AI builds your assistant automatically.' },
+        { q: 'What languages does it support?', a: "Place Companion responds in the guest's language automatically. No configuration needed — it detects and matches the conversation language." },
+        { q: 'How do guests access the assistant?', a: 'Via QR code, a link on your website, or embedded as a chat widget. No app download required.' },
+        { q: 'Can I customize what the assistant knows?', a: 'Yes. You control all property information — menus, policies, amenities, local recommendations. Update it anytime from your dashboard.' },
+        { q: 'Is there a free trial?', a: "Yes. 14 days free, no credit card required. You'll have a fully working assistant for your property within minutes of signing up." },
+        { q: 'What if I have multiple properties?', a: 'The Small Group plan covers 2–5 properties under one dashboard. For larger portfolios, contact us for enterprise pricing.' },
+      ],
+    },
+    demo: {
+      label: 'LIVE DEMO',
+      headline: 'Meet Marina, the AI Guest Companion of MarAzul Riviera Maya.',
+      description: 'A live Place Companion assistant configured for a boutique coastal hotel. Ask anything a guest might want to know — dining hours, spa treatments, nearby experiences, check-in policies.',
+      langNote: 'Ask in any language. Your question, your language.',
+      createCta: 'Create Your Hotel Assistant',
+      trialNote: 'No credit card required · Live in minutes',
+      chatPlaceholder: 'Ask anything about the hotel…',
+      collectionLabel: 'Part of the MarAzul Collection',
+      aiCompanion: 'Your 24/7 AI Guest Companion',
+      suggestionChips: ['Where is breakfast served?', 'Do you have surf lessons?', 'How late is the pool open?', 'Where is the nearest pharmacy?', '¿Tienen servicio de spa?'],
+    },
     auth: {
       loginHeadline: 'Welcome back.',
       loginSubhead: 'Sign in to your Place Companion account.',
@@ -272,7 +303,14 @@ export const translations = {
     revenue: {
       headline: 'Convierte las preguntas en ingresos.',
       body: 'Cada pregunta es una señal de intención. Place Companion captura las que tu equipo nunca tuvo tiempo de atender.',
-      outcome: 'Una reserva. $85. Inversión mensual: cubierta.',
+      outcome: 'Un upgrade. $250. Inversión mensual: cubierta.',
+      timestamp: '10:14 PM',
+      attribution: 'Marina · Place Companion',
+      conversation: [
+        { role: 'guest', text: '¿Es posible hacer un upgrade a una suite con vista al mar por el resto de mi estadía?' },
+        { role: 'assistant', text: 'Excelente noticia — hay una Suite Vista al Mar disponible. $250/noche, incluye terraza privada con vistas directas al mar. ¿Aviso a recepción para confirmar la mejora?' },
+        { role: 'guest', text: 'Sí, por favor.' },
+      ],
     },
     intelligence: {
       headline: 'Conoce tu hotel. Y tu destino.',
@@ -311,6 +349,7 @@ export const translations = {
       startTrial: 'Comenzar Prueba Gratis',
       foundingNote: 'Los Socios Fundadores obtienen tarifas de por vida con 40% de descuento.',
       foundingApply: 'Aplicar →',
+      perMonth: '/mes',
       features: {
         single: ['Asistente IA para tu propiedad', 'Inteligencia de destino completa', 'Multilingüe por defecto', 'Widget para sitio web + códigos QR', 'Análisis de conversaciones', 'Soporte por email'],
         group: ['Todo lo de Propiedad Individual', 'Todas las propiedades en un panel', 'Análisis avanzado de intención de huéspedes', 'Señales de oportunidad de ingresos', 'Notificaciones al equipo', 'Soporte prioritario'],
@@ -421,6 +460,29 @@ export const translations = {
       conversationLayer: 'Somos la capa de conversación que tu stack nunca fue diseñado para tener.',
       visionHeadline: 'La visión.',
       visionDesc: 'Cada hotel independiente merece una experiencia de huésped que se sienta personal y completa — no por su presupuesto, sino por su conocimiento. Place Companion existe para darle a cada propiedad boutique, a cada hotel familiar, a cada colección cuidadosamente curada de habitaciones — la misma inteligencia que las marcas de hospitalidad más grandes del mundo están apenas comenzando a construir.',
+    },
+    faq: {
+      headline: 'Preguntas frecuentes.',
+      items: [
+        { q: '¿Cuánto tiempo tarda la configuración?', a: 'La mayoría de los hoteles están en vivo en menos de 30 minutos. Pega tu sitio web o guía de huéspedes y la IA construye tu asistente automáticamente.' },
+        { q: '¿Qué idiomas soporta?', a: 'Place Companion responde en el idioma del huésped automáticamente. Sin configuración — detecta y coincide con el idioma de la conversación.' },
+        { q: '¿Cómo acceden los huéspedes al asistente?', a: 'Mediante código QR, un enlace en tu sitio web o integrado como widget de chat. No se requiere descargar ninguna app.' },
+        { q: '¿Puedo personalizar lo que el asistente sabe?', a: 'Sí. Tú controlas toda la información de la propiedad — menús, políticas, amenidades, recomendaciones locales. Actualízala en cualquier momento desde tu panel.' },
+        { q: '¿Hay una prueba gratuita?', a: 'Sí. 14 días gratis, sin tarjeta de crédito. Tendrás un asistente completamente funcional para tu propiedad en minutos después de registrarte.' },
+        { q: '¿Qué pasa si tengo varias propiedades?', a: 'El plan Grupo Pequeño cubre 2–5 propiedades en un solo panel. Para portafolios más grandes, contáctanos para precios empresariales.' },
+      ],
+    },
+    demo: {
+      label: 'DEMO EN VIVO',
+      headline: 'Conoce a Marina, la Asistente de Huéspedes con IA de MarAzul Riviera Maya.',
+      description: 'Un asistente en vivo de Place Companion configurado para un hotel boutique costero. Pregunta lo que un huésped quisiera saber — horarios de comedor, tratamientos de spa, experiencias cercanas, políticas de check-in.',
+      langNote: 'Pregunta en cualquier idioma. Tu pregunta, tu idioma.',
+      createCta: 'Crea tu Asistente de Hotel',
+      trialNote: 'Sin tarjeta de crédito · En vivo en minutos',
+      chatPlaceholder: 'Pregunta cualquier cosa sobre el hotel…',
+      collectionLabel: 'Parte de la Colección MarAzul',
+      aiCompanion: 'Tu Asistente de Huéspedes con IA 24/7',
+      suggestionChips: ['¿Dónde se sirve el desayuno?', '¿Tienen clases de surf?', '¿Hasta qué hora está abierta la alberca?', '¿Dónde está la farmacia más cercana?', '¿Tienen servicio de spa?'],
     },
     auth: {
       loginHeadline: 'Bienvenido de vuelta.',

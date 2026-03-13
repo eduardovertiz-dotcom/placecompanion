@@ -1,40 +1,15 @@
 "use client";
 
 import { useState } from "react";
-
-const FAQS = [
-  {
-    q: "How long does setup take?",
-    a: "Most hotels are live in under 30 minutes. Paste your website or guest guide and the AI builds your assistant automatically.",
-  },
-  {
-    q: "What languages does it support?",
-    a: "Place Companion responds in the guest's language automatically. No configuration needed — it detects and matches the conversation language.",
-  },
-  {
-    q: "How do guests access the assistant?",
-    a: "Via QR code, a link on your website, or embedded as a chat widget. No app download required.",
-  },
-  {
-    q: "Can I customize what the assistant knows?",
-    a: "Yes. You control all property information — menus, policies, amenities, local recommendations. Update it anytime from your dashboard.",
-  },
-  {
-    q: "Is there a free trial?",
-    a: "Yes. 14 days free, no credit card required. You'll have a fully working assistant for your property within minutes of signing up.",
-  },
-  {
-    q: "What if I have multiple properties?",
-    a: "The Small Group plan covers 2–5 properties under one dashboard. For larger portfolios, contact us for enterprise pricing.",
-  },
-];
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 export function FaqSection() {
+  const { t } = useLang();
   const [open, setOpen] = useState<number | null>(null);
 
   return (
     <div className="max-w-2xl mx-auto mt-12 text-left">
-      {FAQS.map((faq, i) => (
+      {t.faq.items.map((faq, i) => (
         <div
           key={i}
           style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}

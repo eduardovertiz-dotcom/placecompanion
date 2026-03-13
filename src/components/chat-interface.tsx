@@ -9,6 +9,8 @@ export interface ChatConfig {
   collection: string;
   systemPrompt: string;
   suggestionChips?: string[];
+  placeholder?: string;
+  mobileChipsLimit?: number;
 }
 
 interface Message {
@@ -207,12 +209,12 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
 
             {idx === 0 && showSuggestions && (
               <div className="flex flex-wrap mt-3 gap-2">
-                {config.suggestionChips!.map((s) => (
+                {config.suggestionChips!.map((s, chipIdx) => (
                   <button
                     key={s}
                     type="button"
                     onClick={() => sendMessage(s)}
-                    className="font-sans transition-all duration-200"
+                    className={`font-sans transition-all duration-200${config.mobileChipsLimit !== undefined && chipIdx >= config.mobileChipsLimit ? ' hidden sm:inline-flex' : ''}`}
                     style={{
                       background: "#1F1E1D",
                       border: "1px solid rgba(250,249,245,0.08)",
@@ -269,7 +271,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask anything about the hotel…"
+          placeholder={config.placeholder ?? "Ask anything about the hotel…"}
           disabled={isLoading}
           className="flex-1 font-sans outline-none placeholder-[#9C9A93]"
           style={{
