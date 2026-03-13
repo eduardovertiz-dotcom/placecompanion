@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useLang } from '@/lib/i18n/LanguageContext'
+import UpgradeModal from '@/components/UpgradeModal'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,8 +13,14 @@ interface Props {
   properties: any[]
 }
 
+interface UpgradeTarget {
+  propertyId: string
+  userId: string
+}
+
 export default function DashboardClient({ user, properties }: Props) {
   const { t } = useLang()
+  const [upgradeTarget, setUpgradeTarget] = useState<UpgradeTarget | null>(null)
 
   async function handleSignOut() {
     const supabase = createClient()
@@ -101,12 +109,17 @@ export default function DashboardClient({ user, properties }: Props) {
             {properties.map((property) => {
               const trialEnds = new Date(property.trial_ends_at)
               const daysLeft = Math.max(0, Math.floor((trialEnds.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
-              const trialActive = daysLeft > 0
+              const status: string = property.subscription_status ?? 'trial'
+              const isActive = status === 'active'
+              const isTrial = status === 'trial'
+              const isPastDue = status === 'past_due'
+              const isCanceled = status === 'canceled'
+              const showUpgrade = isTrial || isCanceled || isPastDue
 
               return (
                 <div
                   key={property.id}
-                  className="transition-all cursor-pointer"
+                  className="transition-all"
                   style={{
                     background: '#1F1E1D',
                     borderRadius: '16px',
@@ -116,11 +129,26 @@ export default function DashboardClient({ user, properties }: Props) {
                   onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.16)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.08)' }}
                 >
+                  {/* Name + status badge */}
                   <div className="flex justify-between items-start">
                     <p className="font-serif" style={{ fontSize: '24px', color: '#FAF9F5' }}>
                       {property.hotel_name}
                     </p>
-                    {trialActive && (
+                    {isActive && (
+                      <span
+                        className="font-sans tracking-widest"
+                        style={{
+                          fontSize: '10px',
+                          background: 'rgba(45,158,107,0.2)',
+                          color: '#2D9E6B',
+                          padding: '4px 10px',
+                          borderRadius: '999px',
+                        }}
+                      >
+                        ACTIVE
+                      </span>
+                    )}
+                    {isTrial && daysLeft > 3 && (
                       <span
                         className="font-sans tracking-widest"
                         style={{
@@ -142,15 +170,52 @@ export default function DashboardClient({ user, properties }: Props) {
                     </p>
                   )}
 
-                  <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#9C9A93' }}>
-                    {t.dashboard.trialEnds} {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </p>
+                  {/* Trial warning banners */}
+                  {isTrial && daysLeft <= 3 && daysLeft > 0 && (
+                    <div
+                      className="font-sans rounded-lg mt-4 px-4 py-3"
+                      style={{ background: 'rgba(234,179,8,0.12)', border: '1px solid rgba(234,179,8,0.3)', fontSize: '13px', color: '#FCD34D' }}
+                    >
+                      Trial ends in {daysLeft} day{daysLeft === 1 ? '' : 's'} — upgrade to keep your assistant live.
+                    </div>
+                  )}
+                  {isTrial && daysLeft === 0 && (
+                    <div
+                      className="font-sans rounded-lg mt-4 px-4 py-3"
+                      style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.3)', fontSize: '13px', color: '#F87171' }}
+                    >
+                      Trial expired — upgrade to continue.
+                    </div>
+                  )}
+                  {isCanceled && (
+                    <div
+                      className="font-sans rounded-lg mt-4 px-4 py-3"
+                      style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.3)', fontSize: '13px', color: '#F87171' }}
+                    >
+                      Subscription canceled — upgrade to reactivate.
+                    </div>
+                  )}
+                  {isPastDue && (
+                    <div
+                      className="font-sans rounded-lg mt-4 px-4 py-3"
+                      style={{ background: 'rgba(234,179,8,0.12)', border: '1px solid rgba(234,179,8,0.3)', fontSize: '13px', color: '#FCD34D' }}
+                    >
+                      Payment failed — update your billing to continue.
+                    </div>
+                  )}
 
+                  {isTrial && (
+                    <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#9C9A93' }}>
+                      {t.dashboard.trialEnds} {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
+                  )}
+
+                  {/* Stats */}
                   <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(250,249,245,0.08)' }}>
                     {[
                       { label: t.dashboard.conversations, value: String(property.conversations?.[0]?.count ?? 0) },
                       { label: t.dashboard.questions, value: String(property.messages?.[0]?.count ?? 0) },
-                      { label: t.dashboard.daysLeft, value: String(daysLeft) },
+                      { label: t.dashboard.daysLeft, value: isActive ? '∞' : String(daysLeft) },
                     ].map(({ label, value }) => (
                       <div key={label}>
                         <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#9C9A93' }}>
@@ -163,7 +228,8 @@ export default function DashboardClient({ user, properties }: Props) {
                     ))}
                   </div>
 
-                  <div className="flex gap-3 mt-6">
+                  {/* Actions */}
+                  <div className="flex gap-3 mt-6 flex-wrap">
                     <Link
                       href={`/assistant/${property.id}`}
                       className="font-sans transition-colors"
@@ -192,6 +258,23 @@ export default function DashboardClient({ user, properties }: Props) {
                     >
                       {t.dashboard.manage}
                     </Link>
+                    {showUpgrade && (
+                      <button
+                        onClick={() => setUpgradeTarget({ propertyId: property.id, userId: user.id })}
+                        className="font-sans font-medium transition-colors"
+                        style={{
+                          fontSize: '14px',
+                          color: '#FAF9F5',
+                          background: '#2D9E6B',
+                          borderRadius: '8px',
+                          padding: '10px 16px',
+                          border: 'none',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Upgrade
+                      </button>
+                    )}
                   </div>
                 </div>
               )
@@ -199,6 +282,15 @@ export default function DashboardClient({ user, properties }: Props) {
           </div>
         )}
       </div>
+
+      {/* Upgrade modal */}
+      {upgradeTarget && (
+        <UpgradeModal
+          propertyId={upgradeTarget.propertyId}
+          userId={upgradeTarget.userId}
+          onClose={() => setUpgradeTarget(null)}
+        />
+      )}
     </div>
   )
 }
