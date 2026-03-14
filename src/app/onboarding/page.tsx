@@ -279,7 +279,7 @@ export default function OnboardingPage() {
                 placeholder="https://yourhotel.com"
                 className="w-full font-sans focus:outline-none transition-colors placeholder-[#6B6560]"
                 style={{
-                  background: '#242019',
+                  background: '#0F0D0B',
                   border: '1px solid rgba(232,227,220,0.08)',
                   borderRadius: '12px',
                   padding: '12px 16px',
@@ -318,7 +318,7 @@ export default function OnboardingPage() {
                   setUploadedFiles(prev => [...prev, ...dropped])
                 }}
                 style={{
-                  background: '#242019',
+                  background: '#0F0D0B',
                   border: '1px dashed rgba(232,227,220,0.15)',
                   borderRadius: '12px',
                   padding: '20px',
@@ -386,7 +386,7 @@ export default function OnboardingPage() {
                 rows={6}
                 className="w-full font-sans resize-none focus:outline-none transition-colors placeholder-[#6B6560]"
                 style={{
-                  background: '#242019',
+                  background: '#0F0D0B',
                   border: '1px solid rgba(232,227,220,0.08)',
                   borderRadius: '12px',
                   padding: '12px 16px',
@@ -431,7 +431,7 @@ export default function OnboardingPage() {
                     onClick={() => setConversationalStyle(key)}
                     className="text-left transition-all"
                     style={{
-                      background: isSelected ? '#2C2720' : '#242019',
+                      background: '#0F0D0B',
                       border: `1px solid ${isSelected ? '#2D9E6B' : 'rgba(232,227,220,0.06)'}`,
                       borderRadius: '10px',
                       padding: '14px',
