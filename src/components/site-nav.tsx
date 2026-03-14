@@ -51,7 +51,7 @@ export function SiteNav() {
             {t.nav.signIn}
           </Link>
           <Link href="/demo" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
-            Live Demo
+            {t.nav.seeDemo}
           </Link>
           <Link href="/onboarding" className="font-sans text-sm bg-[#C96A3A] text-[#FAF9F5] h-10 px-5 rounded-md flex items-center hover:bg-[#D4784A] transition-colors">
             {t.nav.createAssistant}
@@ -92,7 +92,7 @@ export function SiteNav() {
               <LanguageToggle />
             </div>
             <Link href="/demo" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
-              Live Demo
+              {t.nav.seeDemo}
             </Link>
             {lang === 'en' && (
               <Link href="/auth/login" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
