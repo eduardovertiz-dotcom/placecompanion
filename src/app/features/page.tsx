@@ -40,7 +40,7 @@ export default function FeaturesPage() {
 
           <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-12 md:mt-16 text-left">
             <div>
-              <p className="font-sans uppercase tracking-widest mb-5" style={{ fontSize: "11px", color: "#9C9A93" }}>
+              <p className="font-sans uppercase tracking-widest mb-5" style={{ fontSize: "11px", color: "#FAF9F5" }}>
                 {t.intelligence.hotelLabel}
               </p>
               <div className="space-y-3">
@@ -51,7 +51,7 @@ export default function FeaturesPage() {
             </div>
             <div className="hidden md:block self-stretch mx-8" style={{ width: "1px", background: "rgba(250,249,245,0.08)" }} />
             <div className="mt-8 md:mt-0">
-              <p className="font-sans uppercase tracking-widest mb-5" style={{ fontSize: "11px", color: "#9C9A93" }}>
+              <p className="font-sans uppercase tracking-widest mb-5" style={{ fontSize: "11px", color: "#FAF9F5" }}>
                 {t.intelligence.destinationLabel}
               </p>
               <div className="space-y-3">
