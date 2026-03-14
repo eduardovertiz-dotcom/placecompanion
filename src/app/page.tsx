@@ -94,8 +94,11 @@ export default function HomePage() {
 
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
       <section className="py-12 overflow-hidden" style={{ background: '#111009' }}>
-        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '16px', color: '#A8A099' }}>
-          {t.realQuestions.label}
+        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '16px', color: '#6B6560' }}>
+          {lang === 'es'
+            ? <>Los huéspedes preguntan. <span style={{ color: '#C96A3A' }}>Ahora mismo.</span></>
+            : <>Guests are asking. <span style={{ color: '#C96A3A' }}>Right now.</span></>
+          }
         </p>
 
         {/* Row 1 — scrolls left */}
