@@ -51,5 +51,5 @@ body {
   animation: scroll-left 35s linear infinite;
 }
 .animate-scroll-right {
-  animation: scroll-right 40s linear infinite;
+  animation: scroll-right 25s linear infinite;
 }
