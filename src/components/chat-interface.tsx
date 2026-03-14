@@ -278,8 +278,8 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           disabled={isLoading}
           className="flex-1 min-w-0 font-sans outline-none placeholder-[#6B6560]"
           style={{
-            background: "#1F1C19",
-            border: "1px solid rgba(232,227,220,0.08)",
+            background: "#080706",
+            border: "1px solid rgba(232,227,220,0.15)",
             borderRadius: "12px",
             padding: "12px 16px",
             fontSize: "15px",

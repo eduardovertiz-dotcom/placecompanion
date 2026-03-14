@@ -1,119 +1,198 @@
 'use client'
 
-import Link from "next/link";
-import { ChatInterface } from "@/components/chat-interface";
-import { marazulChatConfig } from "@/lib/marazul-config";
-import { useLang } from "@/lib/i18n/LanguageContext";
-import type { ChatConfig } from "@/components/chat-interface";
+import { useState } from "react"
+import Link from "next/link"
+import { ChatInterface } from "@/components/chat-interface"
+import { marazulChatConfig } from "@/lib/marazul-config"
+import { useLang } from "@/lib/i18n/LanguageContext"
+import type { ChatConfig } from "@/components/chat-interface"
 
 export default function DemoPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const demoChatConfig: ChatConfig = {
     ...marazulChatConfig,
-    placeholder: t.demo.chatPlaceholder,
+    placeholder: lang === 'es' ? 'Pregunta algo...' : 'Ask anything...',
     suggestionChips: [
       t.demo.suggestionChips[0],
       t.demo.suggestionChips[1],
       t.demo.suggestionChips[4],
     ],
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[#0F0D0B] flex flex-col items-center px-4 py-8">
-      {/* Minimal nav */}
-      <div
-        className="w-full px-4 md:px-8 py-5 flex justify-between items-center"
-        style={{ borderBottom: "1px solid rgba(250,249,245,0.06)" }}
-      >
-        <Link href="/" className="font-serif text-xl text-[#FAF9F5]">
-          Place Companion
-        </Link>
-        <Link
-          href="/onboarding"
-          className="inline-flex items-center font-sans text-[13px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-9 px-4 rounded-md transition-colors"
-        >
-          {t.demo.createCta}
-        </Link>
-      </div>
+    <>
+      {/* ── MOBILE: fixed full-screen layout ─────────────── */}
+      <div className="md:hidden fixed inset-0 flex flex-col bg-[#0F0D0B]">
 
-      {/* Two-column layout */}
-      <div className="w-full max-w-7xl px-4 md:px-8 py-12 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left */}
-          <div>
-            <p
-              className="font-sans uppercase tracking-widest text-[#9C9A93] mb-6"
-              style={{ fontSize: "11px" }}
+        {/* Nav */}
+        <div
+          className="flex-shrink-0 w-full px-4 py-4 flex justify-between items-center relative"
+          style={{ borderBottom: "1px solid rgba(250,249,245,0.06)" }}
+        >
+          <Link href="/" className="font-serif text-xl text-[#FAF9F5]">
+            Place Companion
+          </Link>
+
+          {/* Hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="flex items-center justify-center w-9 h-9"
+            aria-label="Menu"
+            style={{ color: '#E8E3DC' }}
+          >
+            {menuOpen ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div
+              className="absolute top-full left-0 right-0 z-50 flex flex-col"
+              style={{ background: '#141210', borderBottom: '1px solid rgba(232,227,220,0.08)' }}
             >
-              {t.demo.label}
-            </p>
-            <h1
-              className="font-serif font-normal text-[#FAF9F5]"
-              style={{ fontSize: "56px", lineHeight: 1.05 }}
-            >
-              {t.demo.headline}
-            </h1>
-            <p
-              className="font-sans font-light text-[#9C9A93] mt-5"
-              style={{ fontSize: "18px", lineHeight: 1.75 }}
-            >
-              {t.demo.description}
-            </p>
-            <p
-              className="font-sans text-[#9C9A93] mt-4"
-              style={{ fontSize: "16px" }}
-            >
-              {t.demo.langNote}
-            </p>
-            <Link
-              href="/onboarding"
-              className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors mt-6 inline-flex items-center"
-            >
-              {t.demo.createCta}
-            </Link>
-            <p
-              className="font-sans text-[#53525D] mt-3"
-              style={{ fontSize: "12px" }}
-            >
-              {t.demo.trialNote}
+              <Link href="/features" onClick={() => setMenuOpen(false)} className="font-sans px-4 py-3 text-sm" style={{ color: '#A8A099', borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
+                Features
+              </Link>
+              <Link href="/#pricing" onClick={() => setMenuOpen(false)} className="font-sans px-4 py-3 text-sm" style={{ color: '#A8A099', borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
+                Pricing
+              </Link>
+              <Link href="/onboarding" onClick={() => setMenuOpen(false)} className="font-sans px-4 py-3 text-sm font-medium" style={{ color: '#C96A3A', borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
+                Create Your Hotel Assistant
+              </Link>
+              <Link href="/auth/login" onClick={() => setMenuOpen(false)} className="font-sans px-4 py-3 text-sm" style={{ color: '#A8A099' }}>
+                Sign In
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Short mobile copy */}
+        <div className="flex-shrink-0 px-4 pt-4 pb-2">
+          <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-3" style={{ fontSize: '11px' }}>
+            {t.demo.label}
+          </p>
+          <h1 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: '26px', lineHeight: 1.15 }}>
+            {lang === 'es'
+              ? 'Conoce a Marina, la Asistente IA de MarAzul.'
+              : "Meet Marina, MarAzul's AI Guest Companion."}
+          </h1>
+          <p className="font-sans text-[#9C9A93] mt-6 mb-4" style={{ fontSize: '14px' }}>
+            {lang === 'es'
+              ? 'Un asistente real. Pregunta lo que cualquier huésped preguntaría.'
+              : 'A real Place Companion assistant. Ask anything a guest would ask.'}
+          </p>
+        </div>
+
+        {/* Chat — fills remaining screen */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Chat header */}
+          <div
+            className="flex-shrink-0 px-4 py-3"
+            style={{ borderBottom: '1px solid rgba(250,249,245,0.08)', background: '#141210' }}
+          >
+            <div className="flex justify-between items-center">
+              <span className="font-sans text-[16px] font-semibold text-[#FAF9F5]">
+                MarAzul Riviera Maya
+              </span>
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#FAF9F5' }} />
+            </div>
+            <p className="font-sans text-[12px] text-[#9C9A93] mt-0.5">
+              {t.demo.collectionLabel}
             </p>
           </div>
+          <ChatInterface config={demoChatConfig} />
+        </div>
+      </div>
 
-          {/* Right — demo window */}
-          <div
-            className="w-full max-w-[480px] mx-auto rounded-2xl overflow-hidden flex flex-col"
-            style={{
-              border: "1px solid rgba(232,227,220,0.06)",
-              background: "#0F0D0B",
-              minHeight: "560px",
-            }}
+      {/* ── DESKTOP: scrollable two-column layout ────────── */}
+      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 py-8">
+
+        {/* Nav */}
+        <div
+          className="w-full px-4 md:px-8 py-5 flex justify-between items-center"
+          style={{ borderBottom: "1px solid rgba(250,249,245,0.06)" }}
+        >
+          <Link href="/" className="font-serif text-xl text-[#FAF9F5]">
+            Place Companion
+          </Link>
+          <Link
+            href="/onboarding"
+            className="inline-flex items-center font-sans text-[13px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-9 px-4 rounded-md transition-colors"
           >
-            {/* Header */}
-            <div
-              className="flex-shrink-0 px-6 py-5"
-              style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
-            >
-              <div className="flex justify-between items-center">
-                <span className="font-sans text-[20px] font-semibold text-[#FAF9F5]">
-                  MarAzul Riviera Maya
-                </span>
-                <div
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ background: "#FAF9F5" }}
-                />
-              </div>
-              <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
-                {t.demo.collectionLabel}
+            {t.demo.createCta}
+          </Link>
+        </div>
+
+        {/* Two-column layout */}
+        <div className="w-full max-w-7xl px-4 md:px-8 py-12 md:py-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left */}
+            <div>
+              <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-6" style={{ fontSize: "11px" }}>
+                {t.demo.label}
               </p>
-              <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
-                {t.demo.aiCompanion}
+              <h1 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "56px", lineHeight: 1.05 }}>
+                {t.demo.headline}
+              </h1>
+              <p className="font-sans font-light text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+                {t.demo.description}
+              </p>
+              <p className="font-sans text-[#9C9A93] mt-6 mb-6" style={{ fontSize: "16px" }}>
+                {t.demo.langNote}
+              </p>
+              <Link
+                href="/onboarding"
+                className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors inline-flex items-center"
+              >
+                {t.demo.createCta}
+              </Link>
+              <p className="font-sans text-[#53525D] mt-3" style={{ fontSize: "12px" }}>
+                {t.demo.trialNote}
               </p>
             </div>
-            <ChatInterface config={demoChatConfig} />
+
+            {/* Right — demo window */}
+            <div
+              className="w-full max-w-[480px] mx-auto rounded-2xl overflow-hidden flex flex-col"
+              style={{
+                border: "1px solid rgba(232,227,220,0.06)",
+                background: "#0F0D0B",
+                minHeight: "560px",
+              }}
+            >
+              <div
+                className="flex-shrink-0 px-6 py-5"
+                style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-sans text-[20px] font-semibold text-[#FAF9F5]">
+                    MarAzul Riviera Maya
+                  </span>
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#FAF9F5" }} />
+                </div>
+                <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
+                  {t.demo.collectionLabel}
+                </p>
+                <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
+                  {t.demo.aiCompanion}
+                </p>
+              </div>
+              <ChatInterface config={demoChatConfig} />
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
-  );
+    </>
+  )
 }
