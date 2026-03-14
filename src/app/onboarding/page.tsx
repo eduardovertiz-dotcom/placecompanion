@@ -232,7 +232,7 @@ export default function OnboardingPage() {
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
           Place Companion
         </Link>
-        <Link href="/" className="font-sans text-sm transition-colors" style={{ color: '#A8A099' }}>
+        <Link href="/" className="font-sans text-sm transition-colors" style={{ color: '#C4BDB6' }}>
           {t.auth.backHome}
         </Link>
       </header>
@@ -255,7 +255,7 @@ export default function OnboardingPage() {
           <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
             {t.onboarding.step1Headline}
           </h1>
-          <p className="font-sans font-light mt-4" style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.7 }}>
+          <p className="font-sans font-light mt-4" style={{ fontSize: '18px', color: '#C4BDB6', lineHeight: 1.7 }}>
             {t.onboarding.step1Subhead}
           </p>
 
@@ -289,7 +289,7 @@ export default function OnboardingPage() {
                 onFocus={e => { e.target.style.borderColor = 'rgba(232,227,220,0.25)' }}
                 onBlur={e => { e.target.style.borderColor = 'rgba(232,227,220,0.08)' }}
               />
-              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#6B6560' }}>
+              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#C4BDB6' }}>
                 {t.onboarding.websiteHelper}
               </p>
             </div>
@@ -327,8 +327,8 @@ export default function OnboardingPage() {
                   transition: 'border-color 0.2s',
                 }}
               >
-                <p className="font-sans" style={{ fontSize: '14px', color: '#6B6560' }}>
-                  Drag PDFs here, or <span style={{ color: '#A8A099' }}>click to browse</span>
+                <p className="font-sans" style={{ fontSize: '14px', color: '#C4BDB6' }}>
+                  Drag PDFs here, or <span style={{ color: '#C4BDB6' }}>click to browse</span>
                 </p>
               </div>
               <input
@@ -349,13 +349,13 @@ export default function OnboardingPage() {
                     <span
                       key={i}
                       className="font-sans flex items-center gap-1.5 rounded-full px-3 py-1"
-                      style={{ background: '#2C2720', border: '1px solid rgba(232,227,220,0.06)', color: '#A8A099', fontSize: '13px' }}
+                      style={{ background: '#2C2720', border: '1px solid rgba(232,227,220,0.06)', color: '#C4BDB6', fontSize: '13px' }}
                     >
                       {file.name}
                       <button
                         type="button"
                         onClick={() => setUploadedFiles(prev => prev.filter((_, idx) => idx !== i))}
-                        style={{ color: '#6B6560', lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 0 2px', fontSize: '16px' }}
+                        style={{ color: '#C4BDB6', lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 0 2px', fontSize: '16px' }}
                       >
                         ×
                       </button>
@@ -363,7 +363,7 @@ export default function OnboardingPage() {
                   ))}
                 </div>
               )}
-              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#6B6560' }}>
+              <p className="font-sans mt-1.5" style={{ fontSize: '13px', color: '#C4BDB6' }}>
                 {t.onboarding.documentsHelper}
               </p>
             </div>
@@ -407,7 +407,7 @@ export default function OnboardingPage() {
               <line x1="12" y1="8" x2="12" y2="12" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" />
               <circle cx="12" cy="16" r="0.75" fill="#2D9E6B" />
             </svg>
-            <p className="font-sans font-light" style={{ fontSize: '14px', color: '#6B6560', lineHeight: 1.65 }}>
+            <p className="font-sans font-light" style={{ fontSize: '14px', color: '#C4BDB6', lineHeight: 1.65 }}>
               {t.onboarding.proTip}
             </p>
           </div>
@@ -417,7 +417,7 @@ export default function OnboardingPage() {
             <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
               {t.onboarding.chooseStyle}
             </p>
-            <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#6B6560' }}>
+            <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#C4BDB6' }}>
               {t.onboarding.styleSubhead}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
@@ -441,7 +441,7 @@ export default function OnboardingPage() {
                     <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
                       {styleData.name}
                     </p>
-                    <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560', lineHeight: 1.4 }}>
+                    <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#C4BDB6', lineHeight: 1.4 }}>
                       {styleData.tagline}
                     </p>
                   </button>
@@ -467,7 +467,7 @@ export default function OnboardingPage() {
             {t.onboarding.analyzeButton}
           </button>
 
-          <p className="font-sans text-center mt-3" style={{ fontSize: '13px', color: '#6B6560' }}>
+          <p className="font-sans text-center mt-3" style={{ fontSize: '13px', color: '#C4BDB6' }}>
             {t.onboarding.analyzing}
           </p>
 
@@ -491,7 +491,7 @@ export default function OnboardingPage() {
           <h1 className="heading-section font-serif font-normal mt-4" style={{ color: '#E8E3DC' }}>
             {t.onboarding.step2Headline}
           </h1>
-          <p className="font-sans mt-3" style={{ fontSize: '18px', color: '#A8A099' }}>
+          <p className="font-sans mt-3" style={{ fontSize: '18px', color: '#C4BDB6' }}>
             {t.onboarding.step2Subhead}
           </p>
 
@@ -524,7 +524,7 @@ export default function OnboardingPage() {
           </div>
 
           {animatedItems.length > 0 && !extractError && (
-            <p className="font-sans mt-8" style={{ fontSize: '14px', color: '#A8A099' }}>
+            <p className="font-sans mt-8" style={{ fontSize: '14px', color: '#C4BDB6' }}>
               {t.onboarding.building}
             </p>
           )}
@@ -566,7 +566,7 @@ export default function OnboardingPage() {
               ? t.onboarding.step3HeadlineWith.replace('{hotelName}', extracted.hotelName)
               : t.onboarding.step3HeadlineDefault}
           </h1>
-          <p className="font-sans text-center mt-3" style={{ fontSize: '18px', color: '#A8A099' }}>
+          <p className="font-sans text-center mt-3" style={{ fontSize: '18px', color: '#C4BDB6' }}>
             {t.onboarding.step3Subhead}
           </p>
 
@@ -588,7 +588,7 @@ export default function OnboardingPage() {
                 <p className="font-sans font-medium" style={{ fontSize: '16px', color: '#E8E3DC' }}>
                   {extracted?.hotelName || 'Your Hotel'}
                 </p>
-                <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#6B6560' }}>
+                <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#C4BDB6' }}>
                   {t.onboarding.aiCompanionLabel}
                 </p>
               </div>
@@ -714,7 +714,7 @@ export default function OnboardingPage() {
 
           {/* Below chat CTA */}
           <div className="mt-8 text-center pb-16">
-            <p className="font-sans" style={{ fontSize: '16px', color: '#A8A099' }}>
+            <p className="font-sans" style={{ fontSize: '16px', color: '#C4BDB6' }}>
               {t.onboarding.saveCta}
             </p>
             <button
@@ -748,7 +748,7 @@ export default function OnboardingPage() {
           </h1>
           <p
             className="font-sans font-light mt-4 max-w-md mx-auto"
-            style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.7 }}
+            style={{ fontSize: '18px', color: '#C4BDB6', lineHeight: 1.7 }}
           >
             {t.onboarding.step4Body}
           </p>
@@ -812,7 +812,7 @@ export default function OnboardingPage() {
               {isSaving ? t.onboarding.creating : t.onboarding.createBtn}
             </button>
           </div>
-          <p className="font-sans text-center mt-3" style={{ fontSize: '12px', color: '#6B6560' }}>
+          <p className="font-sans text-center mt-3" style={{ fontSize: '12px', color: '#C4BDB6' }}>
             {t.onboarding.trialNote}
           </p>
         </div>
