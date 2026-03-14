@@ -194,8 +194,8 @@ export default function HomePage() {
               </div>
               <p className="font-sans text-center mt-6" style={{ fontSize: '18px', color: '#A8A099' }}>
                 {lang === 'es'
-                  ? <>Un upgrade. Inversión = <span style={{ color: '#C96A3A', fontWeight: 600 }}>cubierta.</span></>
-                  : <>One upgrade. Investment = <span style={{ color: '#C96A3A', fontWeight: 600 }}>covered.</span></>
+                  ? <>Un upgrade.<br />Inversión = <span style={{ color: '#C96A3A', fontWeight: 600 }}>cubierta.</span></>
+                  : <>One upgrade.<br />Investment = <span style={{ color: '#C96A3A', fontWeight: 600 }}>covered.</span></>
                 }
               </p>
             </div>
