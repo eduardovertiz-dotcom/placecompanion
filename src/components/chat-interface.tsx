@@ -292,7 +292,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             width: "40px",
             height: "40px",
             background: isLoading || !input.trim() ? "rgba(201,106,58,0.35)" : "#C96A3A",
-            borderRadius: "12px",
+            borderRadius: "999px",
             border: "none",
             cursor: isLoading || !input.trim() ? "not-allowed" : "pointer",
             display: "flex",
@@ -301,6 +301,8 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             flexShrink: 0,
             transition: "background 0.2s",
           }}
+          onMouseEnter={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#D4784A' }}
+          onMouseLeave={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#C96A3A' }}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
