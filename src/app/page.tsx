@@ -94,7 +94,7 @@ export default function HomePage() {
 
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
       <section className="py-12 overflow-hidden" style={{ background: '#111009' }}>
-        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '11px', color: '#6B6560' }}>
+        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '16px', color: '#A8A099' }}>
           {t.realQuestions.label}
         </p>
 
