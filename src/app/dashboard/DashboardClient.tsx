@@ -341,7 +341,7 @@ export default function DashboardClient({ user, properties }: Props) {
             </p>
             <div className="flex flex-col gap-3 mt-6">
               <a
-                href="#"
+                href="https://forms.gle/CsYAreNSpr2nHCq87"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowInvoiceModal(false)}
@@ -361,7 +361,7 @@ export default function DashboardClient({ user, properties }: Props) {
                 </span>
               </a>
               <a
-                href="#"
+                href="https://forms.gle/gv8vDE62ABG7otH9A"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowInvoiceModal(false)}
