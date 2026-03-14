@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,6 +11,13 @@ import { useLang } from "@/lib/i18n/LanguageContext";
 
 export default function HomePage() {
   const { t, lang } = useLang();
+  const [showBar, setShowBar] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setShowBar(window.scrollY > 400)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const heroChatConfig = {
     ...marazulChatConfig,
@@ -27,7 +35,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#080706" }}>
+    <div className="min-h-screen overflow-x-hidden pb-20 md:pb-0" style={{ background: "#080706" }}>
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
@@ -397,6 +405,35 @@ export default function HomePage() {
       </section>
 
       <SiteFooter />
+
+      {showBar && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
+          style={{
+            background: '#0F0D0B',
+            borderTop: '1px solid rgba(232,227,220,0.08)',
+            padding: '12px 16px',
+            paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
+          }}
+        >
+          <div className="flex gap-3">
+            <Link
+              href="/demo"
+              className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm"
+              style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC' }}
+            >
+              {lang === 'es' ? 'Ver Demo' : 'View Live Demo'}
+            </Link>
+            <Link
+              href="/onboarding"
+              className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm font-medium"
+              style={{ background: '#C96A3A', color: '#FAF9F5' }}
+            >
+              {lang === 'es' ? 'Crear Asistente' : 'Create Assistant'}
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
