@@ -19,7 +19,7 @@ export const translations = {
       primaryCta: 'Try It Free',
       ghostCta: 'Try the Demo',
       trust: 'No credit card required · Live in minutes · Multilingual by default',
-      socialProof: 'Trusted by boutique hotels in 12+ countries',
+
     },
     pain: {
       pill1: 'Where is breakfast served?',
@@ -430,7 +430,7 @@ export const translations = {
       primaryCta: 'Pruébalo Gratis',
       ghostCta: 'Prueba el Demo',
       trust: 'Sin tarjeta de crédito · En minutos · Multilingüe por defecto',
-      socialProof: 'Con la confianza de hoteles boutique en 12+ países',
+
     },
     pain: {
       pill1: '¿Dónde se sirve el desayuno?',

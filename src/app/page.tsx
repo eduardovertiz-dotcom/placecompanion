@@ -63,9 +63,7 @@ export default function HomePage() {
                 <p className="font-sans mt-3" style={{ fontSize: '14px', color: '#A8A099' }}>
                   {t.hero.trust}
                 </p>
-                <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#A8A099' }}>
-                  {t.hero.socialProof}
-                </p>
+
               </div>
             </div>
 
