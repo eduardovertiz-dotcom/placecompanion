@@ -351,7 +351,7 @@ export const translations = {
       pricing: 'Precios',
       demo: 'Demo',
       about: 'Nosotros',
-      seeDemo: 'Demo',
+      seeDemo: 'Ver Demo',
       createAssistant: 'Crea tu Asistente',
       signIn: 'Inicia Sesión',
     },
