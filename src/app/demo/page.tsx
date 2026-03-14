@@ -14,6 +14,9 @@ export default function DemoPage() {
   const demoChatConfig: ChatConfig = {
     ...marazulChatConfig,
     placeholder: lang === 'es' ? 'Pregunta algo...' : 'Ask anything...',
+    greeting: lang === 'es'
+      ? '¡Hola! Soy Marina, la IA de MarAzul. ¿En qué puedo ayudarte?'
+      : "Hi! I'm Marina, MarAzul's AI companion. What can I help you with?",
     suggestionChips: [
       t.demo.suggestionChips[0],
       t.demo.suggestionChips[1],
@@ -75,24 +78,7 @@ export default function DemoPage() {
           )}
         </div>
 
-        {/* Short mobile copy */}
-        <div className="flex-shrink-0 px-4 pt-4 pb-2">
-          <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-3" style={{ fontSize: '11px' }}>
-            {t.demo.label}
-          </p>
-          <h1 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: '26px', lineHeight: 1.15 }}>
-            {lang === 'es'
-              ? 'Conoce a Marina, la Asistente IA de MarAzul.'
-              : "Meet Marina, MarAzul's AI Guest Companion."}
-          </h1>
-          <p className="font-sans text-[#9C9A93] mt-6 mb-4" style={{ fontSize: '14px' }}>
-            {lang === 'es'
-              ? 'Un asistente real. Pregunta lo que cualquier huésped preguntaría.'
-              : 'A real Place Companion assistant. Ask anything a guest would ask.'}
-          </p>
-        </div>
-
-        {/* Chat — fills remaining screen */}
+        {/* Chat — fills remaining space between nav and CTA */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Chat header */}
           <div
@@ -111,6 +97,15 @@ export default function DemoPage() {
           </div>
           <ChatInterface config={demoChatConfig} />
         </div>
+
+        {/* CTA below chat */}
+        <Link
+          href="/onboarding"
+          className="flex-shrink-0 flex items-center justify-center w-full h-14 font-sans font-medium text-[#FAF9F5]"
+          style={{ background: '#C96A3A' }}
+        >
+          {lang === 'es' ? 'Crea tu Asistente' : 'Create Your Hotel Assistant'}
+        </Link>
       </div>
 
       {/* ── DESKTOP: scrollable two-column layout ────────── */}
