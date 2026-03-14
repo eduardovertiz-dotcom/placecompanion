@@ -13,7 +13,7 @@ export default function FeaturesPage() {
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="py-32 md:py-40 text-center px-4 md:px-8" style={{ background: "#141413" }}>
+      <section className="min-h-screen flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 md:pb-32 text-center px-4 md:px-8" style={{ background: "#141413" }}>
         <h1 className="heading-hero font-serif font-normal text-[#FAF9F5] max-w-5xl mx-auto">
           {t.features.heroHeadline}
         </h1>
