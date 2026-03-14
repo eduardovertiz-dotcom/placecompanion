@@ -475,7 +475,7 @@ export default function HomePage() {
             </div>
             <button onClick={() => setShowCalendly(true)} className="font-sans text-sm"
               style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC', padding: '10px 20px', borderRadius: '6px', background: 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-              {lang === 'es' ? 'Hablemos →' : 'Talk to Eduardo →'}
+              {lang === 'es' ? 'Hablemos →' : "Let's talk →"}
             </button>
           </div>
 
@@ -498,7 +498,7 @@ export default function HomePage() {
               </p>
             </div>
             <button onClick={() => setShowCalendly(true)} className="font-sans text-sm"
-              style={{ border: '1px solid rgba(45,158,107,0.4)', color: '#2D9E6B', padding: '10px 20px', borderRadius: '6px', background: 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC', padding: '10px 20px', borderRadius: '6px', background: 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}>
               {lang === 'es' ? 'Construyamos juntos →' : "Let's build together →"}
             </button>
           </div>
