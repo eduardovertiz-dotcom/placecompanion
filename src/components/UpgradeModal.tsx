@@ -101,18 +101,18 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.75)' }}
+      style={{ background: 'rgba(0,0,0,0.85)' }}
       onClick={onClose}
     >
       <div
         className="relative w-full max-w-2xl rounded-2xl overflow-hidden"
-        style={{ background: '#1C1917', border: '1px solid rgba(232,227,220,0.08)' }}
+        style={{ background: '#0F0D0B', border: '1px solid rgba(232,227,220,0.08)' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-8 pt-8 pb-6" style={{ borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
           <div>
-            <h2 className="font-serif font-normal text-[#E8E3DC]" style={{ fontSize: '28px' }}>
+            <h2 className="font-serif font-normal text-[#FFFFFF]" style={{ fontSize: '28px' }}>
               Upgrade your assistant.
             </h2>
             <p className="font-sans text-[#A8A099] mt-1" style={{ fontSize: '14px' }}>
@@ -139,7 +139,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 key={plan.priceId}
                 className="rounded-xl flex flex-col"
                 style={{
-                  background: '#242019',
+                  background: '#1A1715',
                   border: '1px solid rgba(232,227,220,0.06)',
                   padding: '24px',
                 }}
@@ -149,7 +149,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 </p>
 
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="font-serif font-light text-[#E8E3DC]" style={{ fontSize: '40px', lineHeight: 1 }}>
+                  <span className="font-serif font-light text-[#FFFFFF]" style={{ fontSize: '40px', lineHeight: 1 }}>
                     {discounted
                       ? '$' + Math.round(parseInt(plan.price.replace('$', '')) * 0.6)
                       : plan.price}
@@ -179,7 +179,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                   style={{
                     height: '44px',
                     fontSize: '14px',
-                    background: loadingPriceId ? 'rgba(45,158,107,0.5)' : '#2D9E6B',
+                    background: loadingPriceId ? 'rgba(201,106,58,0.35)' : '#C96A3A',
                     color: '#FAF9F5',
                     border: 'none',
                     cursor: loadingPriceId ? 'not-allowed' : 'pointer',
@@ -201,7 +201,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
         {/* Founding partner coupon */}
         <div
           className="mx-6 md:mx-8 mb-8 rounded-xl p-5"
-          style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)' }}
+          style={{ background: '#1F1C19', border: '1px solid rgba(232,227,220,0.06)' }}
         >
           <p className="font-sans text-[#A8A099]" style={{ fontSize: '13px' }}>
             Have a founding partner code?
@@ -219,9 +219,9 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
               style={{
                 height: '40px',
                 fontSize: '14px',
-                background: '#2C2720',
+                background: '#1F1C19',
                 border: '1px solid rgba(232,227,220,0.08)',
-                color: '#E8E3DC',
+                color: '#FFFFFF',
               }}
               onKeyDown={(e) => { if (e.key === 'Enter') handleApplyCoupon() }}
             />
@@ -233,7 +233,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
                 fontSize: '14px',
                 background: 'transparent',
                 border: '1px solid rgba(232,227,220,0.25)',
-                color: '#E8E3DC',
+                color: '#A8A099',
                 cursor: 'pointer',
               }}
             >

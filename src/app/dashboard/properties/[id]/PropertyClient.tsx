@@ -119,7 +119,7 @@ export default function PropertyClient({ property, conversations }: Props) {
     fontSize: '13px',
     color: '#A8A099',
     background: 'transparent',
-    border: '1px solid rgba(255,255,255,0.12)',
+    border: '1px solid rgba(232,227,220,0.15)',
     borderRadius: '8px',
     padding: '8px 14px',
     cursor: 'pointer',
@@ -127,10 +127,10 @@ export default function PropertyClient({ property, conversations }: Props) {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#1C1917' }}>
+    <div className="min-h-screen" style={{ background: '#0F0D0B' }}>
       {/* Nav */}
       <header className="px-4 md:px-8 py-5 flex justify-between items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
+        <Link href="/" className="font-serif text-xl" style={{ color: '#FFFFFF' }}>
           Place Companion
         </Link>
       </header>
@@ -145,7 +145,7 @@ export default function PropertyClient({ property, conversations }: Props) {
         </Link>
 
         <div className="mt-8">
-          <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
+          <h1 className="heading-page font-serif font-normal" style={{ color: '#FFFFFF' }}>
             {property.hotel_name}
           </h1>
           {property.location && (
@@ -166,16 +166,16 @@ export default function PropertyClient({ property, conversations }: Props) {
             <div
               key={label}
               style={{
-                background: '#242019',
+                background: '#1F1C19',
                 borderRadius: '12px',
                 padding: '24px',
-                border: '1px solid rgba(255,255,255,0.06)',
+                border: '1px solid rgba(232,227,220,0.06)',
               }}
             >
-              <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#6B6560' }}>
+              <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#A8A099' }}>
                 {label}
               </p>
-              <p className="font-serif mt-2" style={{ fontSize: '40px', color: '#E8E3DC' }}>
+              <p className="font-serif mt-2" style={{ fontSize: '40px', color: '#FFFFFF' }}>
                 {value}
               </p>
             </div>
@@ -184,12 +184,12 @@ export default function PropertyClient({ property, conversations }: Props) {
 
         {/* Deploy */}
         <div className="mt-12">
-          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
+          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#FFFFFF' }}>
             {t.property.deployHeadline}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             {/* Public URL */}
-            <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ background: '#141210', borderRadius: '12px', padding: '24px', border: '1px solid rgba(232,227,220,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
                 {t.property.publicUrl}
               </p>
@@ -205,7 +205,7 @@ export default function PropertyClient({ property, conversations }: Props) {
             </div>
 
             {/* Embed Widget */}
-            <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ background: '#141210', borderRadius: '12px', padding: '24px', border: '1px solid rgba(232,227,220,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
                 {t.property.embedWidget}
               </p>
@@ -223,7 +223,7 @@ export default function PropertyClient({ property, conversations }: Props) {
             </div>
 
             {/* QR Code */}
-            <div style={{ background: '#242019', borderRadius: '12px', padding: '24px', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ background: '#141210', borderRadius: '12px', padding: '24px', border: '1px solid rgba(232,227,220,0.06)' }}>
               <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
                 {t.property.qrCode}
               </p>
@@ -241,7 +241,7 @@ export default function PropertyClient({ property, conversations }: Props) {
 
         {/* Conversations */}
         <div className="mt-12">
-          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
+          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#FFFFFF' }}>
             {t.property.conversationsHeadline}
           </h2>
           {conversations.length === 0 ? (
@@ -255,10 +255,10 @@ export default function PropertyClient({ property, conversations }: Props) {
                   key={conv.id}
                   className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
                   style={{
-                    background: '#242019',
+                    background: '#1A1715',
                     borderRadius: '12px',
                     padding: '16px 24px',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(232,227,220,0.06)',
                   }}
                 >
                   <span className="font-sans" style={{ fontSize: '14px', color: '#A8A099' }}>
@@ -268,7 +268,7 @@ export default function PropertyClient({ property, conversations }: Props) {
                     className="font-sans"
                     style={{
                       fontSize: '11px',
-                      background: 'rgba(45,158,107,0.2)',
+                      background: '#242019',
                       color: '#2D9E6B',
                       padding: '2px 8px',
                       borderRadius: '999px',
@@ -287,7 +287,7 @@ export default function PropertyClient({ property, conversations }: Props) {
 
         {/* Revenue Signals */}
         <div className="mt-16">
-          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
+          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#FFFFFF' }}>
             {t.property.revenueHeadline}
           </h2>
           {Object.keys(revenueSignals).length === 0 ? (
@@ -303,17 +303,17 @@ export default function PropertyClient({ property, conversations }: Props) {
                     key={signal}
                     className="inline-flex flex-col"
                     style={{
-                      background: '#242019',
+                      background: '#1A1715',
                       borderRadius: '12px',
                       padding: '24px',
-                      border: '1px solid rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(232,227,220,0.06)',
                       minWidth: '140px',
                     }}
                   >
                     <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#2D9E6B' }}>
                       {labels[signal] ?? signal.toUpperCase()}
                     </p>
-                    <p className="font-serif mt-2" style={{ fontSize: '40px', color: '#E8E3DC' }}>
+                    <p className="font-serif mt-2" style={{ fontSize: '40px', color: '#FFFFFF' }}>
                       {count}
                     </p>
                     <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#6B6560' }}>
@@ -328,7 +328,7 @@ export default function PropertyClient({ property, conversations }: Props) {
 
         {/* Settings / Danger */}
         <div className="mt-16">
-          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#E8E3DC' }}>
+          <h2 className="font-serif font-normal" style={{ fontSize: '32px', color: '#FFFFFF' }}>
             {t.property.settingsHeadline}
           </h2>
 
@@ -343,12 +343,12 @@ export default function PropertyClient({ property, conversations }: Props) {
                 onChange={e => handleStyleSave(e.target.value)}
                 className="font-sans"
                 style={{
-                  background: '#242019',
-                  border: '1px solid rgba(255,255,255,0.12)',
+                  background: '#1F1C19',
+                  border: '1px solid rgba(232,227,220,0.08)',
                   borderRadius: '8px',
                   padding: '10px 16px',
                   fontSize: '14px',
-                  color: '#E8E3DC',
+                  color: '#FFFFFF',
                   cursor: 'pointer',
                   appearance: 'auto',
                 }}
@@ -384,12 +384,12 @@ export default function PropertyClient({ property, conversations }: Props) {
                 placeholder="manager@yourhotel.com"
                 className="font-sans flex-1"
                 style={{
-                  background: '#242019',
-                  border: '1px solid rgba(255,255,255,0.12)',
+                  background: '#1F1C19',
+                  border: '1px solid rgba(232,227,220,0.08)',
                   borderRadius: '8px',
                   padding: '10px 16px',
                   fontSize: '14px',
-                  color: '#E8E3DC',
+                  color: '#FFFFFF',
                   outline: 'none',
                 }}
               />
@@ -419,10 +419,10 @@ export default function PropertyClient({ property, conversations }: Props) {
               style={{
                 height: '48px',
                 padding: '0 24px',
-                border: '1px solid rgba(239,68,68,0.5)',
+                border: '1px solid rgba(220,50,50,0.3)',
                 borderRadius: '8px',
                 fontSize: '14px',
-                color: '#F87171',
+                color: '#E05555',
                 background: 'transparent',
                 cursor: isDeleting ? 'not-allowed' : 'pointer',
                 opacity: isDeleting ? 0.6 : 1,

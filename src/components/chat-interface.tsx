@@ -156,7 +156,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
     isLoading && lastMsg?.role === "assistant" && lastMsg?.text === "";
 
   return (
-    <div className="flex flex-col flex-1 min-h-0" style={{ background: "#141413" }}>
+    <div className="flex flex-col flex-1 min-h-0" style={{ background: "#0F0D0B" }}>
       <div
         ref={messagesRef}
         className="flex-1 overflow-y-auto min-h-0 px-5 py-5 flex flex-col gap-3"
@@ -174,7 +174,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     fontSize: "15px",
                     lineHeight: 1.6,
                     color: "#E8E3DC",
-                    background: "#242019",
+                    background: "#1A1715",
                     borderRadius: "16px",
                     marginRight: "auto",
                   }}
@@ -195,8 +195,8 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     padding: "12px 16px",
                     fontSize: "15px",
                     lineHeight: 1.6,
-                    color: "#E8E3DC",
-                    background: m.role === "user" ? "#0F0D0B" : "#242019",
+                    color: m.role === "user" ? "#FFFFFF" : "#E8E3DC",
+                    background: m.role === "user" ? "#1F1C19" : "#1A1715",
                     borderRadius: "16px",
                     marginLeft: m.role === "user" ? "auto" : undefined,
                     marginRight: m.role === "assistant" ? "auto" : undefined,
@@ -213,7 +213,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             <div
               style={{
                 padding: "12px 16px",
-                background: "#242019",
+                background: "#1A1715",
                 borderRadius: "16px",
               }}
             >
@@ -233,23 +233,23 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
               onClick={() => sendMessage(s)}
               className={`font-sans transition-all duration-200${config.mobileChipsLimit !== undefined && chipIdx >= config.mobileChipsLimit ? ' hidden sm:inline-flex' : ''}`}
               style={{
-                background: "#1F1E1D",
-                border: "1px solid rgba(250,249,245,0.08)",
+                background: "#1F1C19",
+                border: "1px solid rgba(232,227,220,0.08)",
                 borderRadius: "9999px",
                 padding: "8px 16px",
                 fontSize: "13px",
-                color: "#9C9A93",
+                color: "#A8A099",
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;
                 el.style.color = "#FAF9F5";
-                el.style.borderColor = "rgba(250,249,245,0.2)";
+                el.style.borderColor = "rgba(232,227,220,0.2)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget;
-                el.style.color = "#9C9A93";
-                el.style.borderColor = "rgba(250,249,245,0.08)";
+                el.style.color = "#A8A099";
+                el.style.borderColor = "rgba(232,227,220,0.08)";
               }}
             >
               {s}
@@ -265,8 +265,8 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
         onSubmit={handleSubmit}
         className="flex-shrink-0 flex items-center gap-2 px-4 py-3"
         style={{
-          background: "#0F0E0D",
-          borderTop: "1px solid rgba(250,249,245,0.06)",
+          background: "#141210",
+          borderTop: "1px solid rgba(232,227,220,0.08)",
         }}
       >
         <input
@@ -275,14 +275,14 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder={config.placeholder ?? "Ask anything about the hotel…"}
           disabled={isLoading}
-          className="flex-1 font-sans outline-none placeholder-[#9C9A93]"
+          className="flex-1 font-sans outline-none placeholder-[#6B6560]"
           style={{
-            background: "#1F1E1D",
-            border: "1px solid rgba(250,249,245,0.08)",
+            background: "#1F1C19",
+            border: "1px solid rgba(232,227,220,0.08)",
             borderRadius: "12px",
             padding: "12px 16px",
             fontSize: "15px",
-            color: "#FAF9F5",
+            color: "#FFFFFF",
           }}
         />
         <button

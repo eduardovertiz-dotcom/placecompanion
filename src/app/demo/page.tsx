@@ -84,7 +84,7 @@ export default function DemoPage() {
           <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
           <div
             className="flex flex-col"
-            style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D', height: '600px' }}
+            style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0D0B', height: '600px' }}
           >
             {/* Header */}
             <div

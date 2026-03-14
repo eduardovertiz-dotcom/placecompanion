@@ -57,7 +57,7 @@ export default function HomePage() {
             <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
               <div
                 className="flex flex-col h-[420px] md:h-[580px]"
-                style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0E0D' }}
+                style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0D0B' }}
               >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">

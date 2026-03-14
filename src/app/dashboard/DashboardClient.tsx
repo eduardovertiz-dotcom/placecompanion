@@ -29,7 +29,7 @@ export default function DashboardClient({ user, properties }: Props) {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#1C1917' }}>
+    <div className="min-h-screen" style={{ background: '#0F0D0B' }}>
       {/* Nav */}
       <header className="px-4 md:px-8 py-5 flex flex-wrap justify-between items-center gap-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
@@ -69,8 +69,8 @@ export default function DashboardClient({ user, properties }: Props) {
             style={{
               height: '48px',
               padding: '0 24px',
-              background: '#FAF9F5',
-              color: '#141413',
+              background: '#C96A3A',
+              color: 'white',
               borderRadius: '8px',
               fontSize: '15px',
               textDecoration: 'none',
@@ -94,8 +94,8 @@ export default function DashboardClient({ user, properties }: Props) {
               style={{
                 height: '48px',
                 padding: '0 24px',
-                background: '#FAF9F5',
-                color: '#141413',
+                background: '#C96A3A',
+                color: 'white',
                 borderRadius: '8px',
                 fontSize: '15px',
                 textDecoration: 'none',
@@ -121,13 +121,13 @@ export default function DashboardClient({ user, properties }: Props) {
                   key={property.id}
                   className="transition-all"
                   style={{
-                    background: '#1F1E1D',
+                    background: '#1A1715',
                     borderRadius: '16px',
                     padding: '32px',
-                    border: '1px solid rgba(250,249,245,0.08)',
+                    border: '1px solid rgba(232,227,220,0.06)',
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.16)' }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(250,249,245,0.08)' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
                 >
                   {/* Name + status badge */}
                   <div className="flex justify-between items-start">
@@ -165,7 +165,7 @@ export default function DashboardClient({ user, properties }: Props) {
                   </div>
 
                   {property.location && (
-                    <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#9C9A93' }}>
+                    <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#A8A099' }}>
                       {property.location}
                     </p>
                   )}
@@ -205,23 +205,23 @@ export default function DashboardClient({ user, properties }: Props) {
                   )}
 
                   {isTrial && (
-                    <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#9C9A93' }}>
+                    <p className="font-sans mt-4" style={{ fontSize: '13px', color: '#A8A099' }}>
                       {t.dashboard.trialEnds} {trialEnds.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
                   )}
 
                   {/* Stats */}
-                  <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(250,249,245,0.08)' }}>
+                  <div className="flex gap-6 mt-6 pt-6" style={{ borderTop: '1px solid rgba(232,227,220,0.06)' }}>
                     {[
                       { label: t.dashboard.conversations, value: String(property.conversations?.[0]?.count ?? 0) },
                       { label: t.dashboard.questions, value: String(property.messages?.[0]?.count ?? 0) },
                       { label: t.dashboard.daysLeft, value: isActive ? '∞' : String(daysLeft) },
                     ].map(({ label, value }) => (
                       <div key={label}>
-                        <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#9C9A93' }}>
+                        <p className="font-sans tracking-widest" style={{ fontSize: '11px', color: '#A8A099' }}>
                           {label}
                         </p>
-                        <p className="font-serif mt-1" style={{ fontSize: '28px', color: '#FAF9F5' }}>
+                        <p className="font-serif mt-1" style={{ fontSize: '28px', color: '#FFFFFF', fontWeight: 600 }}>
                           {value}
                         </p>
                       </div>
@@ -235,8 +235,8 @@ export default function DashboardClient({ user, properties }: Props) {
                       className="font-sans transition-colors"
                       style={{
                         fontSize: '14px',
-                        color: '#9C9A93',
-                        border: '1px solid rgba(250,249,245,0.08)',
+                        color: '#A8A099',
+                        border: '1px solid rgba(232,227,220,0.15)',
                         borderRadius: '8px',
                         padding: '10px 16px',
                         textDecoration: 'none',
@@ -249,8 +249,9 @@ export default function DashboardClient({ user, properties }: Props) {
                       className="font-sans font-medium transition-colors"
                       style={{
                         fontSize: '14px',
-                        color: '#141413',
-                        background: '#FAF9F5',
+                        color: '#A8A099',
+                        background: 'transparent',
+                        border: '1px solid rgba(232,227,220,0.15)',
                         borderRadius: '8px',
                         padding: '10px 16px',
                         textDecoration: 'none',
@@ -265,8 +266,8 @@ export default function DashboardClient({ user, properties }: Props) {
                       className="font-sans font-medium w-full transition-colors mt-3"
                       style={{
                         fontSize: '14px',
-                        color: '#FAF9F5',
-                        background: '#C96A3A',
+                        color: '#A8A099',
+                        background: 'transparent',
                         borderRadius: '8px',
                         padding: '10px 16px',
                         border: 'none',

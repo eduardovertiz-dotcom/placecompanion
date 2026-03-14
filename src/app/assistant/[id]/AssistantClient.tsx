@@ -145,7 +145,7 @@ export default function AssistantClient({ property }: Props) {
         {/* Header */}
         <header
           className="flex-shrink-0 flex justify-between items-center px-5 py-4"
-          style={{ background: '#0F0D0B', borderBottom: '1px solid rgba(232,227,220,0.08)' }}
+          style={{ background: '#141210', borderBottom: '1px solid rgba(232,227,220,0.08)' }}
         >
           <div>
             <p className="font-sans font-medium" style={{ fontSize: '16px', color: '#E8E3DC' }}>
@@ -168,7 +168,7 @@ export default function AssistantClient({ property }: Props) {
             <div
               className="font-sans rounded-2xl"
               style={{
-                background: '#242019',
+                background: '#1A1715',
                 padding: '12px 16px',
                 fontSize: '15px',
                 color: '#E8E3DC',
@@ -186,8 +186,8 @@ export default function AssistantClient({ property }: Props) {
               <div
                 className="font-sans rounded-2xl"
                 style={{
-                  background: m.role === 'user' ? '#0F0D0B' : '#242019',
-                  color: '#E8E3DC',
+                  background: m.role === 'user' ? '#1F1C19' : '#1A1715',
+                  color: m.role === 'user' ? '#FFFFFF' : '#E8E3DC',
                   padding: '12px 16px',
                   maxWidth: '80%',
                   fontSize: '15px',
@@ -206,7 +206,7 @@ export default function AssistantClient({ property }: Props) {
               <div
                 className="font-sans rounded-2xl"
                 style={{
-                  background: '#242019',
+                  background: '#1A1715',
                   padding: '12px 16px',
                   maxWidth: '80%',
                   fontSize: '15px',
@@ -233,7 +233,7 @@ export default function AssistantClient({ property }: Props) {
                 onClick={() => handleSend(chip)}
                 className="font-sans transition-colors"
                 style={{
-                  background: '#242019',
+                  background: '#1F1C19',
                   border: '1px solid rgba(232,227,220,0.08)',
                   borderRadius: '9999px',
                   padding: '8px 16px',
@@ -265,7 +265,7 @@ export default function AssistantClient({ property }: Props) {
         {/* Input */}
         <div
           className="flex-shrink-0 flex gap-3 items-center px-4 py-3"
-          style={{ background: '#161310', borderTop: '1px solid rgba(255,255,255,0.08)' }}
+          style={{ background: '#141210', borderTop: '1px solid rgba(232,227,220,0.08)' }}
         >
           <input
             type="text"
@@ -276,7 +276,7 @@ export default function AssistantClient({ property }: Props) {
             disabled={isStreaming}
             className="flex-1 font-sans focus:outline-none transition-colors placeholder-[#6B6560]"
             style={{
-              background: '#242019',
+              background: '#1F1C19',
               borderRadius: '999px',
               padding: '12px 20px',
               fontSize: '15px',
