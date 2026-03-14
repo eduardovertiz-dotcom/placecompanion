@@ -122,8 +122,8 @@ export default function FeaturesPage() {
                   style={{ background: "#2A2725", border: "1px solid rgba(232,227,220,0.06)" }}
                 >
                   {icons[i]}
-                  <p className="font-sans font-medium text-[#E8E3DC] mt-3" style={{ fontSize: "14px" }}>{style.name}</p>
-                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "12px", lineHeight: 1.5 }}>{style.tagline}</p>
+                  <p className="font-sans text-[#E8E3DC] mt-3" style={{ fontSize: "16px", fontWeight: 500 }}>{style.name}</p>
+                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "14px", lineHeight: 1.5 }}>{style.tagline}</p>
                 </div>
               )
             })}
@@ -159,8 +159,8 @@ export default function FeaturesPage() {
                   <path d="M6 10l3 3 5-5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 <div>
-                  <p className="font-sans font-medium text-[#E8E3DC]" style={{ fontSize: "15px" }}>{item.title}</p>
-                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "14px", lineHeight: 1.6 }}>{item.desc}</p>
+                  <p className="font-sans text-[#E8E3DC]" style={{ fontSize: "17px", fontWeight: 500 }}>{item.title}</p>
+                  <p className="font-sans font-light text-[#6B6560] mt-1" style={{ fontSize: "15px", lineHeight: 1.7 }}>{item.desc}</p>
                 </div>
               </div>
             ))}
