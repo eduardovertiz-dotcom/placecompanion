@@ -432,8 +432,8 @@ export default function OnboardingPage() {
                     onClick={() => setConversationalStyle(key)}
                     className="text-left transition-all"
                     style={{
-                      background: '#0F0D0B',
-                      border: `1px solid ${isSelected ? '#2D9E6B' : 'rgba(232,227,220,0.06)'}`,
+                      background: isSelected ? '#2C1810' : '#0F0D0B',
+                      border: `1px solid ${isSelected ? '#C96A3A' : 'rgba(232,227,220,0.06)'}`,
                       borderRadius: '10px',
                       padding: '14px',
                       cursor: 'pointer',
@@ -466,8 +466,8 @@ export default function OnboardingPage() {
                     onClick={() => setRoomCount(isSelected ? '' : option)}
                     className="font-sans transition-all"
                     style={{
-                      background: isSelected ? '#2D9E6B' : '#0F0D0B',
-                      border: `1px solid ${isSelected ? '#2D9E6B' : 'rgba(232,227,220,0.08)'}`,
+                      background: isSelected ? '#2C1810' : '#0F0D0B',
+                      border: `1px solid ${isSelected ? '#C96A3A' : 'rgba(232,227,220,0.08)'}`,
                       borderRadius: '8px',
                       padding: '8px 18px',
                       fontSize: '14px',
@@ -490,7 +490,7 @@ export default function OnboardingPage() {
               height: '48px',
               borderRadius: '6px',
               fontSize: '16px',
-              background: isStep1Disabled ? '#6B6560' : '#2D9E6B',
+              background: isStep1Disabled ? '#6B6560' : '#C96A3A',
               color: 'white',
               border: 'none',
               cursor: isStep1Disabled ? 'not-allowed' : 'pointer',
