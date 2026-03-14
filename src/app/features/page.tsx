@@ -239,7 +239,7 @@ export default function FeaturesPage() {
           </p>
           <Link
             href="/onboarding"
-            className="font-sans font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white/90 h-12 px-8 rounded-md inline-flex items-center transition-colors duration-200 mt-10"
+            className="font-sans font-medium text-white bg-[#C96A3A] hover:bg-[#D4784A] h-12 px-8 rounded-md inline-flex items-center transition-colors duration-200 mt-10"
             style={{ fontSize: "15px" }}
           >
             {t.finalCta.button}
