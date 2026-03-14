@@ -139,7 +139,7 @@ export default function DashboardClient({ user, properties }: Props) {
                         className="font-sans tracking-widest"
                         style={{
                           fontSize: '10px',
-                          background: 'rgba(45,158,107,0.2)',
+                          background: '#242019',
                           color: '#2D9E6B',
                           padding: '4px 10px',
                           borderRadius: '999px',
@@ -153,7 +153,7 @@ export default function DashboardClient({ user, properties }: Props) {
                         className="font-sans tracking-widest"
                         style={{
                           fontSize: '10px',
-                          background: 'rgba(45,158,107,0.2)',
+                          background: '#242019',
                           color: '#2D9E6B',
                           padding: '4px 10px',
                           borderRadius: '999px',
