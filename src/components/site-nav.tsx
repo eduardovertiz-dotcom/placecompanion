@@ -59,14 +59,17 @@ export function SiteNav() {
           <LanguageToggle />
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden text-[#E8E3DC] p-2"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* Mobile: language toggle + hamburger */}
+        <div className="flex items-center gap-3 md:hidden">
+          <LanguageToggle />
+          <button
+            className="text-[#E8E3DC] p-2"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}

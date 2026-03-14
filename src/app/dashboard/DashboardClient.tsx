@@ -326,20 +326,19 @@ export default function DashboardClient({ user, properties }: Props) {
       {showInvoiceModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center px-4"
-          style={{ background: 'rgba(0,0,0,0.7)' }}
+          style={{ background: 'rgba(0,0,0,0.85)' }}
           onClick={() => setShowInvoiceModal(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl p-8"
-            style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.10)' }}
+            className="relative w-full max-w-md"
+            style={{ background: '#0F0D0B', border: '1px solid rgba(232,227,220,0.08)', borderRadius: '16px', padding: '40px' }}
             onClick={e => e.stopPropagation()}
           >
             <button
               onClick={() => setShowInvoiceModal(false)}
-              className="absolute"
-              style={{ top: '20px', right: '24px', background: 'none', border: 'none', color: '#6B6560', cursor: 'pointer', fontSize: '22px', lineHeight: 1 }}
+              style={{ position: 'absolute', top: '20px', right: '24px', background: 'none', border: 'none', color: '#6B6560', cursor: 'pointer', fontSize: '22px', lineHeight: 1 }}
             >×</button>
-            <h2 className="font-serif font-normal" style={{ fontSize: '24px', color: '#FAF9F5' }}>
+            <h2 className="font-serif font-normal" style={{ fontSize: '28px', color: '#FFFFFF' }}>
               {t.dashboard.invoiceTitle}
             </h2>
             <p className="font-sans mt-2" style={{ fontSize: '14px', color: '#6B6560' }}>
@@ -351,8 +350,8 @@ export default function DashboardClient({ user, properties }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowInvoiceModal(false)}
-                className="flex items-center justify-between rounded-xl"
-                style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)', padding: '20px 24px', textDecoration: 'none' }}
+                className="flex items-center justify-between"
+                style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', padding: '20px 24px', textDecoration: 'none' }}
               >
                 <div>
                   <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
@@ -362,17 +361,17 @@ export default function DashboardClient({ user, properties }: Props) {
                     {t.dashboard.invoiceMxDesc}
                   </p>
                 </div>
-                <span className="font-sans" style={{ fontSize: '13px', color: '#C96A3A', whiteSpace: 'nowrap' as const, marginLeft: '16px' }}>
-                  {t.dashboard.invoiceMxBtn}
-                </span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ marginLeft: '16px', flexShrink: 0 }}>
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="#6B6560" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
               <a
                 href="https://forms.gle/gv8vDE62ABG7otH9A"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowInvoiceModal(false)}
-                className="flex items-center justify-between rounded-xl"
-                style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)', padding: '20px 24px', textDecoration: 'none' }}
+                className="flex items-center justify-between"
+                style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', padding: '20px 24px', textDecoration: 'none' }}
               >
                 <div>
                   <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
@@ -382,26 +381,14 @@ export default function DashboardClient({ user, properties }: Props) {
                     {t.dashboard.invoiceIntlDesc}
                   </p>
                 </div>
-                <span className="font-sans" style={{ fontSize: '13px', color: '#C96A3A', whiteSpace: 'nowrap' as const, marginLeft: '16px' }}>
-                  {t.dashboard.invoiceIntlBtn}
-                </span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ marginLeft: '16px', flexShrink: 0 }}>
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="#6B6560" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
             </div>
-            <button
-              onClick={() => setShowInvoiceModal(false)}
-              className="font-sans font-medium w-full mt-6 transition-colors"
-              style={{
-                height: '44px',
-                borderRadius: '8px',
-                fontSize: '14px',
-                background: 'rgba(250,249,245,0.06)',
-                color: '#A8A099',
-                border: '1px solid rgba(250,249,245,0.08)',
-                cursor: 'pointer',
-              }}
-            >
+            <p className="font-sans text-center mt-6" style={{ fontSize: '12px', color: '#4A4540' }}>
               {t.dashboard.invoiceClose}
-            </button>
+            </p>
           </div>
         </div>
       )}
