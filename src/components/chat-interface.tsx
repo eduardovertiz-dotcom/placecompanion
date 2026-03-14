@@ -159,7 +159,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
     <div className="flex flex-col flex-1 min-h-0" style={{ background: "#0F0D0B" }}>
       <div
         ref={messagesRef}
-        className="flex-1 overflow-y-auto min-h-0 px-5 py-5 flex flex-col gap-3"
+        className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 px-5 py-5 flex flex-col gap-3"
         style={{ overscrollBehavior: "contain" }}
       >
         {messages.map((m) => (
@@ -240,6 +240,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                 fontSize: "13px",
                 color: "#A8A099",
                 cursor: "pointer",
+                whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;
@@ -275,7 +276,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder={config.placeholder ?? "Ask anything about the hotel…"}
           disabled={isLoading}
-          className="flex-1 font-sans outline-none placeholder-[#6B6560]"
+          className="flex-1 min-w-0 font-sans outline-none placeholder-[#6B6560]"
           style={{
             background: "#1F1C19",
             border: "1px solid rgba(232,227,220,0.08)",

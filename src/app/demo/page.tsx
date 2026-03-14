@@ -20,10 +20,10 @@ export default function DemoPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#141413" }}>
+    <div className="min-h-screen bg-[#0F0D0B] flex flex-col items-center px-4 py-8">
       {/* Minimal nav */}
       <div
-        className="px-8 py-5 flex justify-between items-center"
+        className="w-full px-4 md:px-8 py-5 flex justify-between items-center"
         style={{ borderBottom: "1px solid rgba(250,249,245,0.06)" }}
       >
         <Link href="/" className="font-serif text-xl text-[#FAF9F5]">
@@ -38,7 +38,7 @@ export default function DemoPage() {
       </div>
 
       {/* Two-column layout */}
-      <div className="max-w-7xl mx-auto px-8 py-20">
+      <div className="w-full max-w-7xl px-4 md:px-8 py-12 md:py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left */}
           <div>
@@ -81,10 +81,13 @@ export default function DemoPage() {
           </div>
 
           {/* Right — demo window */}
-          <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
           <div
-            className="flex flex-col"
-            style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0D0B', height: '600px' }}
+            className="w-full max-w-[480px] mx-auto rounded-2xl overflow-hidden flex flex-col"
+            style={{
+              border: "1px solid rgba(232,227,220,0.06)",
+              background: "#0F0D0B",
+              minHeight: "560px",
+            }}
           >
             {/* Header */}
             <div
@@ -108,7 +111,6 @@ export default function DemoPage() {
               </p>
             </div>
             <ChatInterface config={demoChatConfig} />
-          </div>
           </div>
         </div>
       </div>
