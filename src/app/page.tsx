@@ -164,7 +164,7 @@ export default function HomePage() {
 
       {/* ── STATS STRIP ──────────────────────────────────── */}
       <section style={{ background: '#141210', borderTop: '1px solid rgba(232,227,220,0.04)', borderBottom: '1px solid rgba(232,227,220,0.04)' }}>
-        <div className="max-w-3xl mx-auto px-4 md:px-8 py-24 text-center">
+        <div className="max-w-3xl mx-auto px-4 md:px-8 py-32 text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <p className="font-serif font-light" style={{ fontSize: 'clamp(3.5rem, 12vw, 8rem)', color: '#FFFFFF', lineHeight: 1 }}>
             $47B
           </p>
@@ -173,7 +173,7 @@ export default function HomePage() {
               ? 'perdidos anualmente por hoteles en fricción evitable con huéspedes.'
               : 'lost annually by hotels to avoidable guest friction.'}
           </p>
-          <p className="font-sans mt-4" style={{ fontSize: '11px', color: '#3A3530', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <p className="font-sans mt-4" style={{ fontSize: '11px', color: '#6B6560', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Medallia, 2024
           </p>
         </div>
