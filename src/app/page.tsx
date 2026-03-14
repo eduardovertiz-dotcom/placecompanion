@@ -27,11 +27,11 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#141413" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "#080706" }}>
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="py-12 md:py-20 flex items-center" style={{ background: "#0F0D0B" }}>
+      <section className="py-12 md:py-20 flex items-center" style={{ background: "#080706" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
@@ -78,7 +78,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PAIN PILLS ───────────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#141413" }}>
+      <section className="py-20 md:py-32" style={{ background: "#0F0D0B" }}>
         <div className="flex justify-center gap-3 flex-wrap px-4 md:px-8">
           {[t.pain.pill1, t.pain.pill2, t.pain.pill3].map((q) => (
             <span
@@ -93,7 +93,7 @@ export default function HomePage() {
       </section>
 
       {/* ── REVENUE ──────────────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#1A1815" }}>
+      <section className="py-20 md:py-32" style={{ background: "#141210" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-center">
 
@@ -146,7 +146,7 @@ export default function HomePage() {
       </section>
 
       {/* ── INTELLIGENCE ─────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#1F1C19" }}>
+      <section className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#1A1715" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <rect x="10" y="20" width="36" height="28" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
@@ -189,7 +189,7 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────── */}
-      <section id="how-it-works" className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#242019" }}>
+      <section id="how-it-works" className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#1F1C19" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <circle cx="12" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
@@ -216,7 +216,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FOUNDING PARTNERS ────────────────────────────── */}
-      <section id="founding-partners" className="py-20 md:py-32 text-center" style={{ background: "#272420" }}>
+      <section id="founding-partners" className="py-20 md:py-32 text-center" style={{ background: "#16131F" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
             <path d="M28 6l5.5 11 12 1.75-8.75 8.5 2 12L28 34l-10.75 5.25 2-12L10.5 18.75l12-1.75L28 6z" stroke="#FAF9F5" strokeWidth="1.5" strokeLinejoin="round" />
@@ -239,7 +239,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ──────────────────────────────────────── */}
-      <section id="pricing" className="py-20 md:py-32 text-center" style={{ background: "#262320" }}>
+      <section id="pricing" className="py-20 md:py-32 text-center" style={{ background: "#1C1917" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <p className="font-sans uppercase tracking-widest" style={{ fontSize: "11px", color: "#9C9A93" }}>
             {t.pricing.label}
@@ -254,7 +254,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 max-w-3xl mx-auto mt-12">
 
             {/* Card 1 — Single Property */}
-            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.08)" }}>
+            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
               <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.single}</p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$249</span>
@@ -276,7 +276,7 @@ export default function HomePage() {
             </div>
 
             {/* Card 2 — Small Group */}
-            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.08)" }}>
+            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
               <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.group}</p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$449</span>
