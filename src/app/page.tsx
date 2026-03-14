@@ -110,10 +110,11 @@ export default function HomePage() {
                 className="font-sans flex-shrink-0 rounded-full"
                 style={{
                   background: '#1A1715',
-                  border: '1px solid rgba(232,227,220,0.06)',
-                  padding: '8px 20px',
-                  fontSize: '14px',
-                  color: '#A8A099',
+                  border: '1px solid rgba(232,227,220,0.10)',
+                  padding: '12px 28px',
+                  fontSize: '20px',
+                  fontWeight: 400,
+                  color: '#C4BDB6',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -135,10 +136,11 @@ export default function HomePage() {
                 className="font-sans flex-shrink-0 rounded-full"
                 style={{
                   background: '#1A1715',
-                  border: '1px solid rgba(232,227,220,0.06)',
-                  padding: '8px 20px',
-                  fontSize: '14px',
-                  color: '#A8A099',
+                  border: '1px solid rgba(232,227,220,0.10)',
+                  padding: '12px 28px',
+                  fontSize: '20px',
+                  fontWeight: 400,
+                  color: '#C4BDB6',
                   whiteSpace: 'nowrap',
                 }}
               >
