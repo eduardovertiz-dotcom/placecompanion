@@ -164,30 +164,18 @@ export default function HomePage() {
 
       {/* ── STATS STRIP 3 ────────────────────────────────── */}
       <section style={{ background: '#141210', borderTop: '1px solid rgba(232,227,220,0.04)', borderBottom: '1px solid rgba(232,227,220,0.04)' }}>
-        <div className="max-w-5xl mx-auto px-4 md:px-8 py-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div>
-              <p className="font-serif font-light" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: '#FFFFFF', lineHeight: 1 }}>80%</p>
-              <p className="font-sans mt-4" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.6 }}>
-                {lang === 'es' ? 'de las preguntas rutinarias de huéspedes respondidas automáticamente' : 'of routine guest inquiries answered automatically'}
-              </p>
-              <p className="font-sans mt-3" style={{ fontSize: '11px', color: '#4A4540', letterSpacing: '0.05em' }}>— Statista, 2024</p>
-            </div>
-            <div>
-              <p className="font-serif font-light" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: '#FFFFFF', lineHeight: 1 }}>25%</p>
-              <p className="font-sans mt-4" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.6 }}>
-                {lang === 'es' ? 'reducción en costos operativos de recepción con IA' : 'reduction in front-desk operational costs with AI'}
-              </p>
-              <p className="font-sans mt-3" style={{ fontSize: '11px', color: '#4A4540', letterSpacing: '0.05em' }}>— McKinsey & Company, 2024</p>
-            </div>
-            <div>
-              <p className="font-serif font-light" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: '#FFFFFF', lineHeight: 1 }}>$47B</p>
-              <p className="font-sans mt-4" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.6 }}>
-                {lang === 'es' ? 'perdidos anualmente por hoteles en fricción evitable con huéspedes' : 'lost annually by hotels to avoidable guest friction'}
-              </p>
-              <p className="font-sans mt-3" style={{ fontSize: '11px', color: '#4A4540', letterSpacing: '0.05em' }}>— Medallia, 2024</p>
-            </div>
-          </div>
+        <div className="max-w-3xl mx-auto px-4 md:px-8 py-24 text-center">
+          <p className="font-serif font-light" style={{ fontSize: 'clamp(3.5rem, 12vw, 8rem)', color: '#FFFFFF', lineHeight: 1 }}>
+            $47B
+          </p>
+          <p className="font-sans mt-6" style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.6 }}>
+            {lang === 'es'
+              ? 'perdidos anualmente por hoteles en fricción evitable con huéspedes.'
+              : 'lost annually by hotels to avoidable guest friction.'}
+          </p>
+          <p className="font-sans mt-4" style={{ fontSize: '11px', color: '#3A3530', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Medallia, 2024
+          </p>
         </div>
       </section>
 
