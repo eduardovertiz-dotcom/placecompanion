@@ -47,6 +47,9 @@ export function SiteNav() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
+          <Link href="/auth/login" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">
+            {t.nav.signIn}
+          </Link>
           <Link href="/demo" className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-10 px-5 rounded-md flex items-center hover:bg-white/5 transition-colors">
             Live Demo
           </Link>
@@ -54,11 +57,6 @@ export function SiteNav() {
             {t.nav.createAssistant}
           </Link>
           <LanguageToggle />
-          {lang === 'en' && (
-            <Link href="/auth/login" className="font-sans text-sm text-[#A8A099] hover:text-[#E8E3DC] transition-colors">
-              {t.nav.signIn}
-            </Link>
-          )}
         </div>
 
         {/* Mobile hamburger */}
