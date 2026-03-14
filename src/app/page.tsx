@@ -92,6 +92,63 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
+      <section className="py-12 overflow-hidden" style={{ background: '#111009' }}>
+        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '11px', color: '#6B6560' }}>
+          {t.realQuestions.label}
+        </p>
+
+        {/* Row 1 — scrolls left */}
+        <div
+          className="overflow-hidden mb-3"
+          style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
+        >
+          <div className="flex gap-3 animate-scroll-left" style={{ width: 'max-content' }}>
+            {[...t.realQuestions.row1, ...t.realQuestions.row1].map((q, i) => (
+              <span
+                key={i}
+                className="font-sans flex-shrink-0 rounded-full"
+                style={{
+                  background: '#1A1715',
+                  border: '1px solid rgba(232,227,220,0.06)',
+                  padding: '8px 20px',
+                  fontSize: '14px',
+                  color: '#A8A099',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {q}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2 — scrolls right */}
+        <div
+          className="overflow-hidden"
+          style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
+        >
+          <div className="flex gap-3 animate-scroll-right" style={{ width: 'max-content' }}>
+            {[...t.realQuestions.row2, ...t.realQuestions.row2].map((q, i) => (
+              <span
+                key={i}
+                className="font-sans flex-shrink-0 rounded-full"
+                style={{
+                  background: '#1A1715',
+                  border: '1px solid rgba(232,227,220,0.06)',
+                  padding: '8px 20px',
+                  fontSize: '14px',
+                  color: '#A8A099',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {q}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── REVENUE ──────────────────────────────────────── */}
       <section className="py-20 md:py-32" style={{ background: "#141210" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
