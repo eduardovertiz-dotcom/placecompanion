@@ -37,8 +37,9 @@ export default function HomePage() {
 
             {/* Left */}
             <div>
-              <h1 className="heading-hero font-serif font-normal text-[#FFFFFF]">
-                {t.hero.headline}
+              <h1 className="heading-hero font-serif font-normal text-[#FFFFFF] text-pretty">
+                {t.hero.headline.replace(' And your destination.', '')}
+                {' '}<span className="whitespace-nowrap">And your destination.</span>
               </h1>
               <p className="font-sans font-light mt-6 md:mt-8" style={{ fontSize: "18px", lineHeight: 1.7, color: "#9C9A93" }}>
                 {t.hero.subhead}
