@@ -77,21 +77,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PAIN PILLS ───────────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#0F0D0B" }}>
-        <div className="flex justify-center gap-3 flex-wrap px-4 md:px-8">
-          {[t.pain.pill1, t.pain.pill2, t.pain.pill3].map((q) => (
-            <span
-              key={q}
-              className="font-sans font-light text-[#9C9A93] hover:text-[#FAF9F5] hover:border-white/35 transition-all cursor-default rounded-full border border-white/[0.18]"
-              style={{ padding: "12px 24px", fontSize: "clamp(14px, 2.5vw, 18px)" }}
-            >
-              {q}
-            </span>
-          ))}
-        </div>
-      </section>
-
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
       <section className="py-12 overflow-hidden" style={{ background: '#111009' }}>
         <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '16px', color: '#6B6560' }}>
