@@ -151,7 +151,7 @@ export default function DemoPage() {
               >
                 {t.demo.createCta}
               </Link>
-              <p className="font-sans text-[#53525D] mt-3" style={{ fontSize: "12px" }}>
+              <p className="font-sans mt-3" style={{ fontSize: "14px", color: "#A8A099" }}>
                 {t.demo.trialNote}
               </p>
             </div>

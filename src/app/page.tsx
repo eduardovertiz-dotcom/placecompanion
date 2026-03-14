@@ -8,10 +8,12 @@ import { ChatInterface } from "@/components/chat-interface";
 import { FaqSection } from "@/components/faq-section";
 import { marazulChatConfig } from "@/lib/marazul-config";
 import { useLang } from "@/lib/i18n/LanguageContext";
+import CalendlyModal from "@/components/CalendlyModal";
 
 export default function HomePage() {
   const { t, lang } = useLang();
   const [showBar, setShowBar] = useState(false)
+  const [showCalendly, setShowCalendly] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setShowBar(window.scrollY > 400)
@@ -58,10 +60,10 @@ export default function HomePage() {
                 >
                   {t.hero.primaryCta}
                 </Link>
-                <p className="font-sans mt-3" style={{ fontSize: '13px', color: '#6B6560' }}>
+                <p className="font-sans mt-3" style={{ fontSize: '14px', color: '#A8A099' }}>
                   {t.hero.trust}
                 </p>
-                <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#9C9A93' }}>
+                <p className="font-sans mt-1" style={{ fontSize: '14px', color: '#A8A099' }}>
                   {t.hero.socialProof}
                 </p>
               </div>
@@ -99,11 +101,11 @@ export default function HomePage() {
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
       <section className="py-20 overflow-hidden" style={{ background: '#1A1715' }}>
         <div className="text-center mb-10">
-          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#6B6560' }}>
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#A8A099', lineHeight: 1.4 }}>
             {lang === 'es' ? 'Los huéspedes preguntan.' : 'Guests are asking.'}
           </p>
-          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#C96A3A' }}>
-            {lang === 'es' ? 'Ahora mismo.' : 'Right now.'}
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', lineHeight: 1.4 }}>
+            <span style={{ color: '#C96A3A' }}>{lang === 'es' ? 'Ahora mismo.' : 'Right now.'}</span>
           </p>
         </div>
 
@@ -135,7 +137,7 @@ export default function HomePage() {
 
         {/* Row 2 — scrolls right */}
         <div
-          className="overflow-hidden"
+          className="overflow-hidden pb-8"
           style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
         >
           <div className="flex gap-4 animate-scroll-right" style={{ width: 'max-content' }}>
@@ -161,19 +163,23 @@ export default function HomePage() {
       </section>
 
       {/* ── STATS STRIP ──────────────────────────────────── */}
-      <section className="py-16" style={{ background: '#141210' }}>
-        <div className="max-w-5xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {t.stats.map((stat) => (
-              <div key={stat.value}>
-                <p className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1 }}>
-                  {stat.value}
-                </p>
-                <p className="font-sans text-[#9C9A93] mt-2" style={{ fontSize: '13px' }}>
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+      <section style={{ background: '#141210', borderTop: '1px solid rgba(232,227,220,0.04)', borderBottom: '1px solid rgba(232,227,220,0.04)' }}>
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+            <div>
+              <p className="font-serif font-light" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: '#FFFFFF', lineHeight: 1 }}>80%</p>
+              <p className="font-sans mt-3" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.6 }}>
+                {lang === 'es' ? 'de las preguntas rutinarias de huéspedes respondidas automáticamente' : 'of routine guest inquiries answered automatically'}
+              </p>
+              <p className="font-sans mt-2" style={{ fontSize: '11px', color: '#4A4540', letterSpacing: '0.05em' }}>— Statista, 2024</p>
+            </div>
+            <div>
+              <p className="font-serif font-light" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: '#FFFFFF', lineHeight: 1 }}>25%</p>
+              <p className="font-sans mt-3" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.6 }}>
+                {lang === 'es' ? 'reducción en costos operativos de recepción con IA' : 'reduction in front-desk operational costs with AI'}
+              </p>
+              <p className="font-sans mt-2" style={{ fontSize: '11px', color: '#4A4540', letterSpacing: '0.05em' }}>— McKinsey & Company, 2024</p>
+            </div>
           </div>
         </div>
       </section>
@@ -219,10 +225,10 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <p className="font-sans text-center mt-6" style={{ fontSize: '18px', color: '#A8A099' }}>
+              <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
                 {lang === 'es'
-                  ? <>Un upgrade.<br />Inversión = <span style={{ color: '#C96A3A', fontWeight: 600 }}>cubierta.</span></>
-                  : <>One upgrade.<br />Investment = <span style={{ color: '#C96A3A', fontWeight: 600 }}>covered.</span></>
+                  ? <>Un upgrade.<br />Inversión: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>cubierta.</span></>
+                  : <>One upgrade.<br />Investment: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>covered.</span></>
                 }
               </p>
             </div>
@@ -313,14 +319,13 @@ export default function HomePage() {
           </h2>
           <p className="font-sans text-[#9C9A93] mt-5" style={{ fontSize: "18px" }}>{t.founding.body}</p>
 
-          <a
-            href="https://calendly.com/placecompanion/founding-partner"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setShowCalendly(true)}
             className="font-sans text-[14px] font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white h-11 px-8 rounded-md transition-colors mt-8 inline-flex items-center"
+            style={{ border: 'none', cursor: 'pointer' }}
           >
             {t.founding.cta}
-          </a>
+          </button>
 
           <p className="font-sans text-[14px] text-[#FAF9F5]/60 mt-4">{t.founding.spots}</p>
         </div>
@@ -339,16 +344,22 @@ export default function HomePage() {
             {t.pricing.subhead}
           </p>
 
-          {/* 3-card row: Boutique, Independent (highlighted), Portfolio */}
+          {/* 3-card row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">
 
             {/* Boutique */}
-            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
+            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.08)" }}>
               <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.boutique}</p>
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
+                {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For independent hotels up to 40 rooms.'}
+              </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>$299</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$299</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+                {lang === 'es' ? 'o $239/mes con compromiso anual' : 'or $239/mo with annual commitment'}
+              </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {t.pricing.features.boutique.map((f) => (
@@ -358,19 +369,25 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(250,249,245,0.08)', color: '#FAF9F5', border: '1px solid rgba(250,249,245,0.15)' }}>
+              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#C96A3A', color: 'white' }}>
                 {t.pricing.startTrial}
               </Link>
+              <p className="font-sans text-[#53525D] text-center mt-2" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
             </div>
 
             {/* Independent — highlighted */}
-            <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#1A1715", border: "1px solid rgba(201,106,58,0.4)" }}>
-              <span className="font-sans text-[10px] font-semibold tracking-widest text-[#C96A3A] uppercase absolute top-4 right-4">{t.pricing.mostPopular}</span>
+            <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.20)", borderTop: "2px solid rgba(232,227,220,0.35)" }}>
               <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.independent}</p>
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
+                {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
+              </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>$499</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$499</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+                {lang === 'es' ? 'o $399/mes con compromiso anual' : 'or $399/mo with annual commitment'}
+              </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {t.pricing.features.independent.map((f) => (
@@ -380,18 +397,24 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#C96A3A', color: '#FAF9F5' }}>
+              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#C96A3A', color: 'white' }}>
                 {t.pricing.startTrial}
               </Link>
+              <p className="font-sans text-[#53525D] text-center mt-2" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
             </div>
 
             {/* Portfolio */}
-            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
+            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#141210", border: "1px solid rgba(232,227,220,0.12)" }}>
               <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.portfolio}</p>
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
+                {lang === 'es' ? 'Para grupos hoteleros.' : 'For portfolio groups.'}
+              </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
               </div>
-              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>{t.pricing.portfolioDesc}</p>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+                {lang === 'es' ? '2+ propiedades. Precio para tu grupo.' : '2+ properties. Priced for your portfolio.'}
+              </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
                 {t.pricing.features.portfolio.map((f) => (
@@ -401,44 +424,73 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="https://calendly.com/placecompanion/founding-partner"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center"
-                style={{ backgroundColor: 'rgba(250,249,245,0.08)', color: '#FAF9F5', border: '1px solid rgba(250,249,245,0.15)' }}
+              <button
+                onClick={() => setShowCalendly(true)}
+                className="font-sans text-[14px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center"
+                style={{ backgroundColor: 'transparent', color: '#FFFFFF', border: '1px solid rgba(232,227,220,0.25)', cursor: 'pointer' }}
               >
-                {t.pricing.contactUs}
-              </a>
+                {lang === 'es' ? 'Agenda una Llamada →' : 'Book a Call →'}
+              </button>
+              <p className="font-sans text-[#6B6560] text-center mt-2" style={{ fontSize: "12px" }}>
+                {lang === 'es' ? 'Respuesta en menos de 24 horas.' : 'Response within 24 hours.'}
+              </p>
             </div>
 
           </div>
 
           {/* Enterprise bar */}
-          <div
-            className="max-w-5xl mx-auto mt-4 rounded-xl px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4"
-            style={{ background: '#080706', border: '1px solid rgba(250,249,245,0.06)' }}
-          >
-            <div className="text-center md:text-left">
-              <span className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.enterprise}</span>
-              <p className="font-sans text-[#FAF9F5] mt-1" style={{ fontSize: '15px' }}>{t.pricing.enterpriseDesc}</p>
+          <div style={{
+            marginTop: '32px', padding: '24px 32px',
+            background: '#141210', border: '1px solid rgba(232,227,220,0.06)',
+            borderRadius: '12px', display: 'flex', alignItems: 'center',
+            justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px',
+            maxWidth: '64rem', margin: '32px auto 0'
+          }}>
+            <div style={{ textAlign: 'left' }}>
+              <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
+                {lang === 'es' ? 'Grupos hoteleros y grandes operadores' : 'Hotel groups and large-scale operators'}
+              </p>
+              <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
+                {lang === 'es'
+                  ? '4+ propiedades o 200+ habitaciones. Construimos alrededor de tu escala, tu estructura y tu marca.'
+                  : '4+ properties or 200+ rooms. We build around your scale, your structure, and your brand.'}
+              </p>
             </div>
-            <a
-              href="https://calendly.com/placecompanion/founding-partner"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-sans text-[14px] font-medium transition-colors flex-shrink-0"
-              style={{ color: '#C96A3A' }}
-            >
-              {t.pricing.contactUs}
-            </a>
+            <button onClick={() => setShowCalendly(true)} className="font-sans text-sm"
+              style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC', padding: '10px 20px', borderRadius: '6px', background: 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              {lang === 'es' ? 'Hablemos →' : 'Talk to Eduardo →'}
+            </button>
+          </div>
+
+          {/* Destination / resort communities bar */}
+          <div style={{
+            marginTop: '16px', padding: '24px 32px',
+            background: '#0D1218', border: '1px solid rgba(232,227,220,0.10)',
+            borderRadius: '12px', display: 'flex', alignItems: 'center',
+            justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px',
+            maxWidth: '64rem', margin: '16px auto 0'
+          }}>
+            <div style={{ textAlign: 'left' }}>
+              <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
+                {lang === 'es' ? 'Comunidades turísticas y desarrolladores' : 'Resort communities and master developers'}
+              </p>
+              <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
+                {lang === 'es'
+                  ? 'Una inteligencia compartida del destino. Overlays por propiedad. Experiencia consistente en toda tu comunidad.'
+                  : 'One shared destination brain. Individual property overlays. Consistent guest experience across your entire community.'}
+              </p>
+            </div>
+            <button onClick={() => setShowCalendly(true)} className="font-sans text-sm"
+              style={{ border: '1px solid rgba(45,158,107,0.4)', color: '#2D9E6B', padding: '10px 20px', borderRadius: '6px', background: 'transparent', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              {lang === 'es' ? 'Construyamos juntos →' : "Let's build together →"}
+            </button>
           </div>
 
           <p className="font-sans text-[15px] mt-8">
             <span className="text-[#53525D]">{t.pricing.foundingNote} </span>
-            <a href="https://calendly.com/placecompanion/founding-partner" target="_blank" rel="noopener noreferrer" className="text-[#FAF9F5] hover:text-white transition-colors duration-200">
+            <button onClick={() => setShowCalendly(true)} className="text-[#FAF9F5] hover:text-white transition-colors duration-200" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '15px' }}>
               {t.pricing.foundingApply}
-            </a>
+            </button>
           </p>
         </div>
       </section>
@@ -514,6 +566,8 @@ export default function HomePage() {
           </div>
         </div>
       )}
+
+      {showCalendly && <CalendlyModal onClose={() => setShowCalendly(false)} />}
     </div>
   );
 }

@@ -9,139 +9,121 @@ export default function AboutPage() {
   const { t } = useLang();
 
   return (
-    <div style={{ background: "#141413" }}>
+    <div style={{ background: "#0F0D0B" }}>
       <SiteNav />
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="min-h-screen flex items-center justify-center text-center px-4 md:px-8" style={{ background: "#141413" }}>
-        <div>
-          <h1 className="heading-page font-serif font-light text-[#FAF9F5] max-w-4xl mx-auto">
+      <section
+        className="flex items-center justify-center text-center px-4 md:px-8"
+        style={{ background: "#0F0D0B", paddingTop: "clamp(120px, 18vw, 200px)", paddingBottom: "clamp(80px, 12vw, 140px)" }}
+      >
+        <div className="max-w-3xl">
+          <h1 className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1.05 }}>
             {t.about.heroHeadline}
           </h1>
-          <p className="font-sans text-[#9C9A93] mt-16" style={{ fontSize: "clamp(1.1rem, 3vw, 1.375rem)" }}>
+          <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)", lineHeight: 1.75 }}>
             {t.about.heroSubhead}
           </p>
         </div>
       </section>
 
       {/* ── WHY HOTELS ───────────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#141413" }}>
+      <section className="py-20 md:py-28" style={{ background: "#141210" }}>
         <div className="max-w-2xl mx-auto px-4 md:px-8">
-          <div className="text-center">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-              <rect x="10" y="20" width="36" height="28" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
-              <path d="M18 20V15a10 10 0 0120 0v5" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" />
-              <rect x="23" y="28" width="10" height="8" rx="1" stroke="#FAF9F5" strokeWidth="1.5" />
-            </svg>
-            <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-              {t.about.whyHotelsHeadline}
-            </h2>
-          </div>
+          <p className="font-sans uppercase tracking-widest mb-4" style={{ fontSize: "11px", color: "#2D9E6B" }}>
+            THE PROBLEM
+          </p>
+          <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
+            {t.about.whyHeadline}
+          </h2>
           <div className="space-y-6 mt-8">
             <p className="font-sans text-[#9C9A93]" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-              {t.about.whyHotelsPara1}
+              {t.about.whyP1}
             </p>
             <p className="font-sans text-[#9C9A93]" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-              {t.about.whyHotelsPara2}
+              {t.about.whyP2}
             </p>
           </div>
         </div>
       </section>
 
       {/* ── GENERIC AI ───────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#0F0E0D" }}>
-        <div className="max-w-7xl mx-auto">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-            <path d="M10 13h36a2 2 0 012 2v22a2 2 0 01-2 2H18l-10 8V15a2 2 0 012-2z" stroke="#FAF9F5" strokeWidth="1.5" strokeLinejoin="round" />
-          </svg>
-
-          <h2 className="heading-section font-serif font-normal text-[#FAF9F5] max-w-3xl mx-auto">
-            {t.about.genericAiHeadline}
-          </h2>
-          <p className="font-serif italic text-[#9C9A93] mt-4" style={{ fontSize: "clamp(1.2rem, 3vw, 1.75rem)" }}>
-            {t.about.genericAiSubhead}
+      <section className="py-20 md:py-28 px-4 md:px-8" style={{ background: "#0F0D0B" }}>
+        <div className="max-w-2xl mx-auto">
+          <p className="font-sans uppercase tracking-widest mb-4" style={{ fontSize: "11px", color: "#C96A3A" }}>
+            THE DIFFERENCE
           </p>
-          <p className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-8" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-            {t.about.genericAiDesc}
+          <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
+            {t.about.genericHeadline}
+          </h2>
+          <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+            {t.about.genericBody}
           </p>
         </div>
       </section>
 
       {/* ── DESTINATION ANGLE ────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#141413" }}>
-        <div className="max-w-2xl mx-auto px-4 md:px-8 text-center">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-            <circle cx="28" cy="22" r="10" stroke="#FAF9F5" strokeWidth="1.5" />
-            <path d="M28 32c0 0-16 12-16 20h32c0-8-16-20-16-20z" stroke="#FAF9F5" strokeWidth="1.5" strokeLinejoin="round" />
-          </svg>
-
-          <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
+      <section className="py-20 md:py-28" style={{ background: "#141210" }}>
+        <div className="max-w-2xl mx-auto px-4 md:px-8">
+          <p className="font-sans uppercase tracking-widest mb-4" style={{ fontSize: "11px", color: "#A8A099" }}>
+            BEYOND THE HOTEL
+          </p>
+          <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
             {t.about.destinationHeadline}
           </h2>
           <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-            {t.about.destinationDesc}
+            {t.about.destinationBody}
           </p>
         </div>
       </section>
 
       {/* ── WHAT WE ARE NOT ──────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#0F0E0D" }}>
-        <div className="max-w-7xl mx-auto">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-            <circle cx="28" cy="28" r="20" stroke="#FAF9F5" strokeWidth="1.5" />
-            <circle cx="28" cy="28" r="5" stroke="#FAF9F5" strokeWidth="1.5" />
-            <line x1="28" y1="8" x2="28" y2="18" stroke="#FAF9F5" strokeWidth="1.5" />
-            <line x1="28" y1="38" x2="28" y2="48" stroke="#FAF9F5" strokeWidth="1.5" />
-            <line x1="8" y1="28" x2="18" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
-            <line x1="38" y1="28" x2="48" y2="28" stroke="#FAF9F5" strokeWidth="1.5" />
-          </svg>
-
-          <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            {t.about.whatWeAreNotHeadline}
+      <section className="py-20 md:py-28 px-4 md:px-8" style={{ background: "#0F0D0B" }}>
+        <div className="max-w-2xl mx-auto">
+          <p className="font-sans uppercase tracking-widest mb-4" style={{ fontSize: "11px", color: "#A8A099" }}>
+            WHAT WE ARE NOT
+          </p>
+          <h2 className="font-serif font-normal text-[#FAF9F5] mb-12" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
+            {t.about.notHeadline}
           </h2>
-
-          <div className="space-y-8 mt-12 max-w-2xl mx-auto text-left">
-            {t.about.whatWeAreNotItems.map((s) => (
-              <p key={s} className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", lineHeight: 1.3 }}>
-                {s}
-              </p>
+          <div className="space-y-6">
+            {t.about.notItems.map((item, i) => (
+              <div key={i} className="flex gap-4 items-start">
+                <div
+                  className="flex-shrink-0 mt-1"
+                  style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#C96A3A", marginTop: "10px" }}
+                />
+                <p className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", lineHeight: 1.4 }}>
+                  {item}
+                </p>
+              </div>
             ))}
           </div>
-
-          <p className="font-sans text-[#9C9A93] mt-12 text-center" style={{ fontSize: "18px" }}>
-            {t.about.conversationLayer}
-          </p>
         </div>
       </section>
 
       {/* ── THE VISION ───────────────────────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#141413" }}>
-        <div className="max-w-2xl mx-auto px-4 md:px-8 text-center">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-            <path d="M28 6l5.5 11 12 1.75-8.75 8.5 2 12L28 34l-10.75 5.25 2-12L10.5 18.75l12-1.75L28 6z" stroke="#FAF9F5" strokeWidth="1.5" strokeLinejoin="round" />
-          </svg>
-
-          <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
+      <section className="py-20 md:py-28" style={{ background: "#141210" }}>
+        <div className="max-w-2xl mx-auto px-4 md:px-8">
+          <p className="font-sans uppercase tracking-widest mb-4" style={{ fontSize: "11px", color: "#2D9E6B" }}>
+            THE VISION
+          </p>
+          <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
             {t.about.visionHeadline}
           </h2>
           <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "18px", lineHeight: 1.8 }}>
-            {t.about.visionDesc}
+            {t.about.visionBody}
           </p>
         </div>
       </section>
 
       {/* ── FINAL CTA ────────────────────────────────────── */}
-      <section className="py-20 md:py-32 text-center" style={{ background: "#2A2725" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" className="mx-auto mb-6">
-            <path d="M10 28a18 18 0 0136 0" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="28" cy="28" r="6" stroke="#FAF9F5" strokeWidth="1.5" />
-            <path d="M28 34v10M24 40l4 4 4-4" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
+      <section className="py-20 md:py-28 text-center" style={{ background: "#1A1715" }}>
+        <div className="max-w-xl mx-auto px-4 md:px-8">
+          <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
             {t.finalCta.headline}
           </h2>
-          <p className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+          <p className="font-sans text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
             {t.finalCta.body}
           </p>
           <Link

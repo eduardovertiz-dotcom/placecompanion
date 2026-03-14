@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useLang } from '@/lib/i18n/LanguageContext'
 import UpgradeModal from '@/components/UpgradeModal'
+import CalendlyModal from '@/components/CalendlyModal'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +23,7 @@ export default function DashboardClient({ user, properties }: Props) {
   const { t } = useLang()
   const [upgradeTarget, setUpgradeTarget] = useState<UpgradeTarget | null>(null)
   const [showInvoiceModal, setShowInvoiceModal] = useState(false)
+  const [showCalendly, setShowCalendly] = useState(false)
 
   async function handleSignOut() {
     const supabase = createClient()
@@ -301,10 +303,17 @@ export default function DashboardClient({ user, properties }: Props) {
       </div>
 
       {/* Team access note */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8 pb-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 pb-8 flex items-center gap-3 flex-wrap">
         <p className="font-sans" style={{ fontSize: '13px', color: '#53525D' }}>
           {t.dashboard.teamAccessNote}
         </p>
+        <button
+          onClick={() => setShowCalendly(true)}
+          className="font-sans transition-colors"
+          style={{ fontSize: '13px', color: '#A8A099', background: 'none', border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}
+        >
+          {t.dashboard.teamAccessCta}
+        </button>
       </div>
 
       {/* Invoice modal */}
@@ -319,12 +328,59 @@ export default function DashboardClient({ user, properties }: Props) {
             style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.10)' }}
             onClick={e => e.stopPropagation()}
           >
+            <button
+              onClick={() => setShowInvoiceModal(false)}
+              className="absolute"
+              style={{ top: '20px', right: '24px', background: 'none', border: 'none', color: '#6B6560', cursor: 'pointer', fontSize: '22px', lineHeight: 1 }}
+            >×</button>
             <h2 className="font-serif font-normal" style={{ fontSize: '24px', color: '#FAF9F5' }}>
               {t.dashboard.invoiceTitle}
             </h2>
-            <p className="font-sans mt-4" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.7 }}>
+            <p className="font-sans mt-2" style={{ fontSize: '14px', color: '#6B6560' }}>
               {t.dashboard.invoiceDesc}
             </p>
+            <div className="flex flex-col gap-3 mt-6">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowInvoiceModal(false)}
+                className="flex items-center justify-between rounded-xl"
+                style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)', padding: '20px 24px', textDecoration: 'none' }}
+              >
+                <div>
+                  <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
+                    {t.dashboard.invoiceMx}
+                  </p>
+                  <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
+                    {t.dashboard.invoiceMxDesc}
+                  </p>
+                </div>
+                <span className="font-sans" style={{ fontSize: '13px', color: '#C96A3A', whiteSpace: 'nowrap' as const, marginLeft: '16px' }}>
+                  {t.dashboard.invoiceMxBtn}
+                </span>
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowInvoiceModal(false)}
+                className="flex items-center justify-between rounded-xl"
+                style={{ background: '#242019', border: '1px solid rgba(232,227,220,0.06)', padding: '20px 24px', textDecoration: 'none' }}
+              >
+                <div>
+                  <p className="font-sans" style={{ fontSize: '15px', fontWeight: 500, color: '#FFFFFF', marginBottom: '4px' }}>
+                    {t.dashboard.invoiceIntl}
+                  </p>
+                  <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
+                    {t.dashboard.invoiceIntlDesc}
+                  </p>
+                </div>
+                <span className="font-sans" style={{ fontSize: '13px', color: '#C96A3A', whiteSpace: 'nowrap' as const, marginLeft: '16px' }}>
+                  {t.dashboard.invoiceIntlBtn}
+                </span>
+              </a>
+            </div>
             <button
               onClick={() => setShowInvoiceModal(false)}
               className="font-sans font-medium w-full mt-6 transition-colors"
@@ -332,9 +388,9 @@ export default function DashboardClient({ user, properties }: Props) {
                 height: '44px',
                 borderRadius: '8px',
                 fontSize: '14px',
-                background: 'rgba(250,249,245,0.08)',
-                color: '#FAF9F5',
-                border: '1px solid rgba(250,249,245,0.12)',
+                background: 'rgba(250,249,245,0.06)',
+                color: '#A8A099',
+                border: '1px solid rgba(250,249,245,0.08)',
                 cursor: 'pointer',
               }}
             >
@@ -352,6 +408,9 @@ export default function DashboardClient({ user, properties }: Props) {
           onClose={() => setUpgradeTarget(null)}
         />
       )}
+
+      {/* Calendly modal */}
+      {showCalendly && <CalendlyModal onClose={() => setShowCalendly(false)} />}
     </div>
   )
 }
