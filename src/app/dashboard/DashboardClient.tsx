@@ -188,6 +188,12 @@ export default function DashboardClient({ user, properties }: Props) {
                     </p>
                   )}
 
+                  {property.openIssueCount > 0 && (
+                    <p className="font-sans mt-1" style={{ fontSize: '12px', color: '#C96A3A' }}>
+                      ● {property.openIssueCount} open issue{property.openIssueCount === 1 ? '' : 's'}
+                    </p>
+                  )}
+
                   {/* Trial warning banners */}
                   {isTrial && daysLeft <= 3 && daysLeft > 0 && (
                     <div

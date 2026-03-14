@@ -24,5 +24,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ id: s
     .order('started_at', { ascending: false })
     .limit(50)
 
-  return <PropertyClient property={property} conversations={conversations || []} />
+  const { data: issues } = await supabase
+    .from('issue_logs')
+    .select('*')
+    .eq('property_id', id)
+    .order('created_at', { ascending: false })
+    .limit(100)
+
+  return <PropertyClient property={property} conversations={conversations || []} issues={issues || []} />
 }

@@ -213,6 +213,15 @@ export async function POST(
           // First alert — send immediately, include room number if already known
           const roomNumber = extractRoomNumber(allMessages)
           sendIssueAlert(property.alert_email, property.hotel_name, lastUserMessage.content, roomNumber)
+          // Fire and forget — log issue to DB
+          const { createServiceClient } = await import('@/lib/supabase/service')
+          const serviceSupabase = createServiceClient()
+          Promise.resolve(serviceSupabase.from('issue_logs').insert({
+            property_id: id,
+            guest_message: lastUserMessage.content,
+            room_number: roomNumber || null,
+            status: 'open'
+          })).then(() => {}).catch((e: Error) => console.error('[issue_log] insert error:', e.message))
         } else {
           // Check if this follow-up message contains a room number and a prior message had an issue
           const roomInThisMessage = extractRoomNumberFromMessage(lastUserMessage.content)
