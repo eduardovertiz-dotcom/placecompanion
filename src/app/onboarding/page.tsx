@@ -242,7 +242,7 @@ export default function OnboardingPage() {
         <div
           style={{
             height: '100%',
-            background: '#2D9E6B',
+            background: '#8B3A1F',
             width: progressWidth,
             transition: 'width 0.5s ease',
           }}
