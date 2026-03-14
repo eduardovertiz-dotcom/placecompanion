@@ -54,7 +54,7 @@ export default function HomePage() {
             </div>
 
             {/* Right — demo window */}
-            <div style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
+            <div className="hidden md:block" style={{ background: '#3A3835', borderRadius: '17px', padding: '1px' }}>
               <div
                 className="flex flex-col h-[420px] md:h-[580px]"
                 style={{ borderRadius: '16px', overflow: 'hidden', background: '#0F0D0B' }}
