@@ -21,6 +21,7 @@ interface UpgradeTarget {
 export default function DashboardClient({ user, properties }: Props) {
   const { t } = useLang()
   const [upgradeTarget, setUpgradeTarget] = useState<UpgradeTarget | null>(null)
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false)
 
   async function handleSignOut() {
     const supabase = createClient()
@@ -35,10 +36,25 @@ export default function DashboardClient({ user, properties }: Props) {
         <Link href="/" className="font-serif text-xl" style={{ color: '#E8E3DC' }}>
           Place Companion
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <span className="font-sans hidden sm:inline" style={{ fontSize: '14px', color: '#A8A099' }}>
             {user.email}
           </span>
+          <button
+            onClick={() => setShowInvoiceModal(true)}
+            className="font-sans transition-colors"
+            style={{
+              fontSize: '14px',
+              color: '#A8A099',
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.12)',
+              borderRadius: '8px',
+              padding: '8px 16px',
+              cursor: 'pointer',
+            }}
+          >
+            {t.dashboard.getInvoice}
+          </button>
           <button
             onClick={handleSignOut}
             className="font-sans transition-colors"
@@ -283,6 +299,50 @@ export default function DashboardClient({ user, properties }: Props) {
           </div>
         )}
       </div>
+
+      {/* Team access note */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 pb-8">
+        <p className="font-sans" style={{ fontSize: '13px', color: '#53525D' }}>
+          {t.dashboard.teamAccessNote}
+        </p>
+      </div>
+
+      {/* Invoice modal */}
+      {showInvoiceModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          style={{ background: 'rgba(0,0,0,0.7)' }}
+          onClick={() => setShowInvoiceModal(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl p-8"
+            style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.10)' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <h2 className="font-serif font-normal" style={{ fontSize: '24px', color: '#FAF9F5' }}>
+              {t.dashboard.invoiceTitle}
+            </h2>
+            <p className="font-sans mt-4" style={{ fontSize: '15px', color: '#A8A099', lineHeight: 1.7 }}>
+              {t.dashboard.invoiceDesc}
+            </p>
+            <button
+              onClick={() => setShowInvoiceModal(false)}
+              className="font-sans font-medium w-full mt-6 transition-colors"
+              style={{
+                height: '44px',
+                borderRadius: '8px',
+                fontSize: '14px',
+                background: 'rgba(250,249,245,0.08)',
+                color: '#FAF9F5',
+                border: '1px solid rgba(250,249,245,0.12)',
+                cursor: 'pointer',
+              }}
+            >
+              {t.dashboard.invoiceClose}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Upgrade modal */}
       {upgradeTarget && (

@@ -59,6 +59,7 @@ export default function OnboardingPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const [conversationalStyle, setConversationalStyle] = useState<StyleKey>('warm_local')
+  const [roomCount, setRoomCount] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -190,7 +191,7 @@ export default function OnboardingPage() {
         user_id: authData.user!.id,
         hotel_name: extracted?.hotelName || 'My Hotel',
         location: extracted?.location || null,
-        room_count: extracted?.roomCount || null,
+        room_count: roomCount || extracted?.roomCount || null,
         extracted_data: extracted,
         system_prompt: systemPrompt,
         conversational_style: conversationalStyle,
@@ -444,6 +445,37 @@ export default function OnboardingPage() {
                     <p className="font-sans mt-0.5" style={{ fontSize: '12px', color: '#C4BDB6', lineHeight: 1.4 }}>
                       {styleData.tagline}
                     </p>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Room count selector */}
+          <div className="mt-8">
+            <p className="font-sans font-medium" style={{ fontSize: '14px', color: '#E8E3DC' }}>
+              {t.onboarding.roomCountLabel}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {t.onboarding.roomCountOptions.map((option) => {
+                const isSelected = roomCount === option
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setRoomCount(isSelected ? '' : option)}
+                    className="font-sans transition-all"
+                    style={{
+                      background: isSelected ? '#2D9E6B' : '#0F0D0B',
+                      border: `1px solid ${isSelected ? '#2D9E6B' : 'rgba(232,227,220,0.08)'}`,
+                      borderRadius: '8px',
+                      padding: '8px 18px',
+                      fontSize: '14px',
+                      color: isSelected ? '#FFFFFF' : '#C4BDB6',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {option}
                   </button>
                 )
               })}

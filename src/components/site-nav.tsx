@@ -88,9 +88,6 @@ export function SiteNav() {
             </Link>
           ))}
           <div className="flex flex-col gap-3 mt-4">
-            <div className="flex justify-center">
-              <LanguageToggle />
-            </div>
             <Link href="/demo" onClick={() => setOpen(false)} className="font-sans text-sm text-[#E8E3DC] border border-white/25 h-12 px-5 rounded-md flex items-center justify-center hover:bg-white/5 transition-colors">
               {t.nav.seeDemo}
             </Link>
@@ -102,6 +99,9 @@ export function SiteNav() {
             <Link href="/onboarding" onClick={() => setOpen(false)} className="font-sans text-sm bg-[#C96A3A] text-[#FAF9F5] h-12 px-5 rounded-md flex items-center justify-center hover:bg-[#D4784A] transition-colors">
               {t.nav.createAssistant}
             </Link>
+            <div className="flex justify-center pt-2" style={{ borderTop: '1px solid rgba(232,227,220,0.06)' }}>
+              <LanguageToggle />
+            </div>
           </div>
         </div>
       )}

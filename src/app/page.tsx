@@ -58,6 +58,12 @@ export default function HomePage() {
                 >
                   {t.hero.primaryCta}
                 </Link>
+                <p className="font-sans mt-3" style={{ fontSize: '13px', color: '#6B6560' }}>
+                  {t.hero.trust}
+                </p>
+                <p className="font-sans mt-1" style={{ fontSize: '13px', color: '#9C9A93' }}>
+                  {t.hero.socialProof}
+                </p>
               </div>
             </div>
 
@@ -91,26 +97,28 @@ export default function HomePage() {
       </section>
 
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
-      <section className="py-12 overflow-hidden" style={{ background: '#111009' }}>
-        <p className="font-sans uppercase tracking-widest text-center mb-8" style={{ fontSize: '16px', color: '#6B6560' }}>
-          {lang === 'es'
-            ? <>Los huéspedes preguntan. <span style={{ color: '#C96A3A' }}>Ahora mismo.</span></>
-            : <>Guests are asking. <span style={{ color: '#C96A3A' }}>Right now.</span></>
-          }
-        </p>
+      <section className="py-20 overflow-hidden" style={{ background: '#1A1715' }}>
+        <div className="text-center mb-10">
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#6B6560' }}>
+            {lang === 'es' ? 'Los huéspedes preguntan.' : 'Guests are asking.'}
+          </p>
+          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#C96A3A' }}>
+            {lang === 'es' ? 'Ahora mismo.' : 'Right now.'}
+          </p>
+        </div>
 
         {/* Row 1 — scrolls left */}
         <div
-          className="overflow-hidden mb-3"
+          className="overflow-hidden mb-4"
           style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
         >
-          <div className="flex gap-3 animate-scroll-left" style={{ width: 'max-content' }}>
+          <div className="flex gap-4 animate-scroll-left" style={{ width: 'max-content' }}>
             {[...t.realQuestions.row1, ...t.realQuestions.row1].map((q, i) => (
               <span
                 key={i}
                 className="font-sans flex-shrink-0 rounded-full"
                 style={{
-                  background: '#1A1715',
+                  background: '#242019',
                   border: '1px solid rgba(232,227,220,0.10)',
                   padding: '12px 28px',
                   fontSize: '20px',
@@ -130,13 +138,13 @@ export default function HomePage() {
           className="overflow-hidden"
           style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
         >
-          <div className="flex gap-3 animate-scroll-right" style={{ width: 'max-content' }}>
+          <div className="flex gap-4 animate-scroll-right" style={{ width: 'max-content' }}>
             {[...t.realQuestions.row2, ...t.realQuestions.row2].map((q, i) => (
               <span
                 key={i}
                 className="font-sans flex-shrink-0 rounded-full"
                 style={{
-                  background: '#1A1715',
+                  background: '#242019',
                   border: '1px solid rgba(232,227,220,0.10)',
                   padding: '12px 28px',
                   fontSize: '20px',
@@ -147,6 +155,24 @@ export default function HomePage() {
               >
                 {q}
               </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS STRIP ──────────────────────────────────── */}
+      <section className="py-16" style={{ background: '#141210' }}>
+        <div className="max-w-5xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {t.stats.map((stat) => (
+              <div key={stat.value}>
+                <p className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1 }}>
+                  {stat.value}
+                </p>
+                <p className="font-sans text-[#9C9A93] mt-2" style={{ fontSize: '13px' }}>
+                  {stat.label}
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -288,7 +314,9 @@ export default function HomePage() {
           <p className="font-sans text-[#9C9A93] mt-5" style={{ fontSize: "18px" }}>{t.founding.body}</p>
 
           <a
-            href="mailto:hola@placecompanion.com?subject=Founding Partner Application"
+            href="https://calendly.com/placecompanion/founding-partner"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-sans text-[14px] font-medium text-[#141413] bg-[#FAF9F5] hover:bg-white h-11 px-8 rounded-md transition-colors mt-8 inline-flex items-center"
           >
             {t.founding.cta}
@@ -311,57 +339,104 @@ export default function HomePage() {
             {t.pricing.subhead}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 max-w-3xl mx-auto mt-12">
+          {/* 3-card row: Boutique, Independent (highlighted), Portfolio */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">
 
-            {/* Card 1 — Single Property */}
-            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
-              <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.single}</p>
+            {/* Boutique */}
+            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.boutique}</p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$249</span>
-                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>{t.pricing.perMonth}</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>$299</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
+              <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.single.map((f) => (
-                  <li key={f} className="flex items-center gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "15px" }}>
-                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-white/40" />
+                {t.pricing.features.boutique.map((f) => (
+                  <li key={f} className="flex items-start gap-3 font-sans text-[#9C9A93]" style={{ fontSize: "14px" }}>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-white/30" />
                     {f}
                   </li>
                 ))}
               </ul>
-              <Link href="/onboarding" className="font-sans text-[15px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#FAF9F5', color: '#141413' }}>
+              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: 'rgba(250,249,245,0.08)', color: '#FAF9F5', border: '1px solid rgba(250,249,245,0.15)' }}>
                 {t.pricing.startTrial}
               </Link>
-              <p className="font-sans text-[#53525D] text-center mt-3" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
             </div>
 
-            {/* Card 2 — Small Group */}
-            <div className="rounded-2xl p-8 md:p-10 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
-              <p className="font-sans text-[13px] font-medium tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.group}</p>
+            {/* Independent — highlighted */}
+            <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#1A1715", border: "1px solid rgba(201,106,58,0.4)" }}>
+              <span className="font-sans text-[10px] font-semibold tracking-widest text-[#C96A3A] uppercase absolute top-4 right-4">{t.pricing.mostPopular}</span>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.independent}</p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$449</span>
-                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "24px" }}>{t.pricing.perMonth}</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>$499</span>
+                <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <div className="my-6" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
+              <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.group.map((f) => (
-                  <li key={f} className="flex items-center gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "15px" }}>
-                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-white/40" />
+                {t.pricing.features.independent.map((f) => (
+                  <li key={f} className="flex items-start gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "14px" }}>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-[#C96A3A]" />
                     {f}
                   </li>
                 ))}
               </ul>
-              <Link href="/onboarding" className="font-sans text-[15px] font-semibold h-11 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#FAF9F5', color: '#141413' }}>
+              <Link href="/onboarding" className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center" style={{ backgroundColor: '#C96A3A', color: '#FAF9F5' }}>
                 {t.pricing.startTrial}
               </Link>
-              <p className="font-sans text-[#53525D] text-center mt-3" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
+            </div>
+
+            {/* Portfolio */}
+            <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#080706", border: "1px solid rgba(250,249,245,0.08)" }}>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.portfolio}</p>
+              <div className="flex items-baseline gap-1 mt-4">
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
+              </div>
+              <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>{t.pricing.portfolioDesc}</p>
+              <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
+              <ul className="flex-1 space-y-3">
+                {t.pricing.features.portfolio.map((f) => (
+                  <li key={f} className="flex items-start gap-3 font-sans text-[#9C9A93]" style={{ fontSize: "14px" }}>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-white/30" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://calendly.com/placecompanion/founding-partner"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans text-[14px] font-semibold h-10 rounded-lg w-full transition-colors mt-6 flex items-center justify-center"
+                style={{ backgroundColor: 'rgba(250,249,245,0.08)', color: '#FAF9F5', border: '1px solid rgba(250,249,245,0.15)' }}
+              >
+                {t.pricing.contactUs}
+              </a>
             </div>
 
           </div>
 
-          <p className="font-sans text-[15px] mt-10">
+          {/* Enterprise bar */}
+          <div
+            className="max-w-5xl mx-auto mt-4 rounded-xl px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4"
+            style={{ background: '#080706', border: '1px solid rgba(250,249,245,0.06)' }}
+          >
+            <div className="text-center md:text-left">
+              <span className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.enterprise}</span>
+              <p className="font-sans text-[#FAF9F5] mt-1" style={{ fontSize: '15px' }}>{t.pricing.enterpriseDesc}</p>
+            </div>
+            <a
+              href="https://calendly.com/placecompanion/founding-partner"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-sans text-[14px] font-medium transition-colors flex-shrink-0"
+              style={{ color: '#C96A3A' }}
+            >
+              {t.pricing.contactUs}
+            </a>
+          </div>
+
+          <p className="font-sans text-[15px] mt-8">
             <span className="text-[#53525D]">{t.pricing.foundingNote} </span>
-            <a href="mailto:hola@placecompanion.com?subject=Founding Partner Application" className="text-[#FAF9F5] hover:text-white transition-colors duration-200">
+            <a href="https://calendly.com/placecompanion/founding-partner" target="_blank" rel="noopener noreferrer" className="text-[#FAF9F5] hover:text-white transition-colors duration-200">
               {t.pricing.foundingApply}
             </a>
           </p>
