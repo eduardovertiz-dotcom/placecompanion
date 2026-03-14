@@ -13,7 +13,11 @@
       "Bash(npx tsc:*)",
       "Bash(git push:*)",
       "Bash(git revert:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(find /Users/evertiz/Desktop/placecompanion -maxdepth 2 -name \".env*\" -o -name \"*.example\" 2>/dev/null | head -20)",
+      "Bash(find /Users/evertiz/Desktop/placecompanion/supabase -type f \\\\\\( -name \"*.sql\" -o -name \"*.ts\" \\\\\\) 2>/dev/null | head -20)",
+      "Bash(cat /Users/evertiz/Desktop/placecompanion/src/app/api/assistant/\\\\[id\\\\]/route.ts)",
+      "Bash(git tag:*)"
     ]
   }
 }
