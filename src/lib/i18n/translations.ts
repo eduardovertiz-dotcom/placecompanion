@@ -123,6 +123,7 @@ export const translations = {
           'Guest conversation analytics',
           'Revenue opportunity signals',
           'Instant staff issue alerts',
+          'Staff notification routing',
           'Email support',
         ],
         independent: [
@@ -543,6 +544,7 @@ export const translations = {
           'Analítica de conversaciones',
           'Señales de oportunidad de ingresos',
           'Alertas instantáneas de incidencias al staff',
+          'Enrutamiento de notificaciones al staff',
           'Soporte por email',
         ],
         independent: [
