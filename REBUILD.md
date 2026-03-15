@@ -5,161 +5,115 @@
 
 ## 1. Project Overview
 
-**Place Companion** is a SaaS platform that lets hotels (and other hospitality venues) deploy an AI guest assistant in minutes. Operators onboard their property by pasting a URL or text, the AI extracts structured knowledge, and a branded chat widget is generated at `/assistant/[id]`. Operators manage their property, view conversations, and review guest issue logs via a dashboard.
+**Place Companion** (`placecompanion.com`) is a SaaS platform that lets hotels deploy an AI guest assistant in minutes. Operators onboard their property by pasting a URL, uploading a PDF, or writing a description. The AI extracts structured hotel knowledge, builds a system prompt, and generates a public chat widget at `/assistant/[id]`. Operators manage analytics, guest issues, deploy links, and settings via a private dashboard.
 
 **Stack:**
-- Next.js 16.1.6 (App Router, React 19, TypeScript 5)
-- Supabase (Postgres + Auth + RLS)
-- Vercel AI SDK (`ai` v6, `@ai-sdk/anthropic`) — Claude Haiku 4.5
-- Stripe (subscriptions)
-- Resend (transactional email alerts)
-- Tailwind CSS v4 (utility classes + inline styles)
-- Lucide React (icons)
-- Google Fonts: Cormorant Garamond (serif) + DM Sans (sans-serif)
+- Next.js 16.1.6 (App Router, server + client components)
+- React 19, TypeScript 5
+- Tailwind CSS v4 (via `@tailwindcss/postcss`)
+- Supabase (auth + database, using `@supabase/ssr`)
+- Anthropic Claude Haiku 4.5 via `@ai-sdk/anthropic` + Vercel AI SDK
+- Stripe for subscriptions
+- Resend for email alerts
+- Recharts for analytics charts
 
 ---
 
 ## 2. Design System
 
-### Color Palette
+### 2.1 Color Tokens
+All colors are applied via inline `style={{ color: '...' }}` or Tailwind arbitrary values. No `tailwind.config.ts` color extensions.
 
-| Token | Hex | Usage |
+| Token Name | Hex | Usage |
 |---|---|---|
-| Page darkest | `#080706` | Homepage background |
-| Onboarding bg | `#1C1917` | Onboarding + assistant page |
-| Page dark | `#0F0D0B` | Dashboard, modal backgrounds |
-| Nav / footer bg | `#161310` | Footer, nav blur base |
-| Card primary | `#1A1715` | Cards, chat bubbles (assistant) |
-| Card secondary | `#1F1C19` | User chat bubbles, input bg |
-| Card tertiary | `#141210` | Chat headers, form input area |
-| Onboarding card | `#242019` | Onboarding chat messages |
-| Input bg | `#080706` | Main chat input |
-| Input dark | `#2C2720` | File chips bg |
-| Border subtle | `rgba(232,227,220,0.06)` | Card borders default |
-| Border medium | `rgba(232,227,220,0.08)` | Modal borders, input borders |
-| Border visible | `rgba(232,227,220,0.12–0.25)` | Hover states, focus rings |
-| Text primary | `#FFFFFF` | Headlines, prices |
-| Text warm-white | `#FAF9F5` | Body text primary |
-| Text warm | `#E8E3DC` | Subheadings, nav links |
-| Text muted | `#A8A099` | Secondary body text |
-| Text dimmer | `#9C9A93` | Plan periods, hints |
-| Text subtle | `#C4BDB6` | Onboarding helpers |
-| Text faint | `#6B6560` | Labels, descriptions |
-| Text whisper | `#4A4540` | Bottom notes |
-| Text ghost | `#53525D` | Team access note |
-| **Orange primary** | `#C96A3A` | CTAs, buttons, progress bar, selected state border |
-| **Orange hover** | `#D4784A` | CTA hover |
-| Orange selected bg | `#2C1810` | Selected card/button background |
-| Orange disabled | `rgba(201,106,58,0.35)` | Disabled send button |
-| **Green accent** | `#2D9E6B` | Status badges, checkmarks, active indicators |
-| Green badge bg | `#242019` | Status badge background |
-| Error red | `#F87171` | Error messages |
-| Warning yellow | `#FCD34D` | Trial warning text |
+| `background-dark` | `#141413` | Global page background (`body`, marketing pages) |
+| `background-page` | `#141413` | Features, About pages |
+| `background-card` | `#1A1715` | Card backgrounds, sidebar selected state, chat bubbles |
+| `background-input` | `#0F0D0B` | Onboarding inputs, chat message area |
+| `background-input-alt` | `#242019` | Step 2 input fields, chat input bg |
+| `background-deeper` | `#161310` | Announcement bar, footer, dashboard header |
+| `background-onboarding` | `#1C1917` | Onboarding page, auth pages |
+| `background-elevated` | `#1F1C19` | User chat bubbles, suggestion chips |
+| `background-muted` | `#141210` | Chat input bar |
+| `background-dark-nav` | `rgba(28,25,23,0.92)` | Nav backdrop blur |
+| `orange-primary` | `#C96A3A` | Primary CTA, active states, issue badges, selected borders |
+| `orange-hover` | `#D4784A` | Orange button hover state |
+| `orange-dim` | `rgba(201,106,58,0.35)` | Disabled send button |
+| `orange-bg` | `#2C1810` | Selected style card background, onboarding selected state |
+| `green-primary` | `#2D9E6B` | Live indicator dot, success states, sign-in buttons, resolution badges |
+| `text-primary` | `#FAF9F5` | Primary headings on dark backgrounds |
+| `text-heading` | `#E8E3DC` | Page headings, input labels, chat text |
+| `text-secondary` | `#A8A099` | Nav links, body text, secondary labels |
+| `text-muted` | `#9C9A93` | Subheadings, body copy on landing |
+| `text-dim` | `#6B6560` | Placeholder text, dim labels, footer links |
+| `text-faint` | `#4A4540` | Sidebar section labels, very dim text |
+| `text-disabled` | `#53525D` | Team access note |
+| `border-subtle` | `rgba(232,227,220,0.06)` | Card borders, dividers |
+| `border-light` | `rgba(232,227,220,0.08)` | Input borders, panel borders |
+| `border-medium` | `rgba(232,227,220,0.15)` | Button borders, nav CTA border |
+| `border-active` | `rgba(232,227,220,0.25)` | Input focus border, hover border |
+| `warning-yellow` | `#FCD34D` | Trial warning banners |
+| `error-red` | `#F87171` / `#EF4444` | Error messages |
 
-### Typography
+### 2.2 Typography
+Two Google Fonts loaded in `layout.tsx` via `next/font/google`:
 
-```
-Serif:  Cormorant Garamond — weights 300, 400, 600, 700 — CSS var: --font-serif
-Sans:   DM Sans — weights 300, 400, 500 — CSS var: --font-sans
-```
+| Variable | Font | Weights | CSS var |
+|---|---|---|---|
+| `cormorantGaramond` | Cormorant Garamond | 300, 400, 600, 700 | `--font-serif` |
+| `dmSans` | DM Sans | 300, 400, 500 | `--font-sans` |
 
-Both fonts loaded via `next/font/google` in `layout.tsx`. Body defaults to `font-sans`.
+Applied on `<body>`: `className="${cormorantGaramond.variable} ${dmSans.variable} font-sans antialiased"`
 
-**Utility heading classes (globals.css):**
-
-| Class | Font-size (clamp) | Line-height |
-|---|---|---|
-| `.heading-hero` | clamp(2rem, 6vw, 4.5rem) | 1.05 |
-| `.heading-section` | clamp(2rem, 5vw, 4.25rem) | 1.1 |
-| `.heading-page` | clamp(2.5rem, 7vw, 4rem) | 1.05 |
-| `.heading-card` | clamp(1.5rem, 4vw, 2rem) | 1.2 |
-
-**Common inline font sizes:**
-- Hero/section headline: heading-* serif
-- Card title: 24–28px serif
-- Body large: 18px sans / 1.7 line-height
-- Body: 15–16px sans
-- Label: 14px sans
-- Small: 13px sans
-- Micro: 11–12px sans / tracking-widest
-- Stat number: 28–40px serif / fontWeight 600
-
-### Button Styles
-
-**Primary CTA (orange):**
+**Heading utility classes** (defined in `globals.css`):
 ```css
-background: #C96A3A; color: white;
-font-family: DM Sans; font-weight: 500;
-height: 48px; padding: 0 24px;
-border-radius: 8px; font-size: 15px;
-hover → background: #D4784A;
+.heading-hero   { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.05; }
+.heading-section { font-size: clamp(2rem, 5vw, 4.25rem); line-height: 1.1; }
+.heading-page   { font-size: clamp(2.5rem, 7vw, 4rem); line-height: 1.05; }
+.heading-card   { font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.2; }
 ```
 
-**Ghost button:**
-```css
-background: transparent; color: #A8A099;
-border: 1px solid rgba(232,227,220,0.15);
-border-radius: 8px; padding: 10px 16px; font-size: 14px;
+### 2.3 Button Styles
+
+| Button Type | Background | Color | Border-radius | Height | Font size |
+|---|---|---|---|---|---|
+| Primary CTA (nav) | `#C96A3A` | white | `8px` | `48px` | `15px`, weight 600 |
+| Primary CTA (form) | `#C96A3A` / `#2D9E6B` | white | `6px`–`12px` | `48px`–`56px` | `16px` |
+| Ghost CTA (nav) | transparent | `#A8A099` | `8px` | `36px` | `13px` |
+| Sign In link | transparent | `#6B6560` | — | — | `13px` |
+| Dashboard Upgrade | `#C96A3A` | `#FAF9F5` | `8px` | auto | `14px` |
+| Send button (chat) | `#C96A3A` active / `rgba(201,106,58,0.35)` disabled | `#FAF9F5` | `999px` | `40px` | — |
+| Issue action | transparent | `#A8A099` | `6px`–`8px` | auto | `12px`–`13px` |
+
+### 2.4 Card Styles
+Standard card:
+```
+background: '#1A1715'
+border: '1px solid rgba(232,227,220,0.06)'
+borderRadius: '12px' or '16px'
+padding: '24px'
 ```
 
-**Nav CTA (ghost outline):**
-```css
-border: 1px solid rgba(255,255,255,0.25);
-color: #E8E3DC; height: 40px; padding: 0 20px; border-radius: 6px;
-hover → background: rgba(255,255,255,0.05);
+Modal card:
+```
+background: '#0F0D0B'
+border: '1px solid rgba(232,227,220,0.08)'
+borderRadius: '16px'
 ```
 
-**Chat send button:**
-```css
-width/height: 40px; border-radius: 999px;
-background: #C96A3A; (disabled: rgba(201,106,58,0.35))
-hover → #D4784A;
-```
+### 2.5 CSS Animations (`globals.css`)
+| Name | Description |
+|---|---|
+| `fade-up` | Opacity 0→1, translateY 20px→0 |
+| `scroll-left` | Marquee scroll left, 22s |
+| `scroll-right` | Marquee scroll right, 38s |
+| `pulse-ring` | Box-shadow orange pulse ring |
+| `pc-arrow-pulse` | translateX 0→-4px, opacity 1→0.6, 2s |
+| `pc-btn-blink` | Outline color blinks orange, 1.2s |
+| `pc-dot-pulse` | Opacity 1→0.3, 2s (green live dot) |
 
-**Suggestion chips:**
-```css
-background: #1F1C19; border: 1px solid rgba(232,227,220,0.08);
-border-radius: 9999px; padding: 8px 16px;
-color: #A8A099; font-size: 13px;
-hover → color #FAF9F5, border rgba(232,227,220,0.2);
-```
-
-### Card Styles
-
-**Standard dashboard card:**
-```css
-background: #1A1715; border: 1px solid rgba(232,227,220,0.06);
-border-radius: 16px; padding: 32px;
-hover → border rgba(232,227,220,0.12);
-```
-
-**Modal container:**
-```css
-background: #0F0D0B; border: 1px solid rgba(232,227,220,0.08);
-border-radius: 16px; padding: 40px;
-overlay: rgba(0,0,0,0.85);
-```
-
-**Invoice / Calendly option card:**
-```css
-background: #1A1715; border: 1px solid rgba(232,227,220,0.06);
-border-radius: 12px; padding: 20px 24px;
-```
-
-### Onboarding Selected State
-
-Style selector and room-count buttons when selected:
-```css
-background: #2C1810; border: 1px solid #C96A3A;
-```
-
-### Scroll Animations (globals.css)
-
-```css
-.animate-scroll-left  { animation: scroll-left  35s linear infinite; }
-.animate-scroll-right { animation: scroll-right 25s linear infinite; }
-```
-Used on the homepage scrolling questions strip.
+**`.marquee-row`**: `display:flex; gap:1rem; width:max-content` — hover pauses animation.
+**`.marquee-chip:hover`**: `background: #2C1810; border-color: rgba(201,106,58,0.4); color: #FAF9F5`
 
 ---
 
@@ -169,188 +123,103 @@ Used on the homepage scrolling questions strip.
 placecompanion/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx              # Root layout: fonts, LanguageProvider, pt-16 body wrapper
-│   │   ├── globals.css             # Tailwind import, body defaults, heading classes, scroll animations
-│   │   ├── page.tsx                # Homepage (client component)
-│   │   ├── not-found.tsx           # 404 page
-│   │   ├── about/page.tsx          # About page (static marketing)
-│   │   ├── demo/page.tsx           # Interactive demo page
-│   │   ├── features/page.tsx       # Features marketing page
-│   │   ├── privacy/page.tsx        # Privacy policy
-│   │   ├── terms/page.tsx          # Terms of service
-│   │   ├── onboarding/page.tsx     # 4-step onboarding flow (client)
+│   │   ├── layout.tsx               # Root layout: fonts, LanguageProvider, AnnouncementBar, pt-24 wrapper
+│   │   ├── globals.css              # Tailwind import, body bg, heading classes, all @keyframes
+│   │   ├── page.tsx                 # Marketing homepage (all sections)
+│   │   ├── not-found.tsx            # 404 page
+│   │   ├── favicon.ico
+│   │   ├── about/page.tsx           # About page
+│   │   ├── features/page.tsx        # Features deep-dive page
+│   │   ├── demo/page.tsx            # Live demo page
+│   │   ├── privacy/page.tsx         # Privacy policy
+│   │   ├── terms/page.tsx           # Terms of service
+│   │   ├── onboarding/page.tsx      # 4-step onboarding flow
 │   │   ├── auth/
-│   │   │   ├── login/page.tsx      # Login page
-│   │   │   └── signup/page.tsx     # Signup page
-│   │   ├── assistant/[id]/
-│   │   │   ├── page.tsx            # Server: fetch property → AssistantClient
-│   │   │   └── AssistantClient.tsx # Guest-facing chat widget
+│   │   │   ├── login/page.tsx       # Login form (email + password)
+│   │   │   └── signup/page.tsx      # Signup form (hotel name + email + password)
 │   │   ├── dashboard/
-│   │   │   ├── page.tsx            # Server: fetch properties + open issue counts
-│   │   │   ├── DashboardClient.tsx # Property grid, invoice modal, upgrade modal
-│   │   │   └── properties/[id]/
-│   │   │       ├── page.tsx        # Server: fetch property, conversations, issues
-│   │   │       └── PropertyClient.tsx # Tabbed property manager (Overview + Issues)
+│   │   │   ├── page.tsx             # Server component: auth check, data fetch, passes to DashboardClient
+│   │   │   └── DashboardClient.tsx  # Full dashboard UI (client component)
+│   │   ├── assistant/[id]/
+│   │   │   ├── page.tsx             # Server: fetch property by id, pass to AssistantClient
+│   │   │   └── AssistantClient.tsx  # Public chat widget UI
 │   │   └── api/
-│   │       ├── chat/route.ts           # Demo chat endpoint (no DB)
-│   │       ├── extract/route.ts        # URL/PDF/text → structured hotel data
-│   │       ├── preview-chat/route.ts   # Onboarding step 3 preview chat (no DB)
-│   │       ├── assistant/[id]/route.ts # Live assistant with DB logging + issue alerts
+│   │       ├── chat/route.ts        # POST: general chat (demo/preview), streams Claude
+│   │       ├── extract/route.ts     # POST: scrape URL or parse text → structured hotel JSON
+│   │       ├── preview-chat/route.ts # POST: onboarding step 3 chat with extracted data
+│   │       ├── assistant/[id]/route.ts # POST: production chat for deployed property
 │   │       └── stripe/
-│   │           ├── checkout/route.ts   # Create Stripe checkout session
-│   │           └── webhook/route.ts    # Handle Stripe events → update properties table
+│   │           ├── checkout/route.ts  # POST: create Stripe checkout session
+│   │           └── webhook/route.ts   # POST: handle Stripe events (subscription lifecycle)
 │   ├── components/
-│   │   ├── site-nav.tsx            # Sticky top nav with hide-on-scroll, language toggle, mobile drawer
-│   │   ├── site-footer.tsx         # Footer with links and language toggle
-│   │   ├── chat-interface.tsx      # Reusable chat widget (homepage/demo)
-│   │   ├── faq-section.tsx         # FAQ accordion
-│   │   ├── final-cta.tsx           # Marketing final CTA section
-│   │   ├── inline-demo.tsx         # Inline interactive demo
-│   │   ├── onboarding-form.tsx     # Legacy (onboarding now in onboarding/page.tsx)
-│   │   ├── UpgradeModal.tsx        # Stripe subscription upgrade modal
-│   │   ├── CalendlyModal.tsx       # Calendly call booking modal
-│   │   └── LanguageToggle.tsx      # EN · ES toggle button pair
+│   │   ├── AnnouncementBar.tsx      # Dismissable top bar (hides on /dashboard, /auth, /assistant)
+│   │   ├── CalendlyModal.tsx        # Modal with 15-min / 30-min Calendly links
+│   │   ├── ChatInterface.tsx        # Reusable chat widget for demo/homepage
+│   │   ├── LanguageToggle.tsx       # EN · ES toggle buttons
+│   │   ├── UpgradeModal.tsx         # Stripe subscription modal with 2 plans + coupon
+│   │   ├── faq-section.tsx          # FAQ accordion (used on homepage)
+│   │   ├── final-cta.tsx            # Bottom CTA section component
+│   │   ├── inline-demo.tsx          # Inline demo embed
+│   │   ├── onboarding-form.tsx      # (Legacy/unused — superseded by onboarding/page.tsx)
+│   │   ├── site-footer.tsx          # Footer with links and LanguageToggle
+│   │   └── site-nav.tsx             # Sticky nav with hide-on-scroll, mobile drawer, LanguageToggle
 │   ├── lib/
-│   │   ├── build-system-prompt.ts  # Builds AI system prompt per vertical from PropertyConfig
-│   │   ├── demo-config.ts          # Re-exports marazulConfig as demoConfig
-│   │   ├── marazul-config.ts       # MarAzul demo hotel config + ChatConfig
-│   │   ├── vertical-configs.ts     # Per-vertical form defaults and suggestion chips
+│   │   ├── build-system-prompt.ts   # Builds AI system prompts per vertical type
+│   │   ├── demo-config.ts           # Demo property config for homepage chat
+│   │   ├── marazul-config.ts        # Marazul hotel config (used as homepage demo)
+│   │   ├── vertical-configs.ts      # Vertical-specific config templates
 │   │   ├── i18n/
-│   │   │   ├── translations.ts     # EN + ES translation keys (full i18n object)
-│   │   │   └── LanguageContext.tsx # React context: lang state, localStorage, browser detection
+│   │   │   ├── translations.ts      # Full EN + ES string dictionary
+│   │   │   └── LanguageContext.tsx  # React context: lang, t, setLang
 │   │   └── supabase/
-│   │       ├── client.ts           # Browser Supabase client (anon key)
-│   │       ├── server.ts           # Server Supabase client (cookie-based, anon key)
-│   │       ├── service.ts          # Service role client (bypasses RLS — server only)
-│   │       └── schema.sql          # Core DB schema with RLS policies
-│   ├── middleware.ts               # Auth middleware: protect /dashboard, redirect logged-in from /auth
-│   └── types/
-│       └── property.ts             # Types: PropertyConfig, ChatMessage, SpaceVertical, SupportedLanguage
-├── next.config.ts                  # Empty Next.js config (no customizations)
+│   │       ├── client.ts            # createClient() — browser client (anon key)
+│   │       ├── server.ts            # createClient() — server client (cookie-based)
+│   │       ├── service.ts           # createServiceClient() — service role key (bypass RLS)
+│   │       └── schema.sql           # Full Supabase schema definition
+│   ├── types/
+│   │   └── property.ts              # PropertyConfig, ChatMessage, SpaceVertical, SupportedLanguage types
+│   └── middleware.ts                # Auth middleware: protect /dashboard, redirect /auth if logged in
+├── next.config.ts                   # Empty Next.js config
 ├── package.json
-└── REBUILD.md
+└── tsconfig.json
 ```
 
 ---
 
-## 4. Pages
+## 4. Components Reference
 
-### `/` — Homepage (`src/app/page.tsx`)
-Client component. Sections in order:
-1. **Hero**: Two-column. Left: headline + subhead + CTA. Right: live MarAzul demo chat (hidden on mobile).
-2. **Scrolling questions strip**: Two rows infinite scroll (`.animate-scroll-left` / `.animate-scroll-right`).
-3. **$47B stats section**: Single Medallia stat. `py-32`, flex column centered. Source color `#6B6560`.
-4. **Revenue simulation**: Interactive upsell revenue calculator.
-5. **How it works**: 3-step grid (`01 / 02 / 03`).
-6. **Features grid**: Marketing features.
-7. **Destination intelligence**: YOUR HOTEL / YOUR DESTINATION comparison.
-8. **Pricing section** (`id="pricing"`): Pricing cards.
-9. **Enterprise bar**: "Let's talk →" / "Hablemos →" ghost CTA.
-10. **Destination bar**: Ghost CTA matching enterprise style.
-11. **FAQ section**: `<FaqSection />`.
-12. **Final CTA**: `<FinalCta />`.
-13. **Footer**: `<SiteFooter />`.
+### `AnnouncementBar`
+**File:** `src/components/AnnouncementBar.tsx`
+**Props:** none
+**Behavior:**
+- Hidden on `/dashboard`, `/assistant/*`, `/auth/*` (checked via `usePathname`)
+- Dismisses to localStorage key `pc_announcement_dismissed`
+- Renders `null` until `useEffect` runs (prevents hydration flash)
+- Mobile: shows short version ("4 of 10 spots left — Lock in 20% off →") in `flex md:hidden`
+- Desktop: shows full version ("Founding Partner spots: 4 of 10 remaining — lock in 20% off for life — Book your call →") in `hidden md:flex`
+- "Book your call" / "Lock in 20% off" button: `getElementById('founding-partners')` → smooth scroll, fallback `window.location.href = '/#founding-partners'`
+- Live green dot with `pc-dot-pulse` animation
 
-Sticky bottom enterprise bar appears at `window.scrollY > 400`.
+### `SiteNav`
+**File:** `src/components/site-nav.tsx`
+**Props:** none
+**Behavior:**
+- `fixed top-10` (40px, accounts for AnnouncementBar height)
+- Hides on scroll down, reappears on scroll up (< 60px always shown)
+- Backdrop blur: `rgba(28,25,23,0.92)`
+- Desktop: Features · How It Works · Pricing · About links + Sign In + See Demo + Try It Free CTA + LanguageToggle
+- Mobile: LanguageToggle + hamburger (lucide `Menu`/`X`), expands drawer with same links
 
----
+### `SiteFooter`
+**File:** `src/components/site-footer.tsx`
+**Props:** none
+**Behavior:** Links to Features, How It Works, Pricing, Demo, About, Founding Partners, Privacy, Terms. LanguageToggle. Copyright from `t.footer.copyright`.
 
-### `/features` — Features page (`src/app/features/page.tsx`)
-Static marketing. Sections:
-- Hero: `min-h-screen flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 md:pb-32`
-- Personality style cards: name 16px/500, tagline 14px/`#6B6560`
-- Always On Duty: title 17px/500, desc 15px/1.7/`#6B6560`
-- Intelligence section: YOUR HOTEL/DESTINATION labels `color: #FAF9F5`
-- Bottom CTA button: `background: #C96A3A`, `hover: #D4784A`, `color: white`
-
----
-
-### `/demo` — Demo page (`src/app/demo/page.tsx`)
-Interactive chat demo using `<ChatInterface>` with MarAzul config. Trust line: `fontSize: 14px, color: #A8A099`.
-
----
-
-### `/about` — About page (`src/app/about/page.tsx`)
-Static marketing. Uses i18n keys: `whyHeadline`, `whyP1`, `whyP2`, `genericHeadline`, `genericBody`, `destinationBody`, `notHeadline`, `notItems`, `visionBody`. Background `#0F0D0B`, pill labels.
-
----
-
-### `/onboarding` — Onboarding (`src/app/onboarding/page.tsx`)
-4-step flow, all client-side. Background `#1C1917` (`.onboarding-page` class).
-
-**Step 1 — Input:**
-- URL input, PDF drag-and-drop upload, textarea for additional info
-- Style selector: 5 cards (warm_local, refined_concierge, barefoot_luxury, playful_explorer, zen_mindful) — selected state: `bg #2C1810, border #C96A3A`
-- Room count selector: 4 pills (Under 40 / 41–200 / 200+ / Multiple) — same selected style
-- "Analyze" button: `#C96A3A` (disabled: `#6B6560` when all inputs empty)
-- Progress bar: `#C96A3A`
-
-**Step 2 — Extraction animation:**
-- 6 items animate in sequentially (600ms delay each): hotelName, restaurant, spa, amenities, policies, nearby
-- On completion → auto-advances to Step 3
-
-**Step 3 — Preview chat:**
-- Live chat against `/api/preview-chat` using extracted data
-- User messages: `bg #2D9E6B` (green). Assistant: `bg #242019`
-- "Build my assistant" button → Step 4
-
-**Step 4 — Account creation:**
-- Email + password inputs → `supabase.auth.signUp()`
-- Then `properties.insert()` with extracted data + system prompt + conversational style
-- Redirect to `/dashboard`
-
----
-
-### `/assistant/[id]` — Guest assistant
-Server fetches property by `id` (must be `is_active = true`). Renders `<AssistantClient>`. 404 if not found.
-
-Chat widget features:
-- Session ID: `Math.random().toString(36).slice(2)` in `useRef` (resets on page refresh)
-- Dynamic suggestion chips from `system_prompt + extracted_data` keyword matching (spa/dining/beach/wifi)
-- Streams from `/api/assistant/[id]`
-- "← Back to dashboard" shown only if Supabase session exists
-- Background `#1C1917`; card `#0F0D0B`
-
----
-
-### `/dashboard` — Dashboard
-Server component. Fetches properties with `conversations(count)` + `messages(count)` aggregates, then fetches `issue_logs` with `status = 'open'` to compute `openIssueCount` per property. Passes merged data to `<DashboardClient>`.
-
----
-
-### `/dashboard/properties/[id]` — Property Manager
-Server fetches property (ownership check), last 50 conversations, last 100 issue_logs. Renders `<PropertyClient>`.
-
----
-
-### `/auth/login` and `/auth/signup`
-Standard Supabase auth. Middleware redirects logged-in users away.
-
----
-
-## 5. Components
-
-### `<SiteNav>` (`src/components/site-nav.tsx`)
-- Fixed top, `z-50`, `backdrop-blur-xl`, `bg-[rgba(28,25,23,0.92)]`, `border-b`
-- Hides on scroll down (via `-translate-y-full`), reappears on scroll up or at `y < 60`
-- **Desktop:** logo · nav links · Sign In · See Demo · Create Assistant · `<LanguageToggle>`
-- **Mobile header row:** logo · `<LanguageToggle>` · hamburger (all on same row, always visible)
-- **Mobile drawer:** nav links + Demo / Sign In / Create CTAs + `<LanguageToggle>` centered
-
----
-
-### `<SiteFooter>` (`src/components/site-footer.tsx`)
-- `bg-[#161310]`, border-top `rgba(232,227,220,0.06)`
-- Logo + tagline left; link grid center; `<LanguageToggle>` right
-- Links: Features, How It Works, Pricing, Demo, About, Founding Partners, Privacy, Terms
-
----
-
-### `<ChatInterface>` (`src/components/chat-interface.tsx`)
-Reusable chat widget for homepage and `/demo`.
-
-**Props (`ChatConfig` interface):**
-```typescript
+### `ChatInterface`
+**File:** `src/components/chat-interface.tsx`
+**Props:** `{ config: ChatConfig }`
+**ChatConfig interface:**
+```ts
 {
   hotelName: string
   assistantName: string
@@ -358,398 +227,488 @@ Reusable chat widget for homepage and `/demo`.
   systemPrompt: string
   suggestionChips?: string[]
   placeholder?: string
-  mobileChipsLimit?: number  // hides chips above this index on mobile
+  mobileChipsLimit?: number
   greeting?: string
 }
 ```
+**Behavior:**
+- Sends to `/api/chat` with `{ messages, propertyConfig: config }`
+- Rate-limit response (`429`) shows upgrade CTA bubble
+- Renders inline markdown: bold `**`, italic `*`, code `` ` ``, bullet `-`/`*`, paragraph breaks
+- Send button: orange ring blinks when empty (`pc-btn-blink`), solid orange when has text
+- Suggestion chips hidden after first message; `mobileChipsLimit` hides extras on mobile
 
-- POSTs to `/api/chat`
-- On `429` rate-limit → shows conversion CTA card with `/onboarding` link
-- Custom markdown renderer: bold, italic, inline code, bullet lists
-- Send button: `#C96A3A` / hover `#D4784A` / disabled `rgba(201,106,58,0.35)`
+### `UpgradeModal`
+**File:** `src/components/UpgradeModal.tsx`
+**Props:** `{ propertyId: string, userId: string, onClose: () => void }`
+**Plans (hardcoded):**
+- Single Property: `$299/mo`, priceId `price_1TALsJBgMSWbEFIIFMFSR5Nz`
+- Small Group: `$549/mo`, priceId `price_1TALnGBgMSWbEFIIYeCYeBfT`
+**Coupon:** `FOUNDING40` applies 40% discount (client-side display only; Stripe processes actual discount)
+**⚠ WARNING:** Price IDs are hardcoded. Changing Stripe products requires updating these constants.
+
+### `CalendlyModal`
+**File:** `src/components/CalendlyModal.tsx`
+**Props:** `{ onClose: () => void }`
+**Links:**
+- 15 min: `https://calendly.com/placecompanion/15-minute-discovery-call`
+- 30 min: `https://calendly.com/placecompanion/30min`
+**i18n:** inline `lang === 'es'` check (does not use `t.*` keys)
+
+### `LanguageToggle`
+**File:** `src/components/LanguageToggle.tsx`
+**Props:** none
+**Behavior:** EN · ES buttons. Active is `#E8E3DC` weight 500, inactive `#6B6560`. Updates `LanguageContext` and `localStorage.pc_lang`.
+
+### `AssistantClient`
+**File:** `src/app/assistant/[id]/AssistantClient.tsx`
+**Props:** `{ property: any }`
+**Behavior:**
+- Public chat widget at `/assistant/[id]`
+- Session ID: `Math.random().toString(36).slice(2)` stored in `useRef`, persists for tab session
+- Sends to `/api/assistant/[id]`
+- Shows suggestion chips derived from property's `system_prompt` + `extracted_data` keywords (spa, restaurant, beach/pool, wifi)
+- If owner is logged in, shows "← Back to dashboard" link
+
+### `DashboardClient`
+**File:** `src/app/dashboard/DashboardClient.tsx`
+**Props:**
+```ts
+{
+  user: any                        // Supabase user object
+  properties: any[]                // All user's properties with openIssueCount
+  selectedPropertyId: string | null
+  selectedProperty: any            // Full property row or null
+  selectedConversations: any[]     // Up to 50 conversations
+  selectedIssues: any[]            // Up to 100 issue_logs
+}
+```
+**State:** `activeTab`, `upgradeTarget`, `showInvoiceModal`, `showCalendly`, `copiedLink`, `copiedEmbed`, `isDeleting`, `revenueSignals`, `selectedStyle`, `isSavingStyle`, `styleSaved`, `alertEmail`, `isSavingAlert`, `alertSaved`, `issues`, `showMobileMenu`
 
 ---
 
-### `<UpgradeModal>` (`src/components/UpgradeModal.tsx`)
-**Props:** `propertyId: string`, `userId: string`, `onClose: () => void`
-
-Two hardcoded plans (see Section 12). Coupon `FOUNDING40` → 40% off. Calls `/api/stripe/checkout`. ESC key closes.
-
----
-
-### `<CalendlyModal>` (`src/components/CalendlyModal.tsx`)
-**Props:** `onClose: () => void`
-
-Two Calendly options:
-- 15 min discovery: `calendly.com/placecompanion/15-minute-discovery-call`
-- 30 min full demo: `calendly.com/placecompanion/30min`
-
-Label color: 15min → `#2D9E6B`; 30min → `#C96A3A`.
-
----
-
-### `<LanguageToggle>` (`src/components/LanguageToggle.tsx`)
-EN · ES toggle pair. Active: `color: #E8E3DC, fontWeight: 500`. Inactive: `color: #6B6560`. Persists to `localStorage` key `pc_lang`.
-
----
-
-### `<DashboardClient>` (`src/app/dashboard/DashboardClient.tsx`)
-**Props:** `user: any`, `properties: any[]`
-
-Features:
-- Property cards: name, location, orange `openIssueCount` badge (`● X open issues`), trial/canceled/past_due banners, stats row (conversations / questions / days left `∞` if active), View Assistant + Manage + Upgrade buttons
-- "Get Invoice" → invoice modal (`#0F0D0B` bg, CFDI MX + International option cards, Google Forms links, arrow SVG `stroke: #6B6560`)
-- Upgrade button → `<UpgradeModal>`
-- Team access note + Calendly CTA → `<CalendlyModal>`
-
----
-
-### `<PropertyClient>` (`src/app/dashboard/properties/[id]/PropertyClient.tsx`)
-**Props:** `property: any`, `conversations: any[]`, `issues: any[]`
-
-Two tabs with orange underline active indicator:
-- **Overview**: deploy instructions, conversation list, revenue signals, property settings
-- **Issues** (+ count badge): dark table — Date/Time · Guest Message · Room · Status · Action
-  - Open: `rgba(201,106,58,0.15)` bg / `#C96A3A` text
-  - Resolved: `rgba(45,158,107,0.15)` bg / `#2D9E6B` text
-  - Mark Resolved: optimistic UI update, PATCH to `issue_logs`
-
----
-
-## 6. API Routes
+## 5. API Routes
 
 ### `POST /api/chat`
-Demo/homepage chat. No DB.
-
-**Body:** `{ messages, propertyConfig? }`
-**Model:** `claude-haiku-4-5-20251001`, `maxOutputTokens: 1024`
-Normalizes both `content` string and `parts` array message formats. Falls back to `demoConfig`.
-
----
+General chat endpoint. Used by `ChatInterface` component (demo + homepage).
+- Body: `{ messages, propertyConfig?, rawSystemPrompt? }`
+- Model: `claude-haiku-4-5-20251001`, max 1024 tokens
+- Normalizes message format (handles `parts` array or `content` string)
+- Returns: text stream (`result.toTextStreamResponse()`)
 
 ### `POST /api/extract`
-Extracts structured hotel data.
-
-**Body:** `{ url?, text?, files?: [{ name, base64 }] }`
-
-**Response:** `{ extracted: { hotelName, restaurant, spa, amenities, policies, nearby, location, summary, systemPrompt } }`
-
-URL scraped with 10s timeout, stripped to 12,000 chars. PDF files received but not parsed (stub). Combined input truncated to 20,000 chars. Model: `claude-haiku-4-5-20251001`.
-
----
+Extracts structured hotel data from a URL, text, or files.
+- Body: `{ url?, text?, files?: Array<{name, base64}> }`
+- Fetches URL, strips HTML, truncates to 12000 chars
+- AI returns JSON: `{ hotelName, restaurant, spa, amenities, policies, nearby, location, summary }`
+- Also builds a `systemPrompt` string from extracted fields
+- Returns: `{ extracted }` — the full object including the generated `systemPrompt`
+- **⚠ WARNING:** PDF parsing is NOT implemented — files are acknowledged but not parsed
 
 ### `POST /api/preview-chat`
-Onboarding step 3. No DB.
-
-**Body:** `{ messages, extracted, conversationalStyle? }`
-**Model:** `claude-haiku-4-5-20251001`, `maxOutputTokens: 512`
-
----
+Chat during onboarding step 3 with the just-extracted hotel data.
+- Body: `{ messages, extracted, conversationalStyle? }`
+- Applies style instructions, hallucination guardrail, fallback behavior, issue handling
+- Model: `claude-haiku-4-5-20251001`, max 512 tokens
+- Returns: text stream
 
 ### `POST /api/assistant/[id]`
-Live production assistant. Full DB read/write.
+Production chat for deployed property. The live endpoint guests use.
+- Body: `{ messages, sessionId }`
+- Fetches property from Supabase (`system_prompt`, `hotel_name`, `is_active`, `conversational_style`, `alert_email`)
+- Upserts conversation record (by `property_id` + `guest_session_id`)
+- Saves user message to `messages` table with `revenue_signal`
+- On finish: saves assistant message, detects issue keywords → sends email alert via Resend, logs to `issue_logs`
+- Room number follow-up: if second message has a room number and prior message had an issue, sends room-update alert
+- Model: `claude-haiku-4-5-20251001`, max 1024 tokens
 
-**Body:** `{ messages, sessionId }`
+**Issue keywords detected (English + Spanish):** broken, not working, issue, problem, maintenance, leak, no hot water, no water, no electricity, no wifi, wifi not working, air conditioning, ac, toilet, emergency, help, stuck, locked out + Spanish equivalents
 
-**Flow:**
-1. Fetch property (`is_active = true`)
-2. Compose system prompt: `system_prompt + COMMUNICATION STYLE + HALLUCINATION_GUARDRAIL + FALLBACK_BEHAVIOR + ISSUE_HANDLING`
-3. Find or create `conversations` row by `(property_id, guest_session_id)`
-4. Save user message with `revenue_signal`
-5. Stream response
-6. `onFinish`: save assistant message; detect issues → email alert via Resend + fire-and-forget insert to `issue_logs` via service client
-
-**Issue keywords (EN + ES):** broken, not working, issue, problem, maintenance, leak, no hot water, no water, no electricity, no wifi, wifi not working, air conditioning, ac, toilet, emergency, help, stuck, locked out + Spanish equivalents.
-
-**Revenue signals:** spa → `spa`, restaurant/dining → `restaurant`, tour/activity → `activity`, transport/taxi → `transport`, checkout/late → `late_checkout`, upgrade/room → `room_upgrade`.
-
-**Conversational styles:**
-| Key | Description |
-|---|---|
-| `warm_local` | Warm local friend, personal |
-| `refined_concierge` | Five-star polish |
-| `barefoot_luxury` | Luxury beach resort |
-| `playful_explorer` | Fun, emojis, adventurous |
-| `zen_mindful` | Calm, unhurried |
-
----
+**Revenue signals detected:** spa, restaurant/food/dining, tour/activity/excursion, transport/taxi/airport, checkout/late, upgrade/room
 
 ### `POST /api/stripe/checkout`
-**Body:** `{ priceId, coupon?, propertyId, userId }`
-**Returns:** `{ url }` — Stripe hosted checkout redirect.
-Success: `/dashboard?success=true` · Cancel: `/dashboard?canceled=true`
-
----
+Creates a Stripe checkout session for subscription.
+- Body: `{ priceId, coupon?, propertyId, userId }`
+- Success URL: `/dashboard?success=true`, Cancel URL: `/dashboard?canceled=true`
+- Returns: `{ url }` — redirect to Stripe checkout
 
 ### `POST /api/stripe/webhook`
-Uses **service role** Supabase client. Verifies Stripe signature.
-
-| Event | Action |
-|---|---|
-| `checkout.session.completed` | Set `subscription_status = 'active'`, save Stripe IDs |
-| `customer.subscription.deleted` | Set `subscription_status = 'canceled'` |
-| `invoice.payment_failed` | Set `subscription_status = 'past_due'` |
+Handles Stripe webhook events.
+- Verifies signature with `STRIPE_WEBHOOK_SECRET`
+- `checkout.session.completed` → updates property: `subscription_status='active'`, `stripe_customer_id`, `stripe_subscription_id`, `subscription_price_id`
+- `customer.subscription.deleted` → `subscription_status='canceled'`
+- `invoice.payment_failed` → `subscription_status='past_due'`
 
 ---
 
-## 7. Database Schema
+## 6. Database Schema
 
-> Run `src/lib/supabase/schema.sql` first. Then add the additional columns and `issue_logs` table below.
+**Full schema at:** `src/lib/supabase/schema.sql`
 
 ### `public.properties`
 | Column | Type | Notes |
 |---|---|---|
-| `id` | uuid PK | `uuid_generate_v4()` |
-| `user_id` | uuid FK | → `auth.users(id)` ON DELETE CASCADE |
+| `id` | uuid PK | auto generated |
+| `user_id` | uuid FK → auth.users | cascade delete |
 | `hotel_name` | text NOT NULL | |
 | `location` | text | |
 | `room_count` | text | |
-| `extracted_data` | jsonb NOT NULL | Raw extraction result |
-| `system_prompt` | text NOT NULL | Built during onboarding |
-| `conversational_style` | text | One of 5 style keys |
-| `is_active` | boolean | Default `true` |
-| `trial_started_at` | timestamptz | Default `now()` |
-| `trial_ends_at` | timestamptz | Default `now() + 14 days` |
-| `subscription_status` | text | `trial` / `active` / `canceled` / `past_due` |
-| `stripe_customer_id` | text | Set by webhook |
-| `stripe_subscription_id` | text | Set by webhook |
-| `subscription_price_id` | text | Set by webhook |
-| `alert_email` | text | Where issue alert emails are sent |
+| `extracted_data` | jsonb NOT NULL | full AI extraction result |
+| `system_prompt` | text NOT NULL | built from extracted_data |
+| `is_active` | boolean | default true |
+| `trial_started_at` | timestamptz | default now() |
+| `trial_ends_at` | timestamptz | default now() + 14 days |
 | `created_at` | timestamptz | |
 | `updated_at` | timestamptz | |
-
-**RLS:** Owner full CRUD via `user_id = auth.uid()`. Public can SELECT where `is_active = true`.
-
-> ⚠️ `schema.sql` does not include: `conversational_style`, `alert_email`, `subscription_*`, `stripe_*`. Add these manually.
-
----
+| `conversational_style` | text | one of 5 style keys (not in schema.sql, added via migration) |
+| `alert_email` | text | email for issue alerts (not in schema.sql, added via migration) |
+| `subscription_status` | text | 'trial'\|'active'\|'canceled'\|'past_due' (not in schema.sql, added via migration) |
+| `stripe_customer_id` | text | (not in schema.sql, added via migration) |
+| `stripe_subscription_id` | text | (not in schema.sql, added via migration) |
+| `subscription_price_id` | text | (not in schema.sql, added via migration) |
 
 ### `public.conversations`
 | Column | Type | Notes |
 |---|---|---|
 | `id` | uuid PK | |
-| `property_id` | uuid FK | → `properties(id)` CASCADE |
-| `guest_session_id` | text NOT NULL | Random string from client |
-| `language_detected` | text | Default `'en'` |
+| `property_id` | uuid FK → properties | cascade delete |
+| `guest_session_id` | text | random string from client |
+| `language_detected` | text | default 'en' |
 | `started_at` | timestamptz | |
-| `last_message_at` | timestamptz | |
-| `message_count` | integer | |
-
-**RLS:** Owner SELECT via property join. Public INSERT + UPDATE.
-
----
+| `last_message_at` | timestamptz | updated on each message |
+| `message_count` | integer | updated on each message |
 
 ### `public.messages`
 | Column | Type | Notes |
 |---|---|---|
 | `id` | uuid PK | |
-| `conversation_id` | uuid FK | → `conversations(id)` CASCADE |
-| `property_id` | uuid FK | → `properties(id)` CASCADE |
-| `role` | text | CHECK: `'user'` or `'assistant'` |
-| `content` | text NOT NULL | |
-| `revenue_signal` | text | Nullable |
+| `conversation_id` | uuid FK → conversations | cascade delete |
+| `property_id` | uuid FK → properties | cascade delete |
+| `role` | text | CHECK in ('user','assistant') |
+| `content` | text | |
+| `revenue_signal` | text | nullable, detected keyword category |
 | `created_at` | timestamptz | |
 
-**RLS:** Owner SELECT via property join. Public INSERT.
-
----
-
-### `public.issue_logs` (must be created manually)
-
-```sql
-CREATE TABLE IF NOT EXISTS public.issue_logs (
-  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  property_id uuid REFERENCES public.properties(id) ON DELETE CASCADE,
-  guest_message text NOT NULL,
-  room_number text,
-  status text DEFAULT 'open',
-  created_at timestamptz DEFAULT now(),
-  resolved_at timestamptz,
-  resolved_by text
-);
-ALTER TABLE public.issue_logs ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can view their own property issues"
-  ON public.issue_logs FOR SELECT
-  USING (property_id IN (SELECT id FROM public.properties WHERE user_id = auth.uid()));
-CREATE POLICY "Service role full access to issue_logs"
-  ON public.issue_logs FOR ALL USING (true);
-```
-
-Status values: `open` / `resolved`.
-
----
-
-## 8. i18n System
-
-**Supported:** `en`, `es`
-
-**Location:** `src/lib/i18n/translations.ts`
-
-**Top-level keys:**
-```
-nav, hero, howItWorks, features, about, demo, pricing, finalCta, faq,
-footer, auth, onboarding, dashboard, property
-```
-
-**Usage:**
-```typescript
-import { useLang } from '@/lib/i18n/LanguageContext'
-const { t, lang, setLang } = useLang()
-// t.dashboard.addProperty, t.nav.features, etc.
-```
-
-`LanguageProvider` wraps entire app in `layout.tsx`. On mount, reads `localStorage['pc_lang']`; if missing, detects from `navigator.language` (Spanish if starts with `es`, else English).
-
----
-
-## 9. Environment Variables
-
-| Variable | Required | Used in |
+### `public.issue_logs`
+*(Not in schema.sql — added via migration in production)*
+| Column | Type | Notes |
 |---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | ✅ | All Supabase clients + middleware |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | Browser + server clients + middleware |
-| `SUPABASE_SERVICE_ROLE_KEY` | ✅ | `service.ts`, Stripe webhook |
-| `ANTHROPIC_API_KEY` | ✅ | All AI routes |
-| `STRIPE_SECRET_KEY` | ✅ | Stripe checkout + webhook |
-| `STRIPE_WEBHOOK_SECRET` | ✅ | Webhook signature verification |
-| `RESEND_API_KEY` | ✅ | Issue alert emails |
-| `NEXT_PUBLIC_SITE_URL` | Optional | Stripe success/cancel URL fallback |
+| `id` | uuid PK | |
+| `property_id` | uuid FK → properties | |
+| `guest_message` | text | the triggering message |
+| `room_number` | text | nullable |
+| `status` | text | 'open'\|'resolved' |
+| `resolved_at` | timestamptz | set on resolution |
+| `created_at` | timestamptz | |
+
+### RLS Policies
+- Properties: users can CRUD their own rows only; public can SELECT active properties (for guest widget)
+- Conversations: owners can SELECT via property ownership; public can INSERT/UPDATE (guests create convos)
+- Messages: owners can SELECT; public can INSERT (AI route saves messages)
+- Issue logs: uses service role key (bypasses RLS) for inserts from the API route
 
 ---
 
-## 10. Middleware (`src/middleware.ts`)
+## 7. Environment Variables
 
-Runs on `/dashboard/:path*` and `/auth/:path*`.
-
-- No session + `/dashboard/**` → redirect to `/auth/login`
-- Has session + `/auth/login` or `/auth/signup` → redirect to `/dashboard`
-
-Uses `@supabase/ssr` `createServerClient` with cookie passthrough pattern.
+| Variable | Where Used | Required |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | client.ts, server.ts, middleware.ts, webhook | Yes |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | client.ts, server.ts, middleware.ts | Yes |
+| `SUPABASE_SERVICE_ROLE_KEY` | service.ts, webhook/route.ts | Yes |
+| `ANTHROPIC_API_KEY` | chat/route.ts, extract/route.ts, preview-chat/route.ts, assistant/[id]/route.ts | Yes |
+| `STRIPE_SECRET_KEY` | checkout/route.ts, webhook/route.ts | Yes |
+| `STRIPE_WEBHOOK_SECRET` | webhook/route.ts | Yes |
+| `RESEND_API_KEY` | assistant/[id]/route.ts | Yes (alerts won't send without it) |
+| `NEXT_PUBLIC_SITE_URL` | checkout/route.ts (fallback to host header) | Optional |
 
 ---
 
-## 11. Verticals (`src/lib/vertical-configs.ts`)
+## 8. Authentication Flow
 
-Six supported verticals (`SpaceVertical` union type):
+1. **Middleware** (`src/middleware.ts`): Runs on `/dashboard/*` and `/auth/*` routes.
+   - No session + `/dashboard` → redirect to `/auth/login`
+   - Has session + `/auth/login` or `/auth/signup` → redirect to `/dashboard`
+2. **Signup**: `supabase.auth.signUp({ email, password, options: { data: { hotel_name } } })` → `window.location.href = '/dashboard'`
+3. **Login**: `supabase.auth.signInWithPassword({ email, password })` → `window.location.href = '/dashboard'`
+4. **Onboarding signup**: Same `signUp` call, then immediately inserts a `properties` row with the extracted data
+5. **Sign out**: `supabase.auth.signOut()` → `window.location.href = '/'`
+6. **Session**: Cookie-based via `@supabase/ssr`. Server client reads cookies. Client client uses browser localStorage.
 
-| Key | Label |
+---
+
+## 9. i18n System
+
+**Files:** `src/lib/i18n/translations.ts`, `src/lib/i18n/LanguageContext.tsx`
+
+**Languages supported:** `'en'` | `'es'`
+
+**How it works:**
+1. `LanguageProvider` wraps the entire app in `layout.tsx`
+2. On mount: reads `localStorage.pc_lang`. If not set, detects browser language (`navigator.language.startsWith('es')`)
+3. Calling `setLang(lang)` updates React state + writes to `localStorage.pc_lang`
+4. Any component calls `const { t, lang, setLang } = useLang()` to access translations
+
+**Translation key namespaces:**
+- `nav` — navigation labels
+- `hero` — homepage hero section
+- `pain` — question pills
+- `realQuestions` — marquee rows
+- `howItWorks` — step titles/descriptions
+- `features` — features page
+- `intelligence` — intelligence section
+- `pricing` — pricing cards (boutique, independent, portfolio)
+- `cta` — call to action text
+- `footer` — footer links and copyright
+- `auth` — login/signup form labels
+- `onboarding` — all 4 onboarding steps, style names, room count options
+- `property` — issue labels (open, resolved, mark resolved)
+- `dashboard` — dashboard UI labels (signOut, addProperty, getInvoice, invoiceTitle, etc.)
+
+**⚠ WARNING:** `CalendlyModal.tsx` uses inline `lang === 'es'` checks instead of `t.*` keys. If you add a language, update it manually.
+
+---
+
+## 10. Homepage Sections (in order)
+
+All in `src/app/page.tsx` — a `'use client'` component.
+
+1. **AnnouncementBar** — rendered in `layout.tsx` above children
+2. **SiteNav** — fixed, top-10, hide-on-scroll
+3. **Hero** — `heading-hero` serif headline, subheadline, two CTAs (Try It Free → `/onboarding`, Try the Demo → `/demo`), trust line, live demo `ChatInterface` panel (using `marazulChatConfig`)
+4. **Pain / Marquee** — "Guests are asking. Right now." — two scrolling marquee rows with question chips. Row 1 scrolls left (22s), Row 2 scrolls right (38s). Green live dot + `pc-dot-pulse`.
+5. **Real Questions** — (Overlaps with marquee — same section)
+6. **How It Works** — 3 icon cards with hover border transitions, steps 01/02/03 from `t.howItWorks.*`
+7. **Revenue Section** — 4-tab pill selector (`activeConvo` state 0–3) showing bilingual sample conversations for: Spa, Dining, Activities, Upgrade. Each conversation is a mockup showing the AI handling revenue opportunities.
+8. **Dashboard Teaser** (`#dashboard-teaser`) — animated on scroll (IntersectionObserver, threshold 0.08, fires once and disconnects). Desktop: full browser chrome mockup with sidebar, tab bar, line chart, bar chart, and donut chart. Mobile: simplified single-column view with chart + CTA.
+9. **Stats Strip** — 3 numeric stats (200+ questions/week, 91% resolved by AI, 14 languages) in a row
+10. **Pricing** (`#pricing`) — 3 plan cards: Boutique ($149/mo), Independent ($299/mo), Portfolio (custom). Each has feature list. Boutique has 9 features including "Staff notification routing". Independent has 5 features starting "Everything in Single Property".
+11. **Founding Partners** (`#founding-partners`) — 10 partner spots, 4 remaining. 3 featured cards. Book a call CTA opens `CalendlyModal`.
+12. **FAQ** — `FaqSection` component
+13. **Final CTA** — `FinalCta` component with orange CTA
+14. **SiteFooter**
+
+---
+
+## 11. Dashboard Layout (Full Detail)
+
+**File:** `src/app/dashboard/DashboardClient.tsx`
+
+### Overall Structure
+```
+<div> [background: #0F0D0B, minHeight: 100vh, flexDirection: column]
+  <header>        [TOP BAR — 56px, background: #161310]
+  <div flex-1>    [BODY]
+    <aside>       [LEFT SIDEBAR — 220px, hidden md:flex]
+    <main>        [MAIN CONTENT — flex:1]
+  </div>
+  <nav>           [BOTTOM TAB BAR — fixed bottom-0, md:hidden]
+  [MODALS]        [Invoice, Upgrade, Calendly]
+</div>
+```
+
+### Top Bar (56px)
+- Left: "Place Companion" serif logo → links to `/`
+- Desktop right (`hidden md:flex`): user email, "Get Invoice" button, "Sign Out" button
+- Mobile right (`flex md:hidden`): `⋯` button (22px, opens dropdown)
+- Mobile dropdown: absolute, `top: 56px`, user email + Invoice + Sign Out
+
+### Left Sidebar (`hidden md:flex flex-col`, 220px)
+- Section label: "Your Hotels" (10px, uppercase, `#4A4540`)
+- Each property: pill button with hotel name, orange left border when selected, orange badge for open issues
+- Bottom: "+ Add hotel" link → `/onboarding`
+
+### Main Content
+- `pb-24 md:pb-0` (padding-bottom 96px on mobile to clear bottom tab bar)
+- `padding: '20px 16px'` (overridden by `md:px-10 md:py-8`)
+
+**No property selected:**
+- Mobile: card list of all hotels (`md:hidden`) — tappable, shows `>` chevron, orange badge for issues
+- Open issues summary banner (orange bg, lists properties with open issues)
+- Empty state: serif text + "Configure your first hotel" CTA → `/onboarding`
+- Desktop arrow hint (`hidden md:flex`): animated left-arrow SVG + "Select a hotel from the left"
+- Team access note + "Book a call" → opens CalendlyModal
+
+**Property selected:**
+- Mobile-only back button: `← All hotels` → `router.push('/dashboard')`
+- Property name (28px serif) + location
+- Subscription status banners: trial warning (≤3 days), canceled, past_due
+- Upgrade button if trial/canceled/past_due
+
+**Tab bar (desktop, within main content):**
+- 4 tabs: Analytics | Issues | Deploy | Settings
+- Active: `color: #FAF9F5`, `borderBottom: 2px solid #C96A3A`
+- Issues tab shows open count badge
+
+### Analytics Tab
+- 2-column grid (`grid-cols-1 md:grid-cols-2`):
+  - Line chart: "Guest questions this month" — mock 30-day data, `LineChart` from recharts, orange line (`#C96A3A`)
+  - Bar chart: "What guests are asking about" — `BarChart` horizontal, orange gradient fill
+- Full-width: Resolution rate card — SVG donut chart (91% green), explanation text. Flex column on mobile, row on desktop.
+- **⚠ WARNING:** Analytics data is entirely mocked (module-level constants). Real analytics requires querying `messages` table.
+
+### Issues Tab
+- Empty state: centered "No issues yet"
+- Desktop: grid table (`hidden md:grid`, 5 columns: Date/Time | Guest Message | Room | Status | Action)
+- Mobile: card per issue (`md:hidden`) — date + room badge + status pill in header row, full message body, full-width "Mark Resolved" button
+- Resolve action: Supabase `.update({ status: 'resolved', resolved_at })` + optimistic state update via `setIssues`
+
+### Deploy Tab
+- `grid-cols-1 md:grid-cols-3` with 3 cards:
+  1. Public link — copy button → `https://placecompanion.com/assistant/[id]`
+  2. Widget embed code — `<script src="..." data-property="[id]">` — copy button
+  3. QR code — fetched from `api.qrserver.com`, download button
+
+### Settings Tab
+- Conversational Style selector: 5 style cards (warm_local, refined_concierge, barefoot_luxury, playful_explorer, zen_mindful) — click to update + save to Supabase
+- Alert email: full-width input (`sm:flex-row` on sm+), Save button `w-full sm:w-auto`
+- Danger zone: Delete property button
+
+### Bottom Tab Bar (`fixed bottom-0 md:hidden`)
+```
+background: #161310
+borderTop: 1px solid rgba(232,227,220,0.06)
+height: ~64px + env(safe-area-inset-bottom) [note: safe-area not currently implemented]
+```
+4 tabs, each `flex-1`:
+| Tab | Icon | Badge |
+|---|---|---|
+| Analytics | Bar chart SVG (3 bars) | — |
+| Issues | Circle with exclamation SVG | Orange pill with open count |
+| Deploy | Monitor/screen SVG | — |
+| Settings | Gear SVG | — |
+
+Active color: `#C96A3A`. Inactive: `#6B6560`. Label: 10px font.
+Issues badge: `position: absolute; top: 6px; right: calc(50% - 18px)` — 9px font, orange.
+
+Only renders when `selectedPropertyId && selectedProperty` are both truthy.
+
+---
+
+## 12. Onboarding Flow (`/onboarding`)
+
+4-step flow. Progress bar: 25% / 50% / 75% / 100%. Background: `#1C1917`.
+
+**Step 1 — Build your assistant:**
+- Website URL input (scrapes via `/api/extract`)
+- PDF upload (drag-and-drop, multi-file — **⚠ NOT parsed, acknowledged only**)
+- Additional info textarea
+- Conversational style selector (5 styles, 2–3 col grid, orange selected state)
+- Room count selector (pill buttons, orange selected state)
+- "Analyze" button → calls `/api/extract` → advances to Step 2
+
+**Step 2 — Processing (loading state):**
+- Animated checklist: hotel name, restaurant, spa, amenities, policies, nearby — staggered 600ms reveals
+- Auto-advances to Step 3 after 1s post-animation
+
+**Step 3 — Test your assistant:**
+- Live chat using `/api/preview-chat` with the extracted data
+- Shows greeting + user can type questions
+- "Save your assistant" button → Step 4
+
+**Step 4 — Create account:**
+- Email + password inputs
+- `supabase.auth.signUp()` + `properties.insert()` in one flow
+- On success: `window.location.href = '/dashboard'`
+
+---
+
+## 13. Conversational Styles
+
+5 styles available throughout the product (onboarding, dashboard settings, API routes):
+
+| Key | Description |
 |---|---|
-| `hotel_resort` | Hotels & Resorts |
-| `hospital_clinic` | Hospitals & Clinics |
-| `airport_transport` | Airports & Transport |
-| `residential` | Residential Buildings |
-| `shopping_retail` | Shopping Malls & Retail |
-| `university_campus` | Universities & Campuses |
+| `warm_local` | Warm genuine local friend, personal, conversational |
+| `refined_concierge` | Five-star concierge polish, precise, professional |
+| `barefoot_luxury` | Relaxed luxury beach resort, effortlessly refined |
+| `playful_explorer` | Fun, enthusiastic, adventurous, occasional emojis |
+| `zen_mindful` | Calm, unhurried, thoughtful, serene |
 
-Each has: `label`, `description`, `visitorLabel`, `defaultPersonality`, `defaultGreeting`, `servicePlaceholder`, `faqQuestionPlaceholder`, `faqAnswerPlaceholder`, `suggestions[]`.
-
-The system prompt builder (`build-system-prompt.ts`) selects per-vertical instructions. Onboarding only surfaces `hotel_resort` in the UI, but the backend fully supports all six.
+Stored in `properties.conversational_style`. Applied in both `/api/preview-chat` and `/api/assistant/[id]`.
 
 ---
 
-## 12. Subscription Plans
+## 14. Things That Are Easy to Break
 
-Hardcoded in `<UpgradeModal>`:
+### ⚠ Critical Fragilities
 
-| Plan | Price | Stripe Price ID |
+1. **Stripe price IDs are hardcoded in `UpgradeModal.tsx`** (lines 10 and 15). Changing Stripe products requires updating these two strings. No env var.
+
+2. **`issue_logs` table is NOT in `schema.sql`** — it was added via a Supabase migration after the fact. If you run `schema.sql` from scratch, the `issue_logs` table won't exist and the assistant route will throw on every issue alert.
+
+3. **Properties table `conversational_style`, `alert_email`, `subscription_status`, `stripe_customer_id`, `stripe_subscription_id`, `subscription_price_id` columns are NOT in `schema.sql`** — also added via migration. Same issue if rebuilding DB from scratch.
+
+4. **Analytics data is entirely mocked** in `DashboardClient.tsx` (module-level `last30Days`, `categoryData`, `totalQuestions`). Real analytics requires querying the `messages` table by `property_id` and `created_at`.
+
+5. **PDF parsing is not implemented** in `/api/extract`. The code reads the file, encodes as base64, but the AI is only given `[PDF UPLOAD: filename — processing not available]`. Users who upload PDFs get no benefit.
+
+6. **`selectedConversations` prop is fetched but not rendered** in `DashboardClient.tsx` (suppressed with `void selectedConversations`). The conversations tab doesn't exist yet.
+
+7. **Nav `top-10` depends on AnnouncementBar height being exactly 40px.** If bar height changes (e.g. taller text on mobile), nav will overlap content. `pt-24` on layout wrapper accounts for 40px bar + 64px nav = 104px, but actual nav height is `h-16` = 64px.
+
+8. **AnnouncementBar is hidden on `/assistant/*` via `pathname.startsWith('/assistant')`.** The layout wrapper still applies `pt-24`. This means assistant pages have 96px of padding at the top even though no bar or nav is rendered — creates dead space.
+
+9. **`handleEmailSubmit` in `onboarding/page.tsx` (legacy function, line ~214) is no longer called** but still present. It saves to `localStorage.pc_lead`. Not a bug but dead code.
+
+10. **Resend `from:` address is hardcoded as `onboarding@resend.dev`** — this is Resend's test domain. In production you must use a verified domain or alerts won't deliver reliably.
+
+11. **`DashboardClient` receives `selectedConversations` but suppresses the value with `void selectedConversations`.** If the conversations tab is ever built, the prop is already there.
+
+12. **Mobile bottom tab bar only renders when `selectedPropertyId && selectedProperty` are both truthy.** On mobile, when no property is selected, there's no bottom navigation — the user must use the property card list in the main area.
+
+### ⚠ Coupling Points
+
+- `layout.tsx` sets `pt-24` to account for `AnnouncementBar` (40px) + `SiteNav` (h-16 = 64px). If either changes height, update `pt-24`.
+- `SiteNav` uses `top-10` (40px) to sit below the announcement bar. If bar height changes, update this.
+- Dashboard `main` uses `pb-24` on mobile to clear the bottom tab bar. If tab bar height changes, update this.
+- The `issue_logs` table in `assistant/[id]/route.ts` is imported dynamically from `service.ts` — if service client isn't configured, the dynamic import will fail silently (the error is caught).
+
+---
+
+## 15. Stripe Price IDs (Production)
+
+| Plan | Monthly Price | Stripe Price ID |
 |---|---|---|
 | Single Property | $299/mo | `price_1TALsJBgMSWbEFIIFMFSR5Nz` |
 | Small Group | $549/mo | `price_1TALnGBgMSWbEFIIYeCYeBfT` |
 
-Founding partner coupon: `FOUNDING40` → 40% off forever. Client-side check only — actual discount enforced by Stripe coupon object with same ID.
+Founding partner coupon code: `FOUNDING40` (40% off forever — validated client-side, must also exist in Stripe dashboard).
 
 ---
 
-## 13. Demo Config — MarAzul (`src/lib/marazul-config.ts`)
+## 16. Calendly Links
 
-Fictional hotel used for all demos on the homepage and `/demo`.
-
-- **Hotel:** MarAzul Riviera Maya
-- **Assistant name:** Marina
-- **Type:** `hotel_resort`, Riviera Maya, Mexico
-- **Services:** Casa Marina Restaurant, Spa Ixchel, beach club, rooftop bar, pool, gym, nearby attractions
-- **FAQs:** breakfast, surf lessons, pool hours, pharmacy
-- **Suggestion chips:** 5 (mix EN/ES)
-
-`marazulChatConfig` adds `hotelName`, `assistantName`, `collection`, `mobileChipsLimit: 2` for `<ChatInterface>`.
+- 15-min discovery: `https://calendly.com/placecompanion/15-minute-discovery-call`
+- 30-min full demo: `https://calendly.com/placecompanion/30min`
 
 ---
 
-## 14. Breakpoints
+## 17. Google Forms (Invoice Requests)
 
-Standard Tailwind:
-- `sm:` (640px) — chip visibility, email in dashboard header
-- `md:` (768px) — most layout splits, nav hamburger → desktop
-- `lg:` (1024px) — hero two-column grid
+- Mexico CFDI: `https://forms.gle/CsYAreNSpr2nHCq87`
+- International: `https://forms.gle/gv8vDE62ABG7otH9A`
 
 ---
 
-## 15. Things That Are Easy to Break
+## 18. Key Supabase Queries
 
-### ⚠️ `issue_logs` table must be created manually
-Not in `schema.sql`. Must be run separately in Supabase SQL Editor (see Section 7). If missing, issue logging silently fails (fire-and-forget). Everything else still works.
+**Dashboard page (server):**
+```ts
+// All user properties with conversation + message counts
+supabase.from('properties').select('*, conversations(count), messages(count)').eq('user_id', user.id)
 
-### ⚠️ `properties` has columns not in `schema.sql`
-Production uses: `conversational_style`, `alert_email`, `subscription_status`, `stripe_customer_id`, `stripe_subscription_id`, `subscription_price_id`. These are not in the schema file. Add them with `ALTER TABLE` when setting up a fresh database.
+// Open issue counts per property
+supabase.from('issue_logs').select('property_id').eq('status', 'open').in('property_id', propertyIds)
 
-### ⚠️ `SUPABASE_SERVICE_ROLE_KEY` must never go client-side
-`src/lib/supabase/service.ts` is only safe in server-side code (API routes). Importing it in a client component would expose it to the browser. Bypasses all RLS.
+// Selected property conversations (limit 50)
+supabase.from('conversations').select('*').eq('property_id', id).order('started_at', { ascending: false }).limit(50)
 
-### ⚠️ Stripe webhook secret mismatch = silent failures
-Subscriptions will never activate if `STRIPE_WEBHOOK_SECRET` is wrong or missing. The route returns 400 and Stripe retries. Check logs for `[stripe/webhook] signature verification failed`.
-
-### ⚠️ Supabase email confirmation
-If Supabase's "Confirm email" is enabled, `signUp()` creates the user but doesn't log them in immediately. The redirect to `/dashboard` will fail. Disable email confirmation or handle the unconfirmed state.
-
-### ⚠️ `alert_email` must be set manually on the property
-Not collected during onboarding. If `alert_email` is null, issue email alerts are silently skipped (`if (property.alert_email)`). Set directly in Supabase or via a future settings screen.
-
-### ⚠️ Fire-and-forget issue_log insert
-`Promise.resolve(serviceSupabase.from('issue_logs').insert(...)).then().catch()` — never throws, never blocks. If the service role key is wrong, issues silently fail. Watch for `[issue_log] insert error:` in server logs.
-
-### ⚠️ Supabase `PromiseLike` vs `Promise`
-Supabase returns a `PromiseLike`, not a full `Promise`. Calling `.catch()` directly on a Supabase query result causes a TypeScript error. Always wrap in `Promise.resolve(...)` before chaining `.then().catch()`.
-
-### ⚠️ Never use inline `position` style in TypeScript
-`style={{ position: 'absolute' }}` causes a TS type error. Use Tailwind `className="absolute"` or `className="relative"` instead. This pattern is applied consistently throughout the codebase.
-
-### ⚠️ Public SELECT policy exposes system prompts
-Any `is_active = true` property is publicly readable, including `system_prompt` and `extracted_data`. This is intentional (guest chat requires it) but means hotel system prompts are not private.
-
-### ⚠️ PDF parsing is a stub
-`/api/extract` accepts PDFs but does not parse them. They are logged as `[PDF UPLOAD: name — processing not available]`. Users who upload PDFs expecting extraction will get no content from them.
-
-### ⚠️ Guest session ID is ephemeral
-`sessionId` is created with `Math.random()` in a `useRef`. Refreshing the page creates a new conversation row. There is no persistent guest identity.
-
----
-
-## 16. Local Development
-
-```bash
-npm install
-npm run dev   # http://localhost:3000
+// Selected property issues (limit 100)
+supabase.from('issue_logs').select('*').eq('property_id', id).order('created_at', { ascending: false }).limit(100)
 ```
 
-**`.env.local`:**
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-ANTHROPIC_API_KEY=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-RESEND_API_KEY=
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
-
-**Stripe webhooks locally:**
-```bash
-stripe listen --forward-to localhost:3000/api/stripe/webhook
-```
-The CLI outputs a webhook signing secret — use that as `STRIPE_WEBHOOK_SECRET`.
-
-**TypeScript check:**
-```bash
-npx tsc --noEmit
+**Revenue signals (client-side in DashboardClient):**
+```ts
+supabase.from('messages').select('revenue_signal').eq('property_id', id).eq('role', 'user').not('revenue_signal', 'is', null)
 ```

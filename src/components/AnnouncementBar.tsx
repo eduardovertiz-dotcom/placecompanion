@@ -45,7 +45,7 @@ export default function AnnouncementBar() {
           paddingBottom: '8px',
         }}
       >
-        <div className="flex items-center justify-center flex-wrap" style={{ gap: '4px 8px', padding: '0 40px', textAlign: 'center' }}>
+        <div style={{ padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
           <span
             style={{
               display: 'inline-block',
@@ -57,38 +57,47 @@ export default function AnnouncementBar() {
               animation: 'pc-dot-pulse 2s ease-in-out infinite',
             }}
           />
-          <span className="font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
-            Founding Partner spots:{' '}
+
+          {/* Mobile version — short, single line */}
+          <span className="flex md:hidden items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099', whiteSpace: 'nowrap' }}>
+            <span style={{ color: '#FAF9F5', fontWeight: 500 }}>4 of 10 spots left</span>
+            <span>—</span>
+            <button
+              onClick={() => {
+                const el = document.getElementById('founding-partners')
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                } else {
+                  window.location.href = '/#founding-partners'
+                }
+              }}
+              className="font-sans hover:text-[#D4784A] transition-colors"
+              style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', whiteSpace: 'nowrap' }}
+            >
+              Lock in 20% off →
+            </button>
           </span>
-          <span className="font-sans" style={{ fontSize: '13px', color: '#FAF9F5', fontWeight: 500 }}>
-            4 of 10 remaining
+
+          {/* Desktop version — full text */}
+          <span className="hidden md:flex items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
+            Founding Partner spots:
+            <span style={{ color: '#FAF9F5', fontWeight: 500 }}>4 of 10 remaining</span>
+            — lock in 20% off for life
+            <button
+              onClick={() => {
+                const el = document.getElementById('founding-partners')
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                } else {
+                  window.location.href = '/#founding-partners'
+                }
+              }}
+              className="font-sans hover:text-[#D4784A] transition-colors"
+              style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
+            >
+              Book your call →
+            </button>
           </span>
-          <span className="font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
-            {' '}— lock in 20% off for life
-          </span>
-          <button
-            onClick={() => {
-              const el = document.getElementById('founding-partners')
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              } else {
-                window.location.href = '/#founding-partners'
-              }
-            }}
-            className="font-sans hover:text-[#D4784A] transition-colors"
-            style={{
-              fontSize: '13px',
-              color: '#C96A3A',
-              fontWeight: 500,
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              fontFamily: 'inherit',
-            }}
-          >
-            Book your call →
-          </button>
         </div>
         <button
           onClick={handleDismiss}
