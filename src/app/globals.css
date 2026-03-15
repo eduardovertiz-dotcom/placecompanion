@@ -69,3 +69,25 @@ body {
   0%, 100% { outline-color: #C96A3A; }
   50% { outline-color: rgba(201,106,58,0.15); }
 }
+
+.marquee-row {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+}
+.marquee-row:hover {
+  animation-play-state: paused;
+}
+.marquee-chip {
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.marquee-chip:hover {
+  background: #2C1810 !important;
+  border-color: rgba(201,106,58,0.4) !important;
+  color: #FAF9F5 !important;
+}
+
+@keyframes pc-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

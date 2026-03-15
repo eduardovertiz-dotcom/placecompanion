@@ -25,11 +25,17 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
+    setDashVisible(false)
     const el = document.getElementById('dashboard-teaser')
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setDashVisible(true) },
-      { threshold: 0.15 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setDashVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -134,9 +140,22 @@ export default function HomePage() {
       {/* ── REAL QUESTIONS STRIP ─────────────────────────── */}
       <section className="py-20 overflow-hidden" style={{ background: '#1A1715' }}>
         <div className="text-center mb-10">
-          <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#A8A099', lineHeight: 1.4 }}>
-            {lang === 'es' ? 'Los huéspedes preguntan.' : 'Guests are asking.'}
-          </p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: '#2D9E6B',
+                flexShrink: 0,
+                animation: 'pc-dot-pulse 1.5s ease-in-out infinite',
+              }}
+            />
+            <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', color: '#A8A099', lineHeight: 1.4 }}>
+              {lang === 'es' ? 'Los huéspedes preguntan.' : 'Guests are asking.'}
+            </p>
+          </div>
           <p className="font-sans uppercase tracking-widest" style={{ fontSize: '16px', lineHeight: 1.4 }}>
             <span style={{ color: '#C96A3A' }}>{lang === 'es' ? 'Ahora mismo.' : 'Right now.'}</span>
           </p>
@@ -147,11 +166,11 @@ export default function HomePage() {
           className="overflow-hidden mb-4"
           style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
         >
-          <div className="flex gap-4 animate-scroll-left" style={{ width: 'max-content' }}>
+          <div className="marquee-row animate-scroll-left">
             {[...t.realQuestions.row1, ...t.realQuestions.row1].map((q, i) => (
               <span
                 key={i}
-                className="font-sans flex-shrink-0 rounded-full"
+                className="font-sans flex-shrink-0 rounded-full marquee-chip"
                 style={{
                   background: '#242019',
                   border: '1px solid rgba(232,227,220,0.10)',
@@ -173,11 +192,11 @@ export default function HomePage() {
           className="overflow-hidden pb-8"
           style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
         >
-          <div className="flex gap-4 animate-scroll-right" style={{ width: 'max-content' }}>
+          <div className="marquee-row animate-scroll-right">
             {[...t.realQuestions.row2, ...t.realQuestions.row2].map((q, i) => (
               <span
                 key={i}
-                className="font-sans flex-shrink-0 rounded-full"
+                className="font-sans flex-shrink-0 rounded-full marquee-chip"
                 style={{
                   background: '#242019',
                   border: '1px solid rgba(232,227,220,0.10)',
@@ -427,14 +446,80 @@ export default function HomePage() {
             {t.howItWorks.headline}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto mt-12 md:mt-16 text-left">
-            {howItWorksSteps.map((step) => (
-              <div key={step.num}>
-                <p className="font-sans tracking-widest" style={{ fontSize: "11px", color: "#2D9E6B" }}>{step.num}</p>
-                <p className="font-sans font-normal text-[#FAF9F5] mt-3" style={{ fontSize: "18px" }}>{step.title}</p>
-                <p className="font-sans font-light text-[#9C9A93] mt-2" style={{ fontSize: "16px" }}>{step.desc}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 md:mt-16">
+
+            {/* Step 1 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="8" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <ellipse cx="11" cy="11" rx="3.5" ry="8" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <line x1="3" y1="11" x2="19" y2="11" stroke="#C96A3A" strokeWidth="1.25"/>
+                </svg>
               </div>
-            ))}
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>01</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step1Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step1Desc}</p>
+            </div>
+
+            {/* Step 2 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M11 3a8 8 0 016 13.3V19l-2.5-1.5A8 8 0 1111 3z" stroke="#C96A3A" strokeWidth="1.25" strokeLinejoin="round"/>
+                  <path d="M8 10h.01M11 10h.01M14 10h.01" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>02</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step2Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step2Desc}</p>
+            </div>
+
+            {/* Step 3 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <rect x="4" y="2" width="14" height="18" rx="2" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <path d="M7 6h8M7 10h8M7 14h5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round"/>
+                  <circle cx="16" cy="16" r="4" fill="#1F1C19" stroke="#2D9E6B" strokeWidth="1.25"/>
+                  <path d="M14.5 16l1 1 2-2" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>03</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step3Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step3Desc}</p>
+            </div>
+
           </div>
         </div>
       </section>
@@ -516,8 +601,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Dashboard shell */}
-            <div style={{ display: 'flex', height: '520px' }}>
+            {/* Dashboard shell — desktop */}
+            <div className="hidden md:flex" style={{ height: '520px' }}>
 
               {/* Left sidebar */}
               <div
@@ -773,6 +858,73 @@ export default function HomePage() {
 
               </div>
             </div>
+
+            {/* Dashboard shell — mobile */}
+            <div className="md:hidden" style={{ background: '#0F0D0B', padding: '20px' }}>
+              {/* Property pill row */}
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', overflowX: 'auto', paddingBottom: '4px' }}>
+                {[
+                  { name: 'MarAzul', active: true, issues: 2 },
+                  { name: 'Casa Sol', active: false, issues: 0 },
+                  { name: 'Villa del Mar', active: false, issues: 1 },
+                ].map((p, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                    <span
+                      className="font-sans"
+                      style={{
+                        fontSize: '11px',
+                        color: p.active ? '#FAF9F5' : '#6B6560',
+                        background: p.active ? '#2C1810' : '#1A1715',
+                        border: `1px solid ${p.active ? '#C96A3A' : 'rgba(232,227,220,0.08)'}`,
+                        borderRadius: '999px',
+                        padding: '4px 10px',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {p.name}
+                    </span>
+                    {p.issues > 0 && (
+                      <span style={{ background: '#C96A3A', color: '#FFFFFF', fontSize: '10px', fontWeight: 600, borderRadius: '999px', padding: '1px 5px' }}>
+                        {p.issues}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Stat row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px' }}>
+                <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '10px', padding: '14px' }}>
+                  <p className="font-sans" style={{ fontSize: '10px', color: '#A8A099', marginBottom: '4px' }}>
+                    {lang === 'es' ? 'Preguntas este mes' : 'Questions this month'}
+                  </p>
+                  <p className="font-serif" style={{ fontSize: '22px', color: '#FFFFFF', fontWeight: 600, lineHeight: 1 }}>
+                    {teaserTotal.toLocaleString()}
+                  </p>
+                </div>
+                <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '10px', padding: '14px' }}>
+                  <p className="font-sans" style={{ fontSize: '10px', color: '#A8A099', marginBottom: '4px' }}>
+                    {lang === 'es' ? 'Resuelto por IA' : 'Resolved by AI'}
+                  </p>
+                  <p className="font-serif" style={{ fontSize: '22px', color: '#2D9E6B', fontWeight: 600, lineHeight: 1 }}>91%</p>
+                </div>
+              </div>
+
+              {/* Mini line chart */}
+              <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '10px', padding: '14px' }}>
+                <p className="font-sans" style={{ fontSize: '10px', color: '#A8A099', marginBottom: '10px' }}>
+                  {lang === 'es' ? 'Actividad de huéspedes — 30 días' : 'Guest activity — 30 days'}
+                </p>
+                <ResponsiveContainer width="100%" height={80}>
+                  <LineChart data={teaserDays} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
+                    <XAxis dataKey="date" tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} interval={9} />
+                    <YAxis tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} />
+                    <Line type="monotone" dataKey="questions" stroke="#C96A3A" strokeWidth={1.5} dot={false} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
           </div>
 
           {/* Caption below mockup */}
@@ -842,26 +994,24 @@ export default function HomePage() {
           <p className="font-sans font-light text-[#9C9A93] mt-4" style={{ fontSize: "18px" }}>
             {t.pricing.subhead}
           </p>
-          <div
-            className="max-w-2xl mx-auto mt-8 rounded-xl px-6 py-5"
-            style={{
-              background: '#1A1715',
-              borderLeft: '2px solid #C96A3A',
-              borderTop: '1px solid rgba(232,227,220,0.06)',
-              borderRight: '1px solid rgba(232,227,220,0.06)',
-              borderBottom: '1px solid rgba(232,227,220,0.06)',
-              borderRadius: '0 12px 12px 0',
-              textAlign: 'left',
-            }}
-          >
-            <p className="font-sans" style={{ fontSize: '15px', color: '#FAF9F5', fontWeight: 500, marginBottom: '6px' }}>
-              {lang === 'es' ? 'Una reserva de spa cubre tu semana.' : 'One spa booking covers your week.'}
-            </p>
-            <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560', lineHeight: 1.6 }}>
-              {lang === 'es'
-                ? 'A $299/mes, Place Companion cuesta menos de $10/día — menos que un late checkout. Una oportunidad de upsell capturada cubre tu mes entero.'
-                : 'At $299/mo, Place Companion costs less than $10/day — less than a single late checkout fee. One captured upsell covers your entire month.'}
-            </p>
+          <div style={{ textAlign: 'center', marginTop: '48px' }}>
+            <div
+              style={{
+                display: 'inline-block',
+                border: '1px solid rgba(201,106,58,0.4)',
+                borderRadius: '999px',
+                padding: '14px 32px',
+                textAlign: 'center',
+                maxWidth: '580px',
+                width: '100%',
+              }}
+            >
+              <p className="font-sans" style={{ fontSize: '15px', color: '#FAF9F5', fontWeight: 500, lineHeight: 1.6 }}>
+                {lang === 'es'
+                  ? 'Una reserva de spa cubre tu semana. A $299/mes — menos de $10/día — una oportunidad de upsell cubre tu mes entero.'
+                  : 'One spa booking covers your week. At $299/mo — less than $10/day — one captured upsell covers your entire month.'}
+              </p>
+            </div>
           </div>
 
           {/* 3-card row */}
@@ -961,7 +1111,7 @@ export default function HomePage() {
           {/* Enterprise bar */}
           <div style={{
             marginTop: '32px', padding: '24px 32px',
-            background: '#141210', border: '1px solid rgba(232,227,220,0.06)',
+            background: '#0D1218', border: '1px solid rgba(45,100,160,0.2)',
             borderRadius: '12px', display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px',
             maxWidth: '64rem', margin: '32px auto 0'
@@ -985,7 +1135,7 @@ export default function HomePage() {
           {/* Destination / resort communities bar */}
           <div style={{
             marginTop: '16px', padding: '24px 32px',
-            background: '#0D1218', border: '1px solid rgba(232,227,220,0.10)',
+            background: '#0D1218', border: '1px solid rgba(45,100,160,0.2)',
             borderRadius: '12px', display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px',
             maxWidth: '64rem', margin: '16px auto 0'

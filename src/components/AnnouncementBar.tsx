@@ -40,10 +40,12 @@ export default function AnnouncementBar() {
         style={{
           background: '#161310',
           borderBottom: '1px solid rgba(232,227,220,0.06)',
-          height: '40px',
+          minHeight: '40px',
+          paddingTop: '8px',
+          paddingBottom: '8px',
         }}
       >
-        <div className="flex items-center" style={{ gap: '8px' }}>
+        <div className="flex items-center justify-center flex-wrap" style={{ gap: '4px 8px', padding: '0 40px', textAlign: 'center' }}>
           <span
             style={{
               display: 'inline-block',
@@ -69,6 +71,8 @@ export default function AnnouncementBar() {
               const el = document.getElementById('founding-partners')
               if (el) {
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              } else {
+                window.location.href = '/#founding-partners'
               }
             }}
             className="font-sans hover:text-[#D4784A] transition-colors"
@@ -91,6 +95,7 @@ export default function AnnouncementBar() {
           className="absolute hover:text-[#A8A099] transition-colors"
           style={{
             right: '16px',
+            top: '8px',
             background: 'none',
             border: 'none',
             color: '#6B6560',
