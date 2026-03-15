@@ -59,3 +59,13 @@ body {
   70% { box-shadow: 0 0 0 12px rgba(201,106,58,0); }
   100% { box-shadow: 0 0 0 0 rgba(201,106,58,0); }
 }
+
+@keyframes pc-arrow-pulse {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(-4px); opacity: 0.6; }
+}
+
+@keyframes pc-btn-blink {
+  0%, 100% { outline-color: #C96A3A; }
+  50% { outline-color: rgba(201,106,58,0.15); }
+}

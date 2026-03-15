@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 
 export default function AnnouncementBar() {
   const pathname = usePathname()
@@ -65,13 +64,27 @@ export default function AnnouncementBar() {
           <span className="font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
             {' '}— lock in 20% off for life
           </span>
-          <Link
-            href="#founding-partners"
+          <button
+            onClick={() => {
+              const el = document.getElementById('founding-partners')
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+            }}
             className="font-sans hover:text-[#D4784A] transition-colors"
-            style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500 }}
+            style={{
+              fontSize: '13px',
+              color: '#C96A3A',
+              fontWeight: 500,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              fontFamily: 'inherit',
+            }}
           >
             Book your call →
-          </Link>
+          </button>
         </div>
         <button
           onClick={handleDismiss}
