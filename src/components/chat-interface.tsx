@@ -302,9 +302,9 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             justifyContent: "center",
             flexShrink: 0,
             transition: "background 0.2s",
-            outline: !isLoading && input.trim() ? "2px solid #C96A3A" : "2px solid transparent",
+            outline: !isLoading && !input.trim() ? "2px solid #C96A3A" : "2px solid transparent",
             outlineOffset: "3px",
-            animation: !isLoading && input.trim() ? "pc-btn-blink 1.2s ease-in-out infinite" : "none",
+            animation: !isLoading && !input.trim() ? "pc-btn-blink 1.2s ease-in-out infinite" : "none",
           }}
           onMouseEnter={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#D4784A' }}
           onMouseLeave={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#C96A3A' }}
