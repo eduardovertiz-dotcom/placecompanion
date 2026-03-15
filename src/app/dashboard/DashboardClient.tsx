@@ -100,6 +100,7 @@ export default function DashboardClient({
   const [isSavingAlert, setIsSavingAlert] = useState(false)
   const [alertSaved, setAlertSaved] = useState(false)
   const [issues, setIssues] = useState(initialSelectedIssues)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   // Reset tab and state when property changes
   useEffect(() => {
@@ -215,17 +216,18 @@ export default function DashboardClient({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
+        padding: '0 20px',
         height: '56px',
         flexShrink: 0,
+        position: 'relative',
       }}>
-        <Link href="/" className="font-serif" style={{ color: '#E8E3DC', fontSize: '18px' }}>
+        <Link href="/" className="font-serif" style={{ color: '#E8E3DC', fontSize: '17px' }}>
           Place Companion
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
-            {user.email}
-          </span>
+
+        {/* Desktop actions */}
+        <div className="hidden md:flex" style={{ alignItems: 'center', gap: '12px' }}>
+          <span className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>{user.email}</span>
           <button onClick={() => setShowInvoiceModal(true)} className="font-sans" style={{ fontSize: '13px', color: '#A8A099', background: 'transparent', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '8px', padding: '6px 14px', cursor: 'pointer', fontFamily: 'inherit' }}>
             {t.dashboard.getInvoice}
           </button>
@@ -233,13 +235,41 @@ export default function DashboardClient({
             {t.dashboard.signOut}
           </button>
         </div>
+
+        {/* Mobile menu button */}
+        <button
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          className="flex md:hidden font-sans"
+          style={{ background: 'none', border: 'none', color: '#A8A099', cursor: 'pointer', fontSize: '22px', lineHeight: 1, padding: '8px', fontFamily: 'inherit' }}
+          aria-label="Menu"
+        >
+          ⋯
+        </button>
+
+        {/* Mobile dropdown menu */}
+        {showMobileMenu && (
+          <div
+            className="md:hidden absolute"
+            style={{ top: '56px', right: '0', left: '0', background: '#161310', borderBottom: '1px solid rgba(232,227,220,0.06)', zIndex: 40, padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: '4px' }}
+          >
+            <p className="font-sans" style={{ fontSize: '12px', color: '#6B6560', marginBottom: '8px', paddingBottom: '8px', borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
+              {user.email}
+            </p>
+            <button onClick={() => { setShowInvoiceModal(true); setShowMobileMenu(false) }} className="font-sans" style={{ fontSize: '14px', color: '#A8A099', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '10px 0', fontFamily: 'inherit' }}>
+              {t.dashboard.getInvoice}
+            </button>
+            <button onClick={() => { handleSignOut(); setShowMobileMenu(false) }} className="font-sans" style={{ fontSize: '14px', color: '#A8A099', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '10px 0', fontFamily: 'inherit' }}>
+              {t.dashboard.signOut}
+            </button>
+          </div>
+        )}
       </header>
 
       {/* BODY: SIDEBAR + MAIN */}
-      <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+      <div className="flex flex-1" style={{ minHeight: 0 }}>
 
         {/* LEFT SIDEBAR */}
-        <aside style={{ width: '220px', flexShrink: 0, borderRight: '1px solid rgba(232,227,220,0.06)', background: '#0F0D0B', display: 'flex', flexDirection: 'column', padding: '24px 0' }}>
+        <aside className="hidden md:flex flex-col" style={{ width: '220px', flexShrink: 0, borderRight: '1px solid rgba(232,227,220,0.06)', background: '#0F0D0B', padding: '24px 0' }}>
           <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4A4540', padding: '0 20px', marginBottom: '12px' }}>
             Your Hotels
           </p>
@@ -289,11 +319,46 @@ export default function DashboardClient({
         </aside>
 
         {/* MAIN CONTENT */}
-        <main style={{ flex: 1, overflowY: 'auto', padding: '32px 40px' }}>
+        <main className="pb-24 md:pb-0 md:px-10 md:py-8" style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
 
           {/* NO PROPERTY SELECTED */}
           {!selectedPropertyId && (
             <div>
+              {properties.length > 0 && (
+                <div className="md:hidden" style={{ marginBottom: '20px' }}>
+                  <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4A4540', marginBottom: '10px' }}>
+                    Your Hotels
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {properties.map((property) => {
+                      const hasIssues = property.openIssueCount > 0
+                      return (
+                        <button
+                          key={property.id}
+                          onClick={() => router.push(`/dashboard?property=${property.id}`)}
+                          className="font-sans w-full"
+                          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+                        >
+                          <span style={{ fontSize: '14px', color: '#FAF9F5', fontWeight: 500 }}>
+                            {property.hotel_name}
+                          </span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {hasIssues && (
+                              <span style={{ background: '#C96A3A', color: '#FFFFFF', fontSize: '11px', fontWeight: 600, borderRadius: '999px', padding: '2px 8px' }}>
+                                {property.openIssueCount}
+                              </span>
+                            )}
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M6 4l4 4-4 4" stroke="#6B6560" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
               {properties.some((p) => p.openIssueCount > 0) && (
                 <div style={{ background: 'rgba(201,106,58,0.08)', border: '1px solid rgba(201,106,58,0.25)', borderRadius: '12px', padding: '16px 20px', marginBottom: '32px' }}>
                   <p className="font-sans" style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500, marginBottom: '12px' }}>
@@ -344,6 +409,19 @@ export default function DashboardClient({
           {/* PROPERTY SELECTED */}
           {selectedPropertyId && selectedProperty && (
             <div>
+              <div className="flex md:hidden items-center gap-3 mb-5">
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className="font-sans"
+                  style={{ background: 'none', border: 'none', color: '#A8A099', cursor: 'pointer', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px', padding: 0, fontFamily: 'inherit' }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10 4L6 8l4 4" stroke="#A8A099" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  All hotels
+                </button>
+              </div>
+
               {/* Property header */}
               <div style={{ marginBottom: '32px' }}>
                 <p className="font-serif" style={{ fontSize: '28px', color: '#FFFFFF', fontWeight: 400 }}>{selectedProperty.hotel_name}</p>
@@ -409,7 +487,7 @@ export default function DashboardClient({
               {/* ANALYTICS TAB */}
               {activeTab === 'analytics' && (
                 <div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                  <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '16px', marginBottom: '16px' }}>
                     <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '24px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
                         <div>
@@ -443,7 +521,7 @@ export default function DashboardClient({
                       </ResponsiveContainer>
                     </div>
                   </div>
-                  <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '32px' }}>
+                  <div className="flex flex-col md:flex-row" style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '24px', gap: '20px', alignItems: 'center' }}>
                     <div style={{ flexShrink: 0, width: '100px', height: '100px' }}>
                       <svg viewBox="0 0 100 100" width="100" height="100">
                         <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(232,227,220,0.06)" strokeWidth="10" />
@@ -475,26 +553,68 @@ export default function DashboardClient({
                     </div>
                   ) : (
                     <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', overflow: 'hidden' }}>
-                      <div className="font-sans" style={{ display: 'grid', gridTemplateColumns: '160px 1fr 80px 100px 130px', background: '#141210', padding: '12px 16px', fontSize: '11px', color: '#6B6560', gap: '16px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+
+                      {/* Desktop table header — hidden on mobile */}
+                      <div className="hidden md:grid font-sans" style={{ gridTemplateColumns: '160px 1fr 80px 100px 130px', background: '#141210', padding: '12px 16px', fontSize: '11px', color: '#6B6560', gap: '16px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                         <span>Date / Time</span>
                         <span>Guest Message</span>
                         <span>Room</span>
                         <span>Status</span>
                         <span></span>
                       </div>
+
                       {issues.map((issue: { id: string; created_at: string; guest_message: string; room_number?: string; status: string }, idx: number) => (
-                        <div key={issue.id} style={{ display: 'grid', gridTemplateColumns: '160px 1fr 80px 100px 130px', padding: '16px', gap: '16px', background: idx % 2 === 0 ? '#1A1715' : '#1F1C19', borderTop: idx === 0 ? 'none' : '1px solid rgba(232,227,220,0.04)', alignItems: 'center' }}>
-                          <span className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>{formatIssueDate(issue.created_at)}</span>
-                          <span className="font-sans" style={{ fontSize: '14px', color: '#A8A099' }}>{truncate(issue.guest_message, 80)}</span>
-                          <span className="font-sans" style={{ fontSize: '14px', color: '#E8E3DC', fontWeight: 500 }}>{issue.room_number || '—'}</span>
-                          <span>
-                            {issue.status === 'open' ? (
-                              <span className="font-sans" style={{ fontSize: '12px', fontWeight: 500, background: 'rgba(201,106,58,0.15)', color: '#C96A3A', borderRadius: '999px', padding: '4px 12px' }}>{t.property.issueOpen}</span>
-                            ) : (
-                              <span className="font-sans" style={{ fontSize: '12px', fontWeight: 500, background: 'rgba(45,158,107,0.15)', color: '#2D9E6B', borderRadius: '999px', padding: '4px 12px' }}>{t.property.issueResolved}</span>
-                            )}
-                          </span>
-                          <span>
+                        <div key={issue.id} style={{ borderTop: idx === 0 ? 'none' : '1px solid rgba(232,227,220,0.04)', background: idx % 2 === 0 ? '#1A1715' : '#1F1C19' }}>
+
+                          {/* Desktop row — hidden on mobile */}
+                          <div className="hidden md:grid" style={{ gridTemplateColumns: '160px 1fr 80px 100px 130px', padding: '16px', gap: '16px', alignItems: 'center' }}>
+                            <span className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>{formatIssueDate(issue.created_at)}</span>
+                            <span className="font-sans" style={{ fontSize: '14px', color: '#A8A099' }}>{truncate(issue.guest_message, 80)}</span>
+                            <span className="font-sans" style={{ fontSize: '14px', color: '#E8E3DC', fontWeight: 500 }}>{issue.room_number || '—'}</span>
+                            <span>
+                              {issue.status === 'open' ? (
+                                <span className="font-sans" style={{ fontSize: '12px', fontWeight: 500, background: 'rgba(201,106,58,0.15)', color: '#C96A3A', borderRadius: '999px', padding: '4px 12px' }}>{t.property.issueOpen}</span>
+                              ) : (
+                                <span className="font-sans" style={{ fontSize: '12px', fontWeight: 500, background: 'rgba(45,158,107,0.15)', color: '#2D9E6B', borderRadius: '999px', padding: '4px 12px' }}>{t.property.issueResolved}</span>
+                              )}
+                            </span>
+                            <span>
+                              {issue.status === 'open' && (
+                                <button
+                                  onClick={async () => {
+                                    const supabase = createClient()
+                                    await supabase.from('issue_logs').update({ status: 'resolved', resolved_at: new Date().toISOString() }).eq('id', issue.id)
+                                    setIssues((prev: typeof issues) => prev.map((i: typeof issue) => i.id === issue.id ? { ...i, status: 'resolved', resolved_at: new Date().toISOString() } : i))
+                                  }}
+                                  className="font-sans"
+                                  style={{ fontSize: '12px', color: '#A8A099', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '6px', padding: '4px 12px', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}
+                                >
+                                  {t.property.issueMarkResolved}
+                                </button>
+                              )}
+                            </span>
+                          </div>
+
+                          {/* Mobile card — shown on mobile only */}
+                          <div className="md:hidden" style={{ padding: '16px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                              <span className="font-sans" style={{ fontSize: '12px', color: '#6B6560' }}>{formatIssueDate(issue.created_at)}</span>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                {issue.room_number && (
+                                  <span className="font-sans" style={{ fontSize: '12px', color: '#E8E3DC', fontWeight: 500, background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', borderRadius: '6px', padding: '2px 8px' }}>
+                                    Room {issue.room_number}
+                                  </span>
+                                )}
+                                {issue.status === 'open' ? (
+                                  <span className="font-sans" style={{ fontSize: '11px', fontWeight: 500, background: 'rgba(201,106,58,0.15)', color: '#C96A3A', borderRadius: '999px', padding: '3px 10px' }}>{t.property.issueOpen}</span>
+                                ) : (
+                                  <span className="font-sans" style={{ fontSize: '11px', fontWeight: 500, background: 'rgba(45,158,107,0.15)', color: '#2D9E6B', borderRadius: '999px', padding: '3px 10px' }}>{t.property.issueResolved}</span>
+                                )}
+                              </div>
+                            </div>
+                            <p className="font-sans" style={{ fontSize: '14px', color: '#A8A099', lineHeight: 1.5, marginBottom: issue.status === 'open' ? '12px' : '0' }}>
+                              {issue.guest_message}
+                            </p>
                             {issue.status === 'open' && (
                               <button
                                 onClick={async () => {
@@ -502,13 +622,14 @@ export default function DashboardClient({
                                   await supabase.from('issue_logs').update({ status: 'resolved', resolved_at: new Date().toISOString() }).eq('id', issue.id)
                                   setIssues((prev: typeof issues) => prev.map((i: typeof issue) => i.id === issue.id ? { ...i, status: 'resolved', resolved_at: new Date().toISOString() } : i))
                                 }}
-                                className="font-sans"
-                                style={{ fontSize: '12px', color: '#A8A099', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '6px', padding: '4px 12px', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}
+                                className="font-sans w-full"
+                                style={{ fontSize: '13px', color: '#A8A099', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '8px', padding: '10px', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}
                               >
                                 {t.property.issueMarkResolved}
                               </button>
                             )}
-                          </span>
+                          </div>
+
                         </div>
                       ))}
                     </div>
@@ -524,7 +645,7 @@ export default function DashboardClient({
                     const embedCode = `<script src="https://placecompanion.com/widget.js" data-property="${selectedProperty.id}"></script>`
                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(publicUrl)}`
                     return (
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+                      <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '16px' }}>
                         <div style={{ background: '#141210', borderRadius: '12px', padding: '24px', border: '1px solid rgba(232,227,220,0.06)' }}>
                           <p className="font-sans" style={{ fontSize: '11px', color: '#2D9E6B', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>{t.property.publicUrl}</p>
                           <p className="font-sans" style={{ fontSize: '13px', color: '#A8A099', wordBreak: 'break-all', marginBottom: '16px' }}>{publicUrl}</p>
@@ -557,7 +678,7 @@ export default function DashboardClient({
 
               {/* SETTINGS TAB */}
               {activeTab === 'settings' && (
-                <div style={{ maxWidth: '480px' }}>
+                <div style={{ maxWidth: '480px', width: '100%' }}>
                   <div style={{ marginBottom: '32px' }}>
                     <label className="font-sans" style={{ display: 'block', fontSize: '11px', color: '#A8A099', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>{t.property.assistantPersonality}</label>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -573,9 +694,9 @@ export default function DashboardClient({
                   <div style={{ marginBottom: '32px' }}>
                     <label className="font-sans" style={{ display: 'block', fontSize: '11px', color: '#A8A099', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>Staff Alert Email</label>
                     <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560', lineHeight: 1.5, marginBottom: '12px' }}>Receive instant email alerts when guests report issues.</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div className="flex flex-col sm:flex-row" style={{ gap: '8px' }}>
                       <input type="email" value={alertEmail} onChange={e => setAlertEmail(e.target.value)} placeholder="manager@yourhotel.com" className="font-sans" style={{ flex: 1, background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', borderRadius: '8px', padding: '10px 16px', fontSize: '14px', color: '#FFFFFF', outline: 'none', fontFamily: 'inherit' }} />
-                      <button onClick={handleAlertEmailSave} disabled={isSavingAlert} className="font-sans" style={{ fontSize: '13px', color: '#A8A099', background: 'transparent', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '8px', padding: '10px 14px', cursor: isSavingAlert ? 'not-allowed' : 'pointer', opacity: isSavingAlert ? 0.6 : 1, fontFamily: 'inherit' }}>
+                      <button onClick={handleAlertEmailSave} disabled={isSavingAlert} className="font-sans w-full sm:w-auto" style={{ fontSize: '13px', color: '#A8A099', background: 'transparent', border: '1px solid rgba(232,227,220,0.15)', borderRadius: '8px', padding: '10px 14px', cursor: isSavingAlert ? 'not-allowed' : 'pointer', opacity: isSavingAlert ? 0.6 : 1, fontFamily: 'inherit' }}>
                         {isSavingAlert ? 'Saving…' : 'Save'}
                       </button>
                       {alertSaved && <span className="font-sans" style={{ fontSize: '12px', color: '#2D9E6B' }}>Saved</span>}
@@ -602,6 +723,100 @@ export default function DashboardClient({
           )}
         </main>
       </div>
+
+      {/* Mobile bottom tab bar — only when property selected */}
+      {selectedPropertyId && selectedProperty && (
+        <nav
+          className="fixed bottom-0 left-0 right-0 md:hidden"
+          style={{
+            background: '#161310',
+            borderTop: '1px solid rgba(232,227,220,0.06)',
+            display: 'flex',
+            alignItems: 'stretch',
+            zIndex: 30,
+            paddingBottom: 'env(safe-area-inset-bottom)',
+          }}
+        >
+          {([
+            {
+              key: 'analytics' as const,
+              label: 'Analytics',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M3 14l4-5 4 3 4-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ),
+            },
+            {
+              key: 'issues' as const,
+              label: 'Issues',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M10 7v4M10 13.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              ),
+            },
+            {
+              key: 'deploy' as const,
+              label: 'Deploy',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="3" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M7 17h6M10 13v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              ),
+            },
+            {
+              key: 'settings' as const,
+              label: 'Settings',
+              icon: (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M10 3v2M10 15v2M3 10h2M15 10h2M5.05 5.05l1.41 1.41M13.54 13.54l1.41 1.41M5.05 14.95l1.41-1.41M13.54 6.46l1.41-1.41" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              ),
+            },
+          ]).map(({ key, label, icon }) => {
+            const isActive = activeTab === key
+            const openCount = issues.filter((i: { status: string }) => i.status === 'open').length
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className="font-sans flex-1"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '3px',
+                  padding: '10px 4px',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: isActive ? '#C96A3A' : '#6B6560',
+                  fontFamily: 'inherit',
+                  position: 'relative',
+                }}
+              >
+                {icon}
+                <span style={{ fontSize: '10px', fontWeight: isActive ? 500 : 400 }}>
+                  {label}
+                </span>
+                {key === 'issues' && openCount > 0 && (
+                  <span
+                    className="absolute"
+                    style={{ top: '6px', right: 'calc(50% - 18px)', background: '#C96A3A', color: '#FFFFFF', fontSize: '9px', fontWeight: 700, borderRadius: '999px', padding: '1px 5px', lineHeight: 1.4 }}
+                  >
+                    {openCount}
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </nav>
+      )}
 
       {/* Invoice modal */}
       {showInvoiceModal && (
