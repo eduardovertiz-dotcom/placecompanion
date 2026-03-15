@@ -319,13 +319,6 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           </svg>
         </button>
       </form>
-      <style>{`
-        @keyframes pulse-ring {
-          0% { box-shadow: 0 0 0 0 rgba(201,106,58,0.9); }
-          70% { box-shadow: 0 0 0 12px rgba(201,106,58,0); }
-          100% { box-shadow: 0 0 0 0 rgba(201,106,58,0); }
-        }
-      `}</style>
     </div>
   );
 }
