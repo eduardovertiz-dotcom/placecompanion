@@ -386,7 +386,7 @@ export default function DashboardClient({
               )}
 
               {properties.length > 0 && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 28px', background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', maxWidth: '380px' }}>
+                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '16px', padding: '24px 28px', background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '12px', maxWidth: '380px' }}>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0, animation: 'pc-arrow-pulse 2s ease-in-out infinite' }}>
                     <path d="M20 16H6M6 16L12 10M6 16L12 22" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
