@@ -100,17 +100,32 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.85)' }}
+      className="fixed inset-0 z-50 overflow-y-auto flex items-start justify-center"
+      style={{
+        paddingTop: '24px',
+        paddingBottom: '24px',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        background: 'rgba(0,0,0,0.85)',
+      }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-2xl overflow-hidden"
-        style={{ background: '#0F0D0B', border: '1px solid rgba(232,227,220,0.08)' }}
+        className="relative w-full rounded-2xl"
+        style={{
+          background: '#0F0D0B',
+          border: '1px solid rgba(232,227,220,0.08)',
+          maxHeight: 'calc(100vh - 48px)',
+          overflowY: 'auto',
+          maxWidth: '560px',
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-8 pt-8 pb-6" style={{ borderBottom: '1px solid rgba(232,227,220,0.06)' }}>
+        {/* Header — sticky */}
+        <div
+          className="sticky top-0 flex items-center justify-between px-6 md:px-10 pt-6 md:pt-10 pb-5"
+          style={{ background: '#0F0D0B', borderBottom: '1px solid rgba(232,227,220,0.06)', zIndex: 10, paddingBottom: '20px' }}
+        >
           <div>
             <h2 className="font-serif font-normal text-[#FFFFFF]" style={{ fontSize: '28px' }}>
               Upgrade your assistant.
@@ -129,7 +144,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
         </div>
 
         {/* Plan cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 md:p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 md:p-10">
           {PLANS.map((plan) => {
             const isLoading = loadingPriceId === plan.priceId
             const discounted = appliedCoupon === 'FOUNDING40'
@@ -200,7 +215,7 @@ export default function UpgradeModal({ propertyId, userId, onClose }: Props) {
 
         {/* Founding partner coupon */}
         <div
-          className="mx-6 md:mx-8 mb-8 rounded-xl p-5"
+          className="mx-6 md:mx-10 mb-6 md:mb-10 rounded-xl p-5"
           style={{ background: '#1F1C19', border: '1px solid rgba(232,227,220,0.06)' }}
         >
           <p className="font-sans text-[#A8A099]" style={{ fontSize: '13px' }}>

@@ -163,6 +163,7 @@ export const translations = {
     },
     onboarding: {
       step1Headline: "Build your hotel's knowledge base",
+      step1UseWhatYouHave: 'Use what you have.',
       step1Subhead: 'Add what you have — website, documents, or a description. Use one or all three.',
       pasteText: 'Paste text',
       enterUrl: 'Enter URL',
@@ -580,6 +581,7 @@ export const translations = {
     },
     onboarding: {
       step1Headline: 'Construye la base de conocimiento de tu hotel',
+      step1UseWhatYouHave: 'Usa lo que tienes.',
       step1Subhead: 'Agrega lo que tengas — sitio web, documentos o una descripción. Usa uno o los tres.',
       pasteText: 'Pegar texto',
       enterUrl: 'Ingresar URL',

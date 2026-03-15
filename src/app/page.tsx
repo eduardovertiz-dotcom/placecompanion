@@ -14,6 +14,7 @@ export default function HomePage() {
   const { t, lang } = useLang();
   const [showBar, setShowBar] = useState(false)
   const [showCalendly, setShowCalendly] = useState(false)
+  const [activeConvo, setActiveConvo] = useState<0|1|2|3>(0)
 
   useEffect(() => {
     const handleScroll = () => setShowBar(window.scrollY > 400)
@@ -180,7 +181,7 @@ export default function HomePage() {
       {/* ── REVENUE ──────────────────────────────────────── */}
       <section className="py-20 md:py-32" style={{ background: "#141210" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-start">
 
             {/* Left */}
             <div>
@@ -196,37 +197,129 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Right — conversation */}
-            <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-              <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>{t.revenue.timestamp}</p>
-              <div className="flex flex-col gap-3">
-                {t.revenue.conversation.map((msg, i) => (
-                  <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
-                    <div
-                      className="font-sans rounded-2xl"
-                      style={{
-                        background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835",
-                        color: "#E8E3DC",
-                        padding: "12px 16px",
-                        fontSize: "16px",
-                        lineHeight: 1.6,
-                        maxWidth: "80%",
-                      }}
-                    >
-                      {msg.text}
-                    </div>
-                  </div>
+            {/* Right — tabbed conversations */}
+            <div>
+              {/* Tab selector */}
+              <div className="flex gap-2 mb-6 flex-wrap">
+                {[
+                  lang === 'es' ? 'Upgrade suite' : 'Suite upgrade',
+                  lang === 'es' ? 'Reserva spa' : 'Spa booking',
+                  lang === 'es' ? 'Late checkout' : 'Late checkout',
+                  lang === 'es' ? 'Mantenimiento' : 'Maintenance',
+                ].map((label, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveConvo(i as 0|1|2|3)}
+                    className="font-sans transition-all"
+                    style={{
+                      fontSize: '13px',
+                      padding: '6px 14px',
+                      borderRadius: '9999px',
+                      border: activeConvo === i ? '1px solid #C96A3A' : '1px solid rgba(232,227,220,0.15)',
+                      background: activeConvo === i ? '#2C1810' : 'transparent',
+                      color: activeConvo === i ? '#FFFFFF' : '#A8A099',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {label}
+                  </button>
                 ))}
               </div>
-              <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
-                {lang === 'es'
-                  ? <>Un upgrade.<br />Inversión: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>cubierta.</span></>
-                  : <>One upgrade.<br />Investment: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>covered.</span></>
-                }
-              </p>
+
+              {/* Conversations */}
+              {activeConvo === 0 && (
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>{t.revenue.timestamp}</p>
+                  <div className="flex flex-col gap-3">
+                    {t.revenue.conversation.map((msg: {role: string; text: string}, i: number) => (
+                      <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
+                        <div className="font-sans rounded-2xl" style={{ background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835", color: "#E8E3DC", padding: "12px 16px", fontSize: "16px", lineHeight: 1.6, maxWidth: "80%" }}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
+                    {lang === 'es' ? <>Un upgrade.<br />Inversión: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>cubierta.</span></> : <>One upgrade.<br />Investment: <span style={{ color: '#FFFFFF', fontWeight: 600 }}>covered.</span></>}
+                  </p>
+                </div>
+              )}
+
+              {activeConvo === 1 && (
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>2:32 PM</p>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { role: 'guest', text: lang === 'es' ? '¿Tienen masajes en pareja disponibles esta noche?' : 'Do you have couples massages available this evening?' },
+                      { role: 'ai', text: lang === 'es' ? '¡Sí! El spa tiene disponibilidad a las 6 PM y 7:30 PM. Nuestro Ritual de Pareja Riviera dura 90 minutos — $180/pareja. Puedes agregar una bienvenida con champán por $220 total. ¿Reservo un horario?' : 'Yes! The spa has availability at 6 PM and 7:30 PM. Our Riviera Couples Ritual is 90 minutes — $180/couple. Add a champagne welcome for $220 total. Shall I reserve a time?' },
+                      { role: 'guest', text: lang === 'es' ? 'Las 7:30 con el champán, por favor.' : '7:30 with the champagne, please.' },
+                      { role: 'ai', text: lang === 'es' ? '¡Listo! Confirmado para las 7:30 PM. El equipo tendrá todo preparado. Que disfruten su velada.' : 'Done! Confirmed for 7:30 PM. The team will have everything ready. Enjoy your evening.' },
+                    ].map((msg, i) => (
+                      <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
+                        <div className="font-sans rounded-2xl" style={{ background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835", color: "#E8E3DC", padding: "12px 16px", fontSize: "16px", lineHeight: 1.6, maxWidth: "80%" }}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
+                    {lang === 'es' ? 'Reserva de spa + upsell capturado' : 'Spa booking + upsell captured'}<br />
+                    <span style={{ color: '#C96A3A', fontWeight: 600 }}>+$220</span>
+                  </p>
+                </div>
+              )}
+
+              {activeConvo === 2 && (
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>8:45 AM</p>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { role: 'guest', text: lang === 'es' ? 'Nuestro vuelo es a las 4pm — ¿podríamos hacer el checkout a las 2pm en lugar de las 12?' : 'Our flight is at 4pm — any chance we can check out at 2pm instead of 12?' },
+                      { role: 'ai', text: lang === 'es' ? 'Buenas noticias — el checkout tardío a las 2 PM está disponible. Hay un cargo de $45 que se añade a tu cuenta. ¿Lo confirmo?' : 'Good news — 2 PM late checkout is available. There is a $45 fee added to your final bill. Want me to confirm?' },
+                      { role: 'guest', text: lang === 'es' ? 'Sí, perfecto, gracias.' : 'Yes, perfect, thank you.' },
+                      { role: 'ai', text: lang === 'es' ? 'Confirmado. Checkout actualizado a las 2 PM. Buen viaje — esperamos verte pronto en MarAzul.' : 'Confirmed! Checkout updated to 2 PM. Safe travels — hope to see you at MarAzul again soon.' },
+                    ].map((msg, i) => (
+                      <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
+                        <div className="font-sans rounded-2xl" style={{ background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835", color: "#E8E3DC", padding: "12px 16px", fontSize: "16px", lineHeight: 1.6, maxWidth: "80%" }}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
+                    {lang === 'es' ? 'Cargo de late checkout capturado' : 'Late checkout fee captured'}<br />
+                    <span style={{ color: '#C96A3A', fontWeight: 600 }}>+$45</span>
+                  </p>
+                </div>
+              )}
+
+              {activeConvo === 3 && (
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <p className="font-sans mb-4" style={{ fontSize: "12px", color: "#8A8480" }}>11:52 PM</p>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { role: 'guest', text: lang === 'es' ? 'El aire acondicionado de nuestra habitación no enfría — hace bastante calor.' : 'The AC in our room is not cooling — it is quite warm in here.' },
+                      { role: 'ai', text: lang === 'es' ? 'Lo siento mucho. ¿Puedes confirmarme el número de habitación para alertar al equipo de mantenimiento de inmediato?' : 'I am sorry about that. Can you confirm your room number so I can alert maintenance right away?' },
+                      { role: 'guest', text: lang === 'es' ? 'Habitación 221.' : 'Room 221.' },
+                      { role: 'ai', text: lang === 'es' ? 'Mantenimiento ha sido alertado y está en camino. También he solicitado un ventilador portátil como respaldo. Lo resolveremos en breve.' : 'Maintenance has been alerted and is on the way. I have also requested a portable fan as backup. We will have this sorted shortly.' },
+                    ].map((msg, i) => (
+                      <div key={i} className={`flex ${msg.role === 'guest' ? 'justify-end' : 'justify-start'}`}>
+                        <div className="font-sans rounded-2xl" style={{ background: msg.role === 'guest' ? "#0F0D0B" : "#3A3835", color: "#E8E3DC", padding: "12px 16px", fontSize: "16px", lineHeight: 1.6, maxWidth: "80%" }}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="font-sans text-center" style={{ fontSize: '18px', color: '#A8A099', marginTop: '32px' }}>
+                    {lang === 'es' ? 'Problema resuelto antes de una mala reseña' : 'Issue resolved before a bad review'}<br />
+                    <span style={{ color: '#2D9E6B', fontWeight: 600 }}>0 complaints</span>
+                  </p>
+                </div>
+              )}
             </div>
 
           </div>
+
         </div>
       </section>
 
@@ -269,7 +362,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          <p className="font-sans text-[16px] text-[#9C9A93] mt-12 text-center">{t.intelligence.closing}</p>
+          <p
+            className="font-serif font-semibold text-[#FFFFFF] text-center w-full"
+            style={{
+              paddingTop: '40px',
+              marginTop: '40px',
+              borderTop: '1px solid rgba(232,227,220,0.08)',
+              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {t.intelligence.closing}
+          </p>
         </div>
       </section>
 
@@ -336,6 +441,27 @@ export default function HomePage() {
           <p className="font-sans font-light text-[#9C9A93] mt-4" style={{ fontSize: "18px" }}>
             {t.pricing.subhead}
           </p>
+          <div
+            className="max-w-2xl mx-auto mt-8 rounded-xl px-6 py-5"
+            style={{
+              background: '#1A1715',
+              borderLeft: '2px solid #C96A3A',
+              borderTop: '1px solid rgba(232,227,220,0.06)',
+              borderRight: '1px solid rgba(232,227,220,0.06)',
+              borderBottom: '1px solid rgba(232,227,220,0.06)',
+              borderRadius: '0 12px 12px 0',
+              textAlign: 'left',
+            }}
+          >
+            <p className="font-sans" style={{ fontSize: '15px', color: '#FAF9F5', fontWeight: 500, marginBottom: '6px' }}>
+              {lang === 'es' ? 'Una reserva de spa cubre tu semana.' : 'One spa booking covers your week.'}
+            </p>
+            <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560', lineHeight: 1.6 }}>
+              {lang === 'es'
+                ? 'A $299/mes, Place Companion cuesta menos de $10/día — menos que un late checkout. Una oportunidad de upsell capturada cubre tu mes entero.'
+                : 'At $299/mo, Place Companion costs less than $10/day — less than a single late checkout fee. One captured upsell covers your entire month.'}
+            </p>
+          </div>
 
           {/* 3-card row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">

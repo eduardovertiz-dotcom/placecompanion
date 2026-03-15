@@ -301,7 +301,9 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
-            transition: "background 0.2s",
+            transition: "background 0.2s, transform 0.15s, box-shadow 0.15s",
+            animation: !isLoading && input.trim() ? "pulse-ring 2s ease-in-out infinite" : "none",
+            boxShadow: !isLoading && input.trim() ? "0 0 0 0 rgba(201,106,58,0.7)" : "none",
           }}
           onMouseEnter={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#D4784A' }}
           onMouseLeave={e => { if (!isLoading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = '#C96A3A' }}
@@ -317,6 +319,13 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           </svg>
         </button>
       </form>
+      <style>{`
+        @keyframes pulse-ring {
+          0% { box-shadow: 0 0 0 0 rgba(201,106,58,0.9); }
+          70% { box-shadow: 0 0 0 12px rgba(201,106,58,0); }
+          100% { box-shadow: 0 0 0 0 rgba(201,106,58,0); }
+        }
+      `}</style>
     </div>
   );
 }

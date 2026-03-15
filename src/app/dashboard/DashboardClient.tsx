@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useLang } from '@/lib/i18n/LanguageContext'
 import UpgradeModal from '@/components/UpgradeModal'
 import CalendlyModal from '@/components/CalendlyModal'
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts'
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,6 +19,27 @@ interface UpgradeTarget {
   propertyId: string
   userId: string
 }
+
+const last30Days = Array.from({ length: 30 }, (_, i) => {
+  const d = new Date()
+  d.setDate(d.getDate() - (29 - i))
+  return {
+    date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    questions: Math.round(15 + Math.random() * 55 + (i * 0.8) + (d.getDay() === 0 || d.getDay() === 6 ? 12 : 0)),
+  }
+})
+
+const categoryData = [
+  { name: 'Food & Beverage', pct: 28 },
+  { name: 'Local Activities', pct: 22 },
+  { name: 'Spa & Wellness', pct: 18 },
+  { name: 'Room Services', pct: 14 },
+  { name: 'Transportation', pct: 10 },
+  { name: 'Check-in / Out', pct: 5 },
+  { name: 'Other', pct: 3 },
+]
+
+const totalQuestions = last30Days.reduce((sum, d) => sum + d.questions, 0)
 
 export default function DashboardClient({ user, properties }: Props) {
   const { t } = useLang()
@@ -306,6 +328,81 @@ export default function DashboardClient({ user, properties }: Props) {
             })}
           </div>
         )}
+
+        {/* ── Analytics ── */}
+        <div className="mt-16">
+          <h2 className="font-serif font-normal mb-8" style={{ fontSize: '28px', color: '#E8E3DC' }}>
+            Analytics <span className="font-sans" style={{ fontSize: '13px', color: '#6B6560', marginLeft: '8px' }}>Last 30 days</span>
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
+
+            {/* Line chart — questions over time */}
+            <div className="rounded-2xl p-6" style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)' }}>
+              <div className="flex justify-between items-baseline mb-6">
+                <p className="font-sans" style={{ fontSize: '13px', color: '#A8A099', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Guest questions</p>
+                <p className="font-serif" style={{ fontSize: '32px', color: '#FFFFFF', fontWeight: 600 }}>{totalQuestions.toLocaleString()}</p>
+              </div>
+              <ResponsiveContainer width="100%" height={180}>
+                <LineChart data={last30Days} margin={{ top: 4, right: 4, left: -28, bottom: 0 }}>
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: '#6B6560', fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                    interval={6}
+                  />
+                  <YAxis
+                    tick={{ fill: '#6B6560', fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{ background: '#0F0D0B', border: '1px solid rgba(232,227,220,0.1)', borderRadius: '8px', fontSize: '13px', color: '#E8E3DC' }}
+                    itemStyle={{ color: '#C96A3A' }}
+                    cursor={{ stroke: 'rgba(232,227,220,0.08)' }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="questions"
+                    stroke="#C96A3A"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4, fill: '#C96A3A', strokeWidth: 0 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Bar chart — category breakdown */}
+            <div className="rounded-2xl p-6" style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)' }}>
+              <p className="font-sans mb-6" style={{ fontSize: '13px', color: '#A8A099', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Top categories</p>
+              <ResponsiveContainer width="100%" height={180}>
+                <BarChart data={categoryData} layout="vertical" margin={{ top: 0, right: 8, left: 0, bottom: 0 }}>
+                  <XAxis type="number" hide />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    tick={{ fill: '#6B6560', fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                    width={110}
+                  />
+                  <Tooltip
+                    contentStyle={{ background: '#0F0D0B', border: '1px solid rgba(232,227,220,0.1)', borderRadius: '8px', fontSize: '13px', color: '#E8E3DC' }}
+                    formatter={(v) => [`${v}%`, 'Share']}
+                    cursor={{ fill: 'rgba(232,227,220,0.04)' }}
+                  />
+                  <Bar dataKey="pct" radius={[0, 4, 4, 0]}>
+                    {categoryData.map((_, i) => (
+                      <Cell key={i} fill={i === 0 ? '#C96A3A' : `rgba(201,106,58,${0.55 - i * 0.07})`} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+          </div>
+        </div>
       </div>
 
       {/* Team access note */}

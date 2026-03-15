@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import AnnouncementBar from "@/components/AnnouncementBar";
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
@@ -32,7 +33,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${cormorantGaramond.variable} ${dmSans.variable} font-sans antialiased`}>
         <LanguageProvider>
-          <div className="pt-16">{children}</div>
+          <AnnouncementBar />
+          <div className="pt-24">{children}</div>
         </LanguageProvider>
       </body>
     </html>

@@ -256,7 +256,19 @@ export default function OnboardingPage() {
           <h1 className="heading-page font-serif font-normal" style={{ color: '#E8E3DC' }}>
             {t.onboarding.step1Headline}
           </h1>
-          <p className="font-sans font-light mt-4" style={{ fontSize: '18px', color: '#C4BDB6', lineHeight: 1.7 }}>
+          <p
+            className="font-serif font-semibold text-[#FFFFFF]"
+            style={{
+              fontSize: 'clamp(1.8rem, 5vw, 3rem)',
+              fontWeight: 600,
+              lineHeight: 1.1,
+              marginBottom: '12px',
+              marginTop: '24px',
+            }}
+          >
+            {t.onboarding.step1UseWhatYouHave}
+          </p>
+          <p className="font-sans font-light" style={{ fontSize: '18px', color: '#C4BDB6', lineHeight: 1.7 }}>
             {t.onboarding.step1Subhead}
           </p>
 
