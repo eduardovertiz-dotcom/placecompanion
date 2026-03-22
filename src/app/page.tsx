@@ -1060,7 +1060,7 @@ export default function HomePage() {
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.COMPANION PRO.map((f) => (
+                {t.pricing.features['COMPANION PRO'].map((f) => (
                   <li key={f} className="flex items-start gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "14px" }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-[#C96A3A]" />
                     {f}
