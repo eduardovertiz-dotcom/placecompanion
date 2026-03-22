@@ -1008,8 +1008,8 @@ export default function HomePage() {
             >
               <p className="font-sans" style={{ fontSize: '15px', color: '#FAF9F5', fontWeight: 500, lineHeight: 1.6 }}>
                 {lang === 'es'
-                  ? 'Una reserva de spa cubre tu semana. A $299/mes — menos de $10/día — una oportunidad de upsell cubre tu mes entero.'
-                  : 'One spa booking covers your week. At $299/mo — less than $10/day — one captured upsell covers your entire month.'}
+                  ? 'Una reserva de spa cubre tu semana. A $349/mes — menos de $10/día — una oportunidad de upsell cubre tu mes entero.'
+                  : 'One spa booking covers your week. At $349/mo — less than $10/day — one captured upsell covers your entire month.'}
               </p>
             </div>
           </div>
@@ -1017,22 +1017,22 @@ export default function HomePage() {
           {/* 3-card row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">
 
-            {/* Boutique */}
+            {/* COMPANION */}
             <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.08)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.boutique}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.COMPANION}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
-                {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For independent hotels up to 40 rooms.'}
+                {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For COMPANION PRO hotels up to 40 rooms.'}
               </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$299</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$349</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
               <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
-                {lang === 'es' ? 'o $239/mes con compromiso anual' : 'or $239/mo with annual commitment'}
+                {lang === 'es' ? 'o $279/mes con compromiso anual' : 'or $279/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.boutique.map((f) => (
+                {t.pricing.features.COMPANION.map((f) => (
                   <li key={f} className="flex items-start gap-3 font-sans text-[#9C9A93]" style={{ fontSize: "14px" }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-white/30" />
                     {f}
@@ -1045,22 +1045,22 @@ export default function HomePage() {
               <p className="font-sans text-[#53525D] text-center mt-2" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
             </div>
 
-            {/* Independent — highlighted */}
+            {/* COMPANION PRO — highlighted */}
             <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.20)", borderTop: "2px solid rgba(232,227,220,0.35)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.independent}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.COMPANION PRO}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
               </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$499</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$599</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
               <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
-                {lang === 'es' ? 'o $399/mes con compromiso anual' : 'or $399/mo with annual commitment'}
+                {lang === 'es' ? 'o $479/mes con compromiso anual' : 'or $479/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.independent.map((f) => (
+                {t.pricing.features.COMPANION PRO.map((f) => (
                   <li key={f} className="flex items-start gap-3 font-sans text-[#FAF9F5]" style={{ fontSize: "14px" }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-[#C96A3A]" />
                     {f}
