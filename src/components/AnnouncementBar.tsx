@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { useLang } from '@/lib/i18n/LanguageContext'
 
 export default function AnnouncementBar() {
   const pathname = usePathname()
+  const { lang } = useLang()
   const [visible, setVisible] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -58,10 +60,17 @@ export default function AnnouncementBar() {
             }}
           />
 
-          {/* Mobile version — short, single line */}
-          <span className="flex md:hidden items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099', whiteSpace: 'nowrap' }}>
-            <span style={{ color: '#FAF9F5', fontWeight: 500 }}>4 of 10 spots left</span>
-            <span>—</span>
+          <span className="flex items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
+            <span className="hidden md:inline">
+              {lang === 'es'
+                ? '5 propiedades. Quedan 3 lugares — tarifas de por vida con 20% de descuento.'
+                : '5 properties. 3 spots remaining — lock in 20% off for life.'}
+            </span>
+            <span className="md:hidden" style={{ whiteSpace: 'nowrap' }}>
+              {lang === 'es'
+                ? 'Quedan 3 lugares — 20% de por vida.'
+                : '3 spots left — 20% off for life.'}
+            </span>
             <button
               onClick={() => {
                 const el = document.getElementById('founding-partners')
@@ -74,28 +83,7 @@ export default function AnnouncementBar() {
               className="font-sans hover:text-[#D4784A] transition-colors"
               style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit', whiteSpace: 'nowrap' }}
             >
-              Lock in 20% off →
-            </button>
-          </span>
-
-          {/* Desktop version — full text */}
-          <span className="hidden md:flex items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
-            Founding Partner spots:
-            <span style={{ color: '#FAF9F5', fontWeight: 500 }}>4 of 10 remaining</span>
-            — lock in 20% off for life
-            <button
-              onClick={() => {
-                const el = document.getElementById('founding-partners')
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                } else {
-                  window.location.href = '/#founding-partners'
-                }
-              }}
-              className="font-sans hover:text-[#D4784A] transition-colors"
-              style={{ fontSize: '13px', color: '#C96A3A', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}
-            >
-              Book your call →
+              {lang === 'es' ? 'Agenda tu llamada →' : 'Book your call →'}
             </button>
           </span>
         </div>

@@ -1023,11 +1023,11 @@ export default function HomePage() {
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For COMPANION PRO hotels up to 40 rooms.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4">
+              <div className="flex items-baseline gap-1 mt-4 mb-1">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$349</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? 'o $279/mes con compromiso anual' : 'or $279/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
@@ -1051,11 +1051,11 @@ export default function HomePage() {
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4">
+              <div className="flex items-baseline gap-1 mt-4 mb-1">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$599</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? 'o $479/mes con compromiso anual' : 'or $479/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
@@ -1079,10 +1079,10 @@ export default function HomePage() {
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para grupos hoteleros.' : 'For portfolio groups.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4">
+              <div className="flex items-baseline gap-1 mt-4 mb-1">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? '2+ propiedades. Precio para tu grupo.' : '2+ properties. Priced for your portfolio.'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
