@@ -1019,7 +1019,7 @@ export default function HomePage() {
 
             {/* COMPANION */}
             <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.08)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.COMPANION}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing['COMPANION']}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For COMPANION PRO hotels up to 40 rooms.'}
               </p>
@@ -1032,7 +1032,7 @@ export default function HomePage() {
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
-                {t.pricing.features.COMPANION.map((f) => (
+                {t.pricing.features['COMPANION'].map((f) => (
                   <li key={f} className="flex items-start gap-3 font-sans text-[#9C9A93]" style={{ fontSize: "14px" }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 bg-white/30" />
                     {f}
