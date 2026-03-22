@@ -1047,7 +1047,7 @@ export default function HomePage() {
 
             {/* COMPANION PRO — highlighted */}
             <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.20)", borderTop: "2px solid rgba(232,227,220,0.35)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.COMPANION PRO}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing['COMPANION PRO']}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
               </p>
