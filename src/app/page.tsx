@@ -392,7 +392,7 @@ export default function HomePage() {
             {t.intelligence.headline}
           </h2>
 
-          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-12 md:mt-16 text-left">
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-2xl mx-auto mt-12 md:mt-16 text-left">
             <div>
               <p className="font-sans text-[13px] font-semibold text-[#FAF9F5] tracking-[0.18em] uppercase mb-5">
                 {t.intelligence.hotelLabel}
@@ -1154,10 +1154,12 @@ export default function HomePage() {
 
       {showBar && (
         <div
-          className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
+          className="fixed bottom-0 left-0 right-0 md:hidden"
           style={{
             background: '#0F0D0B',
             borderTop: '1px solid rgba(232,227,220,0.08)',
+            backdropFilter: 'none',
+            zIndex: 50,
             padding: '12px 16px',
             paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
           }}
@@ -1168,14 +1170,14 @@ export default function HomePage() {
               className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm"
               style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC' }}
             >
-              {lang === 'es' ? 'Ver Demo' : 'View Live Demo'}
+              {lang === 'es' ? 'Ver Demo' : 'See Live Demo'}
             </Link>
             <Link
               href="/onboarding"
               className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm font-medium"
               style={{ background: '#C96A3A', color: '#FAF9F5' }}
             >
-              {lang === 'es' ? 'Crear Asistente' : 'Create Assistant'}
+              {lang === 'es' ? 'Inicia tu Piloto' : 'Start Your Pilot'}
             </Link>
           </div>
         </div>
