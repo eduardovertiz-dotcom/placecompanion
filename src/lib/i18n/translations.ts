@@ -434,7 +434,7 @@ export const translations = {
       signIn: 'Inicia Sesión',
     },
     hero: {
-      headline: 'La IA que conoce tu hotel. Y tu destino.',
+      headline: 'Cada pregunta de tus huéspedes, respondida. Cada oportunidad de ingresos, capturada.',
       subhead: 'Tu equipo atiende lo que importa. El resto se maneja solo.',
       emerald: 'Tu hotel se vuelve buscable por conversación.',
       primaryCta: 'Inicia tu Piloto',
