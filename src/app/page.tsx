@@ -114,6 +114,8 @@ export default function HomePage() {
               borderRadius: '20px',
               padding: '1.5px',
               boxShadow: '0 0 0 1px rgba(232,227,220,0.10), 0 24px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,106,58,0.04)',
+              position: 'relative',
+              isolation: 'isolate',
             }}>
               <div
                 className="flex flex-col h-[420px] md:h-[580px]"
