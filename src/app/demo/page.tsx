@@ -133,7 +133,7 @@ export default function DemoPage() {
           <div className="grid lg:grid-cols-2 gap-6 items-center">
 
             {/* Left */}
-            <div>
+            <div className="pb-4">
               <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-3" style={{ fontSize: "11px" }}>
                 {t.demo.label}
               </p>
@@ -142,18 +142,6 @@ export default function DemoPage() {
               </h1>
               <p className="font-sans font-light text-[#9C9A93] mt-3" style={{ fontSize: "16px", lineHeight: 1.65 }}>
                 {t.demo.description}
-              </p>
-              <p className="font-sans text-[#9C9A93] mt-3 mb-4" style={{ fontSize: "14px" }}>
-                {t.demo.langNote}
-              </p>
-              <Link
-                href="/onboarding"
-                className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-6 rounded-md transition-colors inline-flex items-center"
-              >
-                {t.demo.createCta}
-              </Link>
-              <p className="font-sans mt-3" style={{ fontSize: "14px", color: "#A8A099" }}>
-                {t.demo.trialNote}
               </p>
             </div>
 
@@ -204,6 +192,19 @@ export default function DemoPage() {
               </div>
               <ChatInterface config={demoChatConfig} />
               </div>
+            </div>
+
+            {/* CTA below chat */}
+            <div className="lg:col-span-2 flex flex-col items-center pt-6">
+              <Link
+                href="/onboarding"
+                className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-8 rounded-md transition-colors inline-flex items-center"
+              >
+                {t.demo.createCta}
+              </Link>
+              <p className="font-sans mt-3" style={{ fontSize: "14px", color: "#A8A099" }}>
+                {t.demo.trialNote}
+              </p>
             </div>
 
           </div>
