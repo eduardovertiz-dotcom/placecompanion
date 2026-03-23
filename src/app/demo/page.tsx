@@ -121,7 +121,8 @@ export default function DemoPage() {
           </Link>
           <Link
             href="/onboarding"
-            className="inline-flex items-center font-sans text-[13px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-9 px-4 rounded-md transition-colors"
+            className="inline-flex items-center font-sans text-[13px] font-medium h-9 px-4 rounded-md transition-colors"
+            style={{ background: 'transparent', border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC' }}
           >
             {t.demo.createCta}
           </Link>
