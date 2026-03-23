@@ -109,16 +109,15 @@ export default function HomePage() {
             </div>
 
             {/* Right — demo window */}
-            <div className="hidden md:block" style={{
-              background: 'linear-gradient(135deg, rgba(232,227,220,0.25) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.20) 100%)',
-              borderRadius: '20px',
-              padding: '1.5px',
-              boxShadow: '0 0 0 1px rgba(232,227,220,0.10), 0 24px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,106,58,0.04)',
-            }}>
-              <div
-                className="flex flex-col h-[420px] md:h-[580px]"
-                style={{ borderRadius: '18.5px', overflow: 'hidden', background: '#0F0D0B', boxShadow: 'inset 0 1px 0 rgba(232,227,220,0.08)' }}
-              >
+            <div
+              className="hidden md:flex flex-col h-[420px] md:h-[580px]"
+              style={{
+                borderRadius: '20px',
+                border: '1px solid rgba(232,227,220,0.15)',
+                boxShadow: '0 0 0 1px rgba(232,227,220,0.08), 0 24px 80px rgba(0,0,0,0.6)',
+                overflow: 'hidden',
+              }}
+            >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
@@ -130,7 +129,6 @@ export default function HomePage() {
                   <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">Your 24/7 AI Guest Companion</p>
                 </div>
                 <ChatInterface config={heroChatConfig} />
-              </div>
             </div>
 
           </div>

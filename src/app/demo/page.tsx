@@ -159,10 +159,13 @@ export default function DemoPage() {
 
             {/* Right — demo window */}
             <div
-              className="w-full max-w-[480px] mx-auto rounded-2xl overflow-hidden flex flex-col"
+              className="w-full max-w-[480px] mx-auto flex flex-col"
               style={{
-                border: "1px solid rgba(232,227,220,0.06)",
-                background: "#0F0D0B",
+                borderRadius: '16px',
+                border: '1px solid rgba(232,227,220,0.15)',
+                boxShadow: '0 0 0 1px rgba(232,227,220,0.08), 0 8px 32px rgba(0,0,0,0.4)',
+                overflow: 'hidden',
+                background: '#0F0D0B',
                 minHeight: "420px",
                 height: "calc(100vh - 280px)",
                 maxHeight: "560px",
