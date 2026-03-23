@@ -61,11 +61,9 @@ export default function AnnouncementBar() {
           />
           <span className="flex items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
             <span className="hidden md:inline">
-              {lang === 'es' ? (
-                <>5 propiedades. <span style={{ color: '#FAF9F5', fontWeight: 500 }}>Quedan 3 lugares</span> — tarifas de por vida con 20% de descuento.</>
-              ) : (
-                <>5 properties. <span style={{ color: '#FAF9F5', fontWeight: 500 }}>3 spots remaining</span> — lock in 20% off for life.</>
-              )}
+              {lang === 'es'
+                ? 'Programa de Socios Fundadores — 5 propiedades, quedan 3 lugares. Tarifas de por vida con 20% de descuento.'
+                : 'Founding Partner Program — 5 properties, 3 spots remaining. Lock in 20% off for life.'}
             </span>
             <span className="md:hidden" style={{ whiteSpace: 'nowrap' }}>
               {lang === 'es' ? (

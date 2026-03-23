@@ -109,7 +109,7 @@ export default function DemoPage() {
       </div>
 
       {/* ── DESKTOP: scrollable two-column layout ────────── */}
-      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 py-8">
+      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 pt-4 md:pt-8 pb-4">
 
         {/* Nav */}
         <div
@@ -129,8 +129,8 @@ export default function DemoPage() {
         </div>
 
         {/* Two-column layout */}
-        <div className="w-full max-w-7xl px-4 md:px-8 py-12 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="w-full max-w-7xl px-4 md:px-8 mt-4 md:mt-6">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
 
             {/* Left */}
             <div>
