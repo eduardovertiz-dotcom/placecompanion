@@ -27,7 +27,7 @@ export default function DemoPage() {
   return (
     <>
       {/* ── MOBILE: fixed full-screen layout ─────────────── */}
-      <div className="md:hidden fixed inset-0 flex flex-col bg-[#0F0D0B]">
+      <div className="md:hidden fixed inset-0 flex flex-col bg-[#0F0D0B] px-4 max-w-full overflow-hidden">
 
         {/* Nav */}
         <div
@@ -129,7 +129,7 @@ export default function DemoPage() {
         </div>
 
         {/* Two-column layout */}
-        <div className="w-full max-w-7xl px-4 md:px-8 py-8 md:py-10">
+        <div className="w-full max-w-7xl px-4 md:px-8 py-8 md:py-10 overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-6 items-center">
 
             {/* Left */}
