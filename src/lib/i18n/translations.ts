@@ -14,11 +14,11 @@ export const translations = {
     },
     hero: {
       headline: 'Every guest question answered. Every revenue opportunity captured.',
-      subhead: 'Your front desk handles 200+ guest questions every week. Most have the same 40 answers. Free your team for the moments that actually need a human.',
+      subhead: 'Your team handles what matters. The rest runs itself.',
       emerald: 'Your hotel becomes searchable by conversation.',
       primaryCta: 'Start Your Pilot',
       ghostCta: 'See Live Demo',
-      trust: 'No commitment required · Live in minutes · Multilingual by default',
+      trust: 'No commitment required · Live in 30 minutes',
 
     },
     pain: {
@@ -435,11 +435,11 @@ export const translations = {
     },
     hero: {
       headline: 'La IA que conoce tu hotel. Y tu destino.',
-      subhead: 'Tu recepción atiende más de 200 preguntas de huéspedes cada semana. La mayoría tienen las mismas 40 respuestas. Libera a tu equipo para los momentos que realmente necesitan un humano.',
+      subhead: 'Tu equipo atiende lo que importa. El resto se maneja solo.',
       emerald: 'Tu hotel se vuelve buscable por conversación.',
       primaryCta: 'Inicia tu Piloto',
       ghostCta: 'Ver Demo en Vivo',
-      trust: 'Sin tarjeta de crédito · En minutos · Multilingüe por defecto',
+      trust: 'Sin compromiso · En vivo en 30 minutos',
 
     },
     pain: {
