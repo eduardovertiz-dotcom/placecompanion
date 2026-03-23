@@ -73,12 +73,10 @@ export default function AnnouncementBar() {
                 </>
               )}
             </span>
-            <span className="md:hidden" style={{ whiteSpace: 'nowrap' }}>
-              {lang === 'es' ? (
-                <><span style={{ color: '#FAF9F5', fontWeight: 500 }}>Quedan 3 lugares</span> — 20% de por vida.</>
-              ) : (
-                <><span style={{ color: '#FAF9F5', fontWeight: 500 }}>3 spots left</span> — 20% off for life.</>
-              )}
+            <span className="md:hidden" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '60vw' }}>
+              {lang === 'es'
+                ? '3 lugares — 20% de por vida.'
+                : '3 spots left — 20% off.'}
             </span>
             <button
               onClick={() => {
