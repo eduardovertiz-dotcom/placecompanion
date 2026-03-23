@@ -108,18 +108,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Frame wrapper — background-clip border technique */}
+            {/* Frame wrapper — padding gradient border (works in all browsers) */}
             <div
               className="hidden md:flex flex-col h-[420px] md:h-[580px]"
               style={{
                 borderRadius: '20px',
-                border: '1.5px solid transparent',
-                background: 'linear-gradient(#0F0D0B, #0F0D0B) padding-box, linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%) border-box',
+                padding: '1.5px',
+                background: 'linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%)',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
               }}
             >
-              {/* Inner clip div — separates overflow:hidden from background-clip:border-box to fix Chrome/Opera rendering bug */}
-              <div style={{ flex: '1 1 0', minHeight: 0, overflow: 'hidden', borderRadius: '18.5px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ flex: '1 1 0', minHeight: 0, borderRadius: '18.5px', background: '#0F0D0B', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
