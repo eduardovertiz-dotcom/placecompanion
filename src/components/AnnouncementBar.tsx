@@ -61,14 +61,18 @@ export default function AnnouncementBar() {
           />
           <span className="flex items-center gap-2 font-sans" style={{ fontSize: '13px', color: '#A8A099' }}>
             <span className="hidden md:inline">
-              {lang === 'es'
-                ? '5 propiedades. Quedan 3 lugares — tarifas de por vida con 20% de descuento.'
-                : '5 properties. 3 spots remaining — lock in 20% off for life.'}
+              {lang === 'es' ? (
+                <>5 propiedades. <span style={{ color: '#FAF9F5', fontWeight: 500 }}>Quedan 3 lugares</span> — tarifas de por vida con 20% de descuento.</>
+              ) : (
+                <>5 properties. <span style={{ color: '#FAF9F5', fontWeight: 500 }}>3 spots remaining</span> — lock in 20% off for life.</>
+              )}
             </span>
             <span className="md:hidden" style={{ whiteSpace: 'nowrap' }}>
-              {lang === 'es'
-                ? 'Quedan 3 lugares — 20% de por vida.'
-                : '3 spots left — 20% off for life.'}
+              {lang === 'es' ? (
+                <><span style={{ color: '#FAF9F5', fontWeight: 500 }}>Quedan 3 lugares</span> — 20% de por vida.</>
+              ) : (
+                <><span style={{ color: '#FAF9F5', fontWeight: 500 }}>3 spots left</span> — 20% off for life.</>
+              )}
             </span>
             <button
               onClick={() => {
