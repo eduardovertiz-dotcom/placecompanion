@@ -109,7 +109,7 @@ export default function DemoPage() {
       </div>
 
       {/* ── DESKTOP: scrollable two-column layout ────────── */}
-      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 pt-16 pb-0">
+      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 pt-4 pb-0">
 
         {/* Nav */}
         <div
