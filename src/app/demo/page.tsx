@@ -147,34 +147,20 @@ export default function DemoPage() {
               </p>
             </div>
 
-            {/* Frame wrapper — cross-browser border technique */}
+            {/* Frame wrapper — background-clip border technique */}
             <div
-              className="w-full max-w-[480px] mx-auto"
+              className="w-full max-w-[480px] mx-auto flex flex-col"
               style={{
-                position: 'relative',
                 borderRadius: '20px',
-                padding: '1.5px',
-                background: 'linear-gradient(135deg, rgba(232,227,220,0.30) 0%, rgba(232,227,220,0.06) 50%, rgba(232,227,220,0.25) 100%)',
+                border: '1.5px solid transparent',
+                background: 'linear-gradient(#0F0D0B, #0F0D0B) padding-box, linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%) border-box',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-                transform: 'translateZ(0)',
-                WebkitTransform: 'translateZ(0)',
-                isolation: 'isolate',
+                overflow: 'hidden',
+                minHeight: "420px",
+                height: "calc(100vh - 280px)",
+                maxHeight: "560px",
               }}
             >
-              {/* Inner content */}
-              <div
-                className="flex flex-col"
-                style={{
-                  borderRadius: '18.5px',
-                  overflow: 'hidden',
-                  background: '#0F0D0B',
-                  transform: 'translateZ(0)',
-                  WebkitTransform: 'translateZ(0)',
-                  minHeight: "420px",
-                  height: "calc(100vh - 280px)",
-                  maxHeight: "560px",
-                }}
-              >
               <div
                 className="flex-shrink-0 px-6 py-5"
                 style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
@@ -193,7 +179,6 @@ export default function DemoPage() {
                 </p>
               </div>
               <ChatInterface config={demoChatConfig} />
-              </div>
             </div>
 
           </div>
