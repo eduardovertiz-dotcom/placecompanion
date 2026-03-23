@@ -13,10 +13,13 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, 
 
 export default function HomePage() {
   const { t, lang } = useLang();
+  const [mounted, setMounted] = useState(false)
   const [showBar, setShowBar] = useState(false)
   const [showCalendly, setShowCalendly] = useState(false)
   const [activeConvo, setActiveConvo] = useState<0|1|2|3>(0)
   const [dashVisible, setDashVisible] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     const handleScroll = () => setShowBar(window.scrollY > 400)
@@ -689,7 +692,7 @@ export default function HomePage() {
                         {lang === 'es' ? 'Últimos 30 días' : 'Last 30 days'}
                       </span>
                     </div>
-                    <ResponsiveContainer width="100%" height={100}>
+                    {mounted && <ResponsiveContainer width="100%" height={100}>
                       <LineChart data={teaserDays} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
                         <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} interval={9} />
                         <YAxis tick={{ fontSize: 9, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} />
@@ -708,7 +711,7 @@ export default function HomePage() {
                           style={{ transition: 'stroke-width 1s ease 0.8s' }}
                         />
                       </LineChart>
-                    </ResponsiveContainer>
+                    </ResponsiveContainer>}
                   </div>
 
                   {/* Chart 2 — Bar chart */}
@@ -726,7 +729,7 @@ export default function HomePage() {
                     <p className="font-sans" style={{ fontSize: '11px', color: '#A8A099', marginBottom: '14px' }}>
                       {lang === 'es' ? 'Lo que preguntan los huéspedes' : 'What guests are asking about'}
                     </p>
-                    <ResponsiveContainer width="100%" height={130}>
+                    {mounted && <ResponsiveContainer width="100%" height={130}>
                       <BarChart data={teaserCategories} layout="vertical" margin={{ top: 0, right: 28, left: 0, bottom: 0 }}>
                         <XAxis type="number" hide />
                         <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#6B6560', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} width={90} />
@@ -742,7 +745,7 @@ export default function HomePage() {
                           ))}
                         </Bar>
                       </BarChart>
-                    </ResponsiveContainer>
+                    </ResponsiveContainer>}
                   </div>
                 </div>
 
@@ -856,13 +859,13 @@ export default function HomePage() {
                 <p className="font-sans" style={{ fontSize: '10px', color: '#A8A099', marginBottom: '10px' }}>
                   {lang === 'es' ? 'Actividad de huéspedes — 30 días' : 'Guest activity — 30 days'}
                 </p>
-                <ResponsiveContainer width="100%" height={80}>
+                {mounted && <ResponsiveContainer width="100%" height={80}>
                   <LineChart data={teaserDays} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
                     <XAxis dataKey="date" tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} interval={9} />
                     <YAxis tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} />
                     <Line type="monotone" dataKey="questions" stroke="#C96A3A" strokeWidth={1.5} dot={false} />
                   </LineChart>
-                </ResponsiveContainer>
+                </ResponsiveContainer>}
               </div>
             </div>
 
