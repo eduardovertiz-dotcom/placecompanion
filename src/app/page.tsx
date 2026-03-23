@@ -131,7 +131,6 @@ export default function HomePage() {
                   background: '#0F0D0B',
                   transform: 'translateZ(0)',
                   WebkitTransform: 'translateZ(0)',
-                  WebkitMaskImage: '-webkit-radial-gradient(white, black)',
                 }}
               >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>

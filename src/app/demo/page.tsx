@@ -180,7 +180,6 @@ export default function DemoPage() {
                   background: '#0F0D0B',
                   transform: 'translateZ(0)',
                   WebkitTransform: 'translateZ(0)',
-                  WebkitMaskImage: '-webkit-radial-gradient(white, black)',
                   minHeight: "420px",
                   height: "calc(100vh - 280px)",
                   maxHeight: "560px",
