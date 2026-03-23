@@ -116,9 +116,10 @@ export default function HomePage() {
                 border: '1.5px solid transparent',
                 background: 'linear-gradient(#0F0D0B, #0F0D0B) padding-box, linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%) border-box',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-                overflow: 'hidden',
               }}
             >
+              {/* Inner clip div — separates overflow:hidden from background-clip:border-box to fix Chrome/Opera rendering bug */}
+              <div style={{ flex: '1 1 0', minHeight: 0, overflow: 'hidden', borderRadius: '18.5px', display: 'flex', flexDirection: 'column' }}>
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
@@ -130,6 +131,7 @@ export default function HomePage() {
                   <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">Your 24/7 AI Guest Companion</p>
                 </div>
                 <ChatInterface config={heroChatConfig} />
+              </div>
             </div>
 
           </div>

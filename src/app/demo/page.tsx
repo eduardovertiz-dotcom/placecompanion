@@ -155,30 +155,32 @@ export default function DemoPage() {
                 border: '1.5px solid transparent',
                 background: 'linear-gradient(#0F0D0B, #0F0D0B) padding-box, linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%) border-box',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-                overflow: 'hidden',
                 minHeight: "420px",
                 height: "calc(100vh - 280px)",
                 maxHeight: "560px",
               }}
             >
-              <div
-                className="flex-shrink-0 px-6 py-5"
-                style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="font-sans text-[20px] font-semibold text-[#FAF9F5]">
-                    MarAzul Riviera Maya
-                  </span>
-                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#FAF9F5" }} />
+              {/* Inner clip div — separates overflow:hidden from background-clip:border-box to fix Chrome/Opera rendering bug */}
+              <div style={{ flex: '1 1 0', minHeight: 0, overflow: 'hidden', borderRadius: '18.5px', display: 'flex', flexDirection: 'column' }}>
+                <div
+                  className="flex-shrink-0 px-6 py-5"
+                  style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-sans text-[20px] font-semibold text-[#FAF9F5]">
+                      MarAzul Riviera Maya
+                    </span>
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#FAF9F5" }} />
+                  </div>
+                  <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
+                    {t.demo.collectionLabel}
+                  </p>
+                  <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
+                    {t.demo.aiCompanion}
+                  </p>
                 </div>
-                <p className="font-sans text-[13px] font-normal text-[#9C9A93] mt-1">
-                  {t.demo.collectionLabel}
-                </p>
-                <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">
-                  {t.demo.aiCompanion}
-                </p>
+                <ChatInterface config={demoChatConfig} />
               </div>
-              <ChatInterface config={demoChatConfig} />
             </div>
 
           </div>
