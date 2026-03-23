@@ -108,17 +108,32 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right — demo window */}
+            {/* Frame wrapper — cross-browser border technique */}
             <div
-              className="hidden md:flex flex-col h-[420px] md:h-[580px]"
+              className="hidden md:block"
               style={{
+                position: 'relative',
                 borderRadius: '20px',
-                overflow: 'hidden',
-                outline: '1px solid rgba(232,227,220,0.20)',
-                boxShadow: '0 0 0 1px rgba(232,227,220,0.08), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(232,227,220,0.12)',
-                background: '#0F0D0B',
+                padding: '1.5px',
+                background: 'linear-gradient(135deg, rgba(232,227,220,0.30) 0%, rgba(232,227,220,0.06) 50%, rgba(232,227,220,0.25) 100%)',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+                transform: 'translateZ(0)',
+                WebkitTransform: 'translateZ(0)',
+                isolation: 'isolate',
               }}
             >
+              {/* Inner content */}
+              <div
+                className="flex flex-col h-[420px] md:h-[580px]"
+                style={{
+                  borderRadius: '18.5px',
+                  overflow: 'hidden',
+                  background: '#0F0D0B',
+                  transform: 'translateZ(0)',
+                  WebkitTransform: 'translateZ(0)',
+                  WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+                }}
+              >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
@@ -130,6 +145,7 @@ export default function HomePage() {
                   <p className="font-sans text-[15px] font-light text-[#9C9A93] mt-1">Your 24/7 AI Guest Companion</p>
                 </div>
                 <ChatInterface config={heroChatConfig} />
+              </div>
             </div>
 
           </div>
