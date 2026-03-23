@@ -158,21 +158,14 @@ export default function DemoPage() {
             </div>
 
             {/* Right — demo window */}
-            <div className="w-full max-w-[480px] mx-auto" style={{
-              background: 'linear-gradient(135deg, rgba(232,227,220,0.25) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.20) 100%)',
-              borderRadius: '20px',
-              padding: '1.5px',
-              boxShadow: '0 0 0 1px rgba(232,227,220,0.10), 0 24px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,106,58,0.04)',
-              position: 'relative',
-              isolation: 'isolate',
-            }}>
             <div
-              className="flex flex-col"
+              className="w-full max-w-[480px] mx-auto flex flex-col"
               style={{
-                borderRadius: '18.5px',
+                borderRadius: '20px',
                 overflow: 'hidden',
+                outline: '1px solid rgba(232,227,220,0.20)',
+                boxShadow: '0 0 0 1px rgba(232,227,220,0.08), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(232,227,220,0.12)',
                 background: '#0F0D0B',
-                boxShadow: 'inset 0 1px 0 rgba(232,227,220,0.08)',
                 minHeight: "420px",
                 height: "calc(100vh - 280px)",
                 maxHeight: "560px",
@@ -196,7 +189,6 @@ export default function DemoPage() {
                 </p>
               </div>
               <ChatInterface config={demoChatConfig} />
-            </div>
             </div>
 
           </div>
