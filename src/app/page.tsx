@@ -108,17 +108,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Frame wrapper — padding gradient border (works in all browsers) */}
+            {/* Frame wrapper — absolute-inset gradient border */}
             <div
-              className="hidden md:flex flex-col h-[420px] md:h-[580px]"
+              className="hidden md:block h-[420px] md:h-[580px]"
               style={{
+                position: 'relative',
                 borderRadius: '20px',
-                padding: '1.5px',
                 background: 'linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%)',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
               }}
             >
-              <div style={{ flex: '1 1 0', minHeight: 0, borderRadius: '18.5px', background: '#0F0D0B', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ position: 'absolute', top: '1.5px', right: '1.5px', bottom: '1.5px', left: '1.5px', borderRadius: '18.5px', background: '#0F0D0B', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
