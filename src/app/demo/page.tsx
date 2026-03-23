@@ -109,11 +109,11 @@ export default function DemoPage() {
       </div>
 
       {/* ── DESKTOP: scrollable two-column layout ────────── */}
-      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 pt-4 md:pt-8 pb-4">
+      <div className="hidden md:flex flex-col min-h-screen bg-[#0F0D0B] items-center px-4 pt-16 pb-0">
 
         {/* Nav */}
         <div
-          className="w-full px-4 md:px-8 py-5 flex justify-between items-center"
+          className="w-full px-4 md:px-8 py-3 flex justify-between items-center"
           style={{ borderBottom: "1px solid rgba(250,249,245,0.06)" }}
         >
           <Link href="/" className="font-serif text-xl text-[#FAF9F5]">
@@ -129,21 +129,21 @@ export default function DemoPage() {
         </div>
 
         {/* Two-column layout */}
-        <div className="w-full max-w-7xl px-4 md:px-8 mt-4 md:mt-6">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="w-full max-w-7xl px-4 md:px-8 py-8 md:py-10">
+          <div className="grid lg:grid-cols-2 gap-6 items-center">
 
             {/* Left */}
             <div>
-              <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-6" style={{ fontSize: "11px" }}>
+              <p className="font-sans uppercase tracking-widest text-[#9C9A93] mb-3" style={{ fontSize: "11px" }}>
                 {t.demo.label}
               </p>
-              <h1 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "56px", lineHeight: 1.05 }}>
+              <h1 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "44px", lineHeight: 1.05 }}>
                 {t.demo.headline}
               </h1>
-              <p className="font-sans font-light text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+              <p className="font-sans font-light text-[#9C9A93] mt-3" style={{ fontSize: "16px", lineHeight: 1.65 }}>
                 {t.demo.description}
               </p>
-              <p className="font-sans text-[#9C9A93] mt-6 mb-6" style={{ fontSize: "16px" }}>
+              <p className="font-sans text-[#9C9A93] mt-3 mb-4" style={{ fontSize: "14px" }}>
                 {t.demo.langNote}
               </p>
               <Link
@@ -163,7 +163,9 @@ export default function DemoPage() {
               style={{
                 border: "1px solid rgba(232,227,220,0.06)",
                 background: "#0F0D0B",
-                minHeight: "560px",
+                minHeight: "420px",
+                height: "calc(100vh - 280px)",
+                maxHeight: "560px",
               }}
             >
               <div
