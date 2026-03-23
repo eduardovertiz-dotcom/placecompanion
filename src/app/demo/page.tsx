@@ -122,7 +122,9 @@ export default function DemoPage() {
           <Link
             href="/onboarding"
             className="inline-flex items-center font-sans text-[13px] font-medium h-9 px-4 rounded-md transition-colors"
-            style={{ background: 'transparent', border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC' }}
+            style={{ background: '#C96A3A', color: '#FAF9F5' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#D4784A' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#C96A3A' }}
           >
             {t.demo.createCta}
           </Link>
@@ -192,19 +194,6 @@ export default function DemoPage() {
               </div>
               <ChatInterface config={demoChatConfig} />
               </div>
-            </div>
-
-            {/* CTA below chat */}
-            <div className="lg:col-span-2 flex flex-col items-center pt-6">
-              <Link
-                href="/onboarding"
-                className="font-sans text-[14px] font-medium text-[#FAF9F5] bg-[#C96A3A] hover:bg-[#D4784A] h-11 px-8 rounded-md transition-colors inline-flex items-center"
-              >
-                {t.demo.createCta}
-              </Link>
-              <p className="font-sans mt-3" style={{ fontSize: "14px", color: "#A8A099" }}>
-                {t.demo.trialNote}
-              </p>
             </div>
 
           </div>
