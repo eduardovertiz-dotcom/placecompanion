@@ -460,78 +460,73 @@ export default function HomePage() {
             {t.howItWorks.headline}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 md:mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_48px_1fr_48px_1fr] items-start max-w-5xl mx-auto mt-12 md:mt-16 gap-4 md:gap-0">
 
             {/* Step 1 */}
-            <div
-              style={{
-                background: '#1A1715',
-                border: '1px solid rgba(232,227,220,0.06)',
-                borderRadius: '16px',
-                padding: '32px 28px',
-                transition: 'border-color 0.2s',
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
-            >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="11" cy="11" r="8" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <ellipse cx="11" cy="11" rx="3.5" ry="8" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <line x1="3" y1="11" x2="19" y2="11" stroke="#C96A3A" strokeWidth="1.25"/>
+            <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '36px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+              <p style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif)', fontSize: 'clamp(5rem, 10vw, 8rem)', fontWeight: 300, color: 'rgba(232,227,220,0.06)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', zIndex: 0 }}>01</p>
+              <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', position: 'relative', zIndex: 1 }}>
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                  <circle cx="13" cy="13" r="9" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <ellipse cx="13" cy="13" rx="4" ry="9" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <line x1="4" y1="13" x2="22" y2="13" stroke="#C96A3A" strokeWidth="1.25"/>
                 </svg>
               </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>01</p>
-              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step1Title}</p>
-              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step1Desc}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px', position: 'relative', zIndex: 1 }}>01</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 500, color: '#FAF9F5', marginBottom: '10px', lineHeight: 1.3, position: 'relative', zIndex: 1 }}>{t.howItWorks.step1Title}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 300, color: '#9C9A93', lineHeight: 1.7, position: 'relative', zIndex: 1 }}>{t.howItWorks.step1Desc}</p>
+            </div>
+
+            {/* Connector 1→2 */}
+            <div className="hidden md:flex items-center justify-center" style={{ paddingTop: '60px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ width: '24px', height: '1px', background: 'rgba(232,227,220,0.15)' }} />
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <path d="M1 4H7M7 4L4 1M7 4L4 7" stroke="rgba(232,227,220,0.25)" strokeWidth="1" strokeLinecap="round"/>
+                </svg>
+                <div style={{ width: '24px', height: '1px', background: 'rgba(232,227,220,0.15)' }} />
+              </div>
             </div>
 
             {/* Step 2 */}
-            <div
-              style={{
-                background: '#1A1715',
-                border: '1px solid rgba(232,227,220,0.06)',
-                borderRadius: '16px',
-                padding: '32px 28px',
-                transition: 'border-color 0.2s',
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
-            >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <path d="M11 3a8 8 0 016 13.3V19l-2.5-1.5A8 8 0 1111 3z" stroke="#C96A3A" strokeWidth="1.25" strokeLinejoin="round"/>
-                  <path d="M8 10h.01M11 10h.01M14 10h.01" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round"/>
+            <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '36px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+              <p style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif)', fontSize: 'clamp(5rem, 10vw, 8rem)', fontWeight: 300, color: 'rgba(232,227,220,0.06)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', zIndex: 0 }}>02</p>
+              <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', position: 'relative', zIndex: 1 }}>
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                  <path d="M13 3a10 10 0 017.5 16.6V22l-3-1.8A10 10 0 1113 3z" stroke="#C96A3A" strokeWidth="1.25" strokeLinejoin="round"/>
+                  <path d="M9.5 12h.01M13 12h.01M16.5 12h.01" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>02</p>
-              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step2Title}</p>
-              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step2Desc}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px', position: 'relative', zIndex: 1 }}>02</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 500, color: '#FAF9F5', marginBottom: '10px', lineHeight: 1.3, position: 'relative', zIndex: 1 }}>{t.howItWorks.step2Title}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 300, color: '#9C9A93', lineHeight: 1.7, position: 'relative', zIndex: 1 }}>{t.howItWorks.step2Desc}</p>
+            </div>
+
+            {/* Connector 2→3 */}
+            <div className="hidden md:flex items-center justify-center" style={{ paddingTop: '60px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ width: '24px', height: '1px', background: 'rgba(232,227,220,0.15)' }} />
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <path d="M1 4H7M7 4L4 1M7 4L4 7" stroke="rgba(232,227,220,0.25)" strokeWidth="1" strokeLinecap="round"/>
+                </svg>
+                <div style={{ width: '24px', height: '1px', background: 'rgba(232,227,220,0.15)' }} />
+              </div>
             </div>
 
             {/* Step 3 */}
-            <div
-              style={{
-                background: '#1A1715',
-                border: '1px solid rgba(232,227,220,0.06)',
-                borderRadius: '16px',
-                padding: '32px 28px',
-                transition: 'border-color 0.2s',
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
-            >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <rect x="4" y="2" width="14" height="18" rx="2" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <path d="M7 6h8M7 10h8M7 14h5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round"/>
-                  <circle cx="16" cy="16" r="4" fill="#1F1C19" stroke="#2D9E6B" strokeWidth="1.25"/>
-                  <path d="M14.5 16l1 1 2-2" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+            <div style={{ background: '#1A1715', border: '1px solid rgba(232,227,220,0.06)', borderRadius: '16px', padding: '36px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+              <p style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif)', fontSize: 'clamp(5rem, 10vw, 8rem)', fontWeight: 300, color: 'rgba(232,227,220,0.06)', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', zIndex: 0 }}>03</p>
+              <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', position: 'relative', zIndex: 1 }}>
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                  <rect x="5" y="3" width="16" height="20" rx="2" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <path d="M8 8h10M8 12h10M8 16h6" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round"/>
+                  <circle cx="19" cy="19" r="4.5" fill="#1F1C19" stroke="#2D9E6B" strokeWidth="1.25"/>
+                  <path d="M17.5 19l1 1 2.5-2.5" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>03</p>
-              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step3Title}</p>
-              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step3Desc}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px', position: 'relative', zIndex: 1 }}>03</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', fontWeight: 500, color: '#FAF9F5', marginBottom: '10px', lineHeight: 1.3, position: 'relative', zIndex: 1 }}>{t.howItWorks.step3Title}</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 300, color: '#9C9A93', lineHeight: 1.7, position: 'relative', zIndex: 1 }}>{t.howItWorks.step3Desc}</p>
             </div>
 
           </div>
