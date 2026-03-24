@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
 
 export interface ChatConfig {
   hotelName: string;
@@ -55,6 +56,39 @@ function applyInline(text: string): string {
     );
 }
 
+function SunIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+  )
+}
+
+function MoonIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  )
+}
+
+function ContrastIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 2a10 10 0 0 1 0 20V2z" fill="currentColor" stroke="none"/>
+    </svg>
+  )
+}
+
 export function ChatInterface({ config }: { config: ChatConfig }) {
   const greeting = config.greeting ?? `Welcome to ${config.hotelName}. I'm ${config.assistantName}, your AI Guest Companion. How can I help you today?`;
 
@@ -64,6 +98,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const { skin, cycle } = useTheme();
 
   useEffect(() => {
     const el = messagesRef.current;
@@ -157,7 +192,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
     isLoading && lastMsg?.role === "assistant" && lastMsg?.text === "";
 
   return (
-    <div className="flex flex-col flex-1 min-h-0" style={{ background: "#0F0D0B" }}>
+    <div className="flex flex-col flex-1 min-h-0" style={{ background: "var(--pc-bg-secondary)", position: 'relative' }}>
       <div
         ref={messagesRef}
         className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 px-5 py-5 flex flex-col gap-3"
@@ -175,7 +210,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     fontSize: "15px",
                     lineHeight: 1.6,
                     color: "#E8E3DC",
-                    background: "#1A1715",
+                    background: "var(--pc-bg-elevated)",
                     borderRadius: "16px",
                     marginRight: "auto",
                   }}
@@ -197,7 +232,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
                     fontSize: "15px",
                     lineHeight: 1.6,
                     color: m.role === "user" ? "#FFFFFF" : "#E8E3DC",
-                    background: m.role === "user" ? "#1F1C19" : "#1A1715",
+                    background: m.role === "user" ? "var(--pc-bg-input)" : "var(--pc-bg-elevated)",
                     borderRadius: "16px",
                     marginLeft: m.role === "user" ? "auto" : undefined,
                     marginRight: m.role === "assistant" ? "auto" : undefined,
@@ -214,7 +249,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
             <div
               style={{
                 padding: "12px 16px",
-                background: "#1A1715",
+                background: "var(--pc-bg-elevated)",
                 borderRadius: "16px",
               }}
             >
@@ -234,7 +269,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
               onClick={() => sendMessage(s)}
               className={`font-sans transition-all duration-200${config.mobileChipsLimit !== undefined && chipIdx >= config.mobileChipsLimit ? ' hidden sm:inline-flex' : ''}`}
               style={{
-                background: "#1F1C19",
+                background: "var(--pc-bg-input)",
                 border: "1px solid rgba(232,227,220,0.08)",
                 borderRadius: "9999px",
                 padding: "8px 16px",
@@ -271,6 +306,31 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           borderTop: "1px solid rgba(232,227,220,0.08)",
         }}
       >
+        <button
+          type="button"
+          onClick={cycle}
+          aria-label={`Switch theme. Current: ${skin}`}
+          style={{
+            width: '36px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: skin === 'dark' ? '#6B6560' : '#9A9490',
+            borderRadius: '50%',
+            padding: '0',
+            flexShrink: 0,
+            opacity: 0.5,
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
+        >
+          {skin === 'dark' ? <MoonIcon /> : skin === 'light' ? <SunIcon /> : <ContrastIcon />}
+        </button>
         <input
           type="text"
           value={input}
@@ -279,7 +339,7 @@ export function ChatInterface({ config }: { config: ChatConfig }) {
           disabled={isLoading}
           className="flex-1 min-w-0 font-sans outline-none placeholder-[#6B6560]"
           style={{
-            background: "#080706",
+            background: "var(--pc-bg-primary)",
             border: "1px solid rgba(232,227,220,0.15)",
             borderRadius: "12px",
             padding: "12px 16px",

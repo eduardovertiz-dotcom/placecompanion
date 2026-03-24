@@ -31,6 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      </head>
       <body className={`${cormorantGaramond.variable} ${dmSans.variable} font-sans antialiased`}>
         <LanguageProvider>
           <AnnouncementBar />

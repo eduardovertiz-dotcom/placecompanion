@@ -13,13 +13,10 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, 
 
 export default function HomePage() {
   const { t, lang } = useLang();
-  const [mounted, setMounted] = useState(false)
   const [showBar, setShowBar] = useState(false)
   const [showCalendly, setShowCalendly] = useState(false)
   const [activeConvo, setActiveConvo] = useState<0|1|2|3>(0)
   const [dashVisible, setDashVisible] = useState(false)
-
-  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     const handleScroll = () => setShowBar(window.scrollY > 400)
@@ -111,17 +108,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Frame wrapper — absolute-inset gradient border */}
-            <div
-              className="hidden md:block h-[420px] md:h-[580px]"
-              style={{
-                position: 'relative',
-                borderRadius: '20px',
-                background: 'linear-gradient(135deg, rgba(232,227,220,0.35) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.28) 100%)',
-                boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-              }}
-            >
-              <div style={{ position: 'absolute', top: '1.5px', right: '1.5px', bottom: '1.5px', left: '1.5px', borderRadius: '18.5px', background: '#0F0D0B', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {/* Right — demo window */}
+            <div className="hidden md:block" style={{
+              background: 'linear-gradient(135deg, rgba(232,227,220,0.25) 0%, rgba(232,227,220,0.08) 50%, rgba(232,227,220,0.20) 100%)',
+              borderRadius: '20px',
+              padding: '1.5px',
+              boxShadow: '0 0 0 1px rgba(232,227,220,0.10), 0 24px 80px rgba(0,0,0,0.6), 0 0 60px rgba(201,106,58,0.04)',
+            }}>
+              <div
+                className="flex flex-col h-[420px] md:h-[580px]"
+                style={{ borderRadius: '18.5px', overflow: 'hidden', background: '#0F0D0B', boxShadow: 'inset 0 1px 0 rgba(232,227,220,0.08)' }}
+              >
                 <div className="flex-shrink-0 px-6 py-5" style={{ borderBottom: "1px solid rgba(250,249,245,0.08)" }}>
                   <div className="flex justify-between items-center">
                     <span className="font-sans text-[18px] md:text-[20px] font-semibold text-[#FAF9F5]">
@@ -392,7 +389,7 @@ export default function HomePage() {
             {t.intelligence.headline}
           </h2>
 
-          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-2xl mx-auto mt-12 md:mt-16 text-left">
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-0 max-w-3xl mx-auto mt-12 md:mt-16 text-left">
             <div>
               <p className="font-sans text-[13px] font-semibold text-[#FAF9F5] tracking-[0.18em] uppercase mb-5">
                 {t.intelligence.hotelLabel}
@@ -449,21 +446,80 @@ export default function HomePage() {
             {t.howItWorks.headline}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-5xl mx-auto mt-16">
-            {howItWorksSteps.map((step, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <p style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(4.5rem, 9vw, 7.5rem)', fontWeight: 300, color: 'rgba(232,227,220,0.15)', lineHeight: 1, marginBottom: '16px', letterSpacing: '-0.02em' }}>
-                  {step.num}
-                </p>
-                <div style={{ width: '32px', height: '1px', background: 'rgba(232,227,220,0.15)', margin: '0 auto 20px' }} />
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '19px', fontWeight: 500, color: '#FAF9F5', lineHeight: 1.3, marginBottom: '12px' }}>
-                  {step.title}
-                </p>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '15px', fontWeight: 300, color: '#9C9A93', lineHeight: 1.75 }}>
-                  {step.desc}
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 md:mt-16">
+
+            {/* Step 1 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="8" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <ellipse cx="11" cy="11" rx="3.5" ry="8" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <line x1="3" y1="11" x2="19" y2="11" stroke="#C96A3A" strokeWidth="1.25"/>
+                </svg>
               </div>
-            ))}
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>01</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step1Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step1Desc}</p>
+            </div>
+
+            {/* Step 2 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M11 3a8 8 0 016 13.3V19l-2.5-1.5A8 8 0 1111 3z" stroke="#C96A3A" strokeWidth="1.25" strokeLinejoin="round"/>
+                  <path d="M8 10h.01M11 10h.01M14 10h.01" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>02</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step2Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step2Desc}</p>
+            </div>
+
+            {/* Step 3 */}
+            <div
+              style={{
+                background: '#1A1715',
+                border: '1px solid rgba(232,227,220,0.06)',
+                borderRadius: '16px',
+                padding: '32px 28px',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
+            >
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <rect x="4" y="2" width="14" height="18" rx="2" stroke="#C96A3A" strokeWidth="1.25"/>
+                  <path d="M7 6h8M7 10h8M7 14h5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round"/>
+                  <circle cx="16" cy="16" r="4" fill="#1F1C19" stroke="#2D9E6B" strokeWidth="1.25"/>
+                  <path d="M14.5 16l1 1 2-2" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>03</p>
+              <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step3Title}</p>
+              <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step3Desc}</p>
+            </div>
+
           </div>
         </div>
       </section>
@@ -692,7 +748,7 @@ export default function HomePage() {
                         {lang === 'es' ? 'Últimos 30 días' : 'Last 30 days'}
                       </span>
                     </div>
-                    {mounted && <ResponsiveContainer width="100%" height={100}>
+                    <ResponsiveContainer width="100%" height={100}>
                       <LineChart data={teaserDays} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
                         <XAxis dataKey="date" tick={{ fontSize: 9, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} interval={9} />
                         <YAxis tick={{ fontSize: 9, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} />
@@ -711,7 +767,7 @@ export default function HomePage() {
                           style={{ transition: 'stroke-width 1s ease 0.8s' }}
                         />
                       </LineChart>
-                    </ResponsiveContainer>}
+                    </ResponsiveContainer>
                   </div>
 
                   {/* Chart 2 — Bar chart */}
@@ -729,7 +785,7 @@ export default function HomePage() {
                     <p className="font-sans" style={{ fontSize: '11px', color: '#A8A099', marginBottom: '14px' }}>
                       {lang === 'es' ? 'Lo que preguntan los huéspedes' : 'What guests are asking about'}
                     </p>
-                    {mounted && <ResponsiveContainer width="100%" height={130}>
+                    <ResponsiveContainer width="100%" height={130}>
                       <BarChart data={teaserCategories} layout="vertical" margin={{ top: 0, right: 28, left: 0, bottom: 0 }}>
                         <XAxis type="number" hide />
                         <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#6B6560', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} width={90} />
@@ -745,7 +801,7 @@ export default function HomePage() {
                           ))}
                         </Bar>
                       </BarChart>
-                    </ResponsiveContainer>}
+                    </ResponsiveContainer>
                   </div>
                 </div>
 
@@ -859,13 +915,13 @@ export default function HomePage() {
                 <p className="font-sans" style={{ fontSize: '10px', color: '#A8A099', marginBottom: '10px' }}>
                   {lang === 'es' ? 'Actividad de huéspedes — 30 días' : 'Guest activity — 30 days'}
                 </p>
-                {mounted && <ResponsiveContainer width="100%" height={80}>
+                <ResponsiveContainer width="100%" height={80}>
                   <LineChart data={teaserDays} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
                     <XAxis dataKey="date" tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} interval={9} />
                     <YAxis tick={{ fontSize: 8, fill: '#4A4540', fontFamily: 'var(--font-sans)' }} tickLine={false} axisLine={false} />
                     <Line type="monotone" dataKey="questions" stroke="#C96A3A" strokeWidth={1.5} dot={false} />
                   </LineChart>
-                </ResponsiveContainer>}
+                </ResponsiveContainer>
               </div>
             </div>
 
@@ -967,11 +1023,11 @@ export default function HomePage() {
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For COMPANION PRO hotels up to 40 rooms.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4 mb-2">
+              <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$349</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? 'o $279/mes con compromiso anual' : 'or $279/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
@@ -991,15 +1047,15 @@ export default function HomePage() {
 
             {/* COMPANION PRO — highlighted */}
             <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.20)", borderTop: "2px solid rgba(232,227,220,0.35)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.independent}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing['COMPANION PRO']}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4 mb-2">
+              <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$599</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? 'o $479/mes con compromiso anual' : 'or $479/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
@@ -1023,10 +1079,10 @@ export default function HomePage() {
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
                 {lang === 'es' ? 'Para grupos hoteleros.' : 'For portfolio groups.'}
               </p>
-              <div className="flex items-baseline gap-1 mt-4 mb-2">
+              <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
               </div>
-              <p className="font-sans text-[#6B6560] mt-3" style={{ fontSize: '12px' }}>
+              <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
                 {lang === 'es' ? '2+ propiedades. Precio para tu grupo.' : '2+ properties. Priced for your portfolio.'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
@@ -1154,12 +1210,10 @@ export default function HomePage() {
 
       {showBar && (
         <div
-          className="fixed bottom-0 left-0 right-0 md:hidden"
+          className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
           style={{
             background: '#0F0D0B',
             borderTop: '1px solid rgba(232,227,220,0.08)',
-            backdropFilter: 'none',
-            zIndex: 50,
             padding: '12px 16px',
             paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
           }}
@@ -1170,14 +1224,14 @@ export default function HomePage() {
               className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm"
               style={{ border: '1px solid rgba(232,227,220,0.25)', color: '#E8E3DC' }}
             >
-              {lang === 'es' ? 'Ver Demo' : 'See Live Demo'}
+              {lang === 'es' ? 'Ver Demo' : 'View Live Demo'}
             </Link>
             <Link
               href="/onboarding"
               className="flex-1 flex items-center justify-center rounded-md h-11 font-sans text-sm font-medium"
               style={{ background: '#C96A3A', color: '#FAF9F5' }}
             >
-              {lang === 'es' ? 'Inicia tu Piloto' : 'Start Your Pilot'}
+              {lang === 'es' ? 'Crear Asistente' : 'Create Assistant'}
             </Link>
           </div>
         </div>
