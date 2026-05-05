@@ -1008,8 +1008,8 @@ export default function HomePage() {
             >
               <p className="font-sans" style={{ fontSize: '15px', color: '#FAF9F5', fontWeight: 500, lineHeight: 1.6 }}>
                 {lang === 'es'
-                  ? 'Una reserva de spa cubre tu semana. A $349/mes — menos de $10/día — una oportunidad de upsell cubre tu mes entero.'
-                  : 'One spa booking covers your week. At $349/mo — less than $10/day — one captured upsell covers your entire month.'}
+                  ? 'Una reserva de spa cubre tu semana. A $199/mes — menos de $7/día — una oportunidad de upsell cubre tu mes entero.'
+                  : 'One spa booking covers your week. At $199/mo — less than $7/day — one captured upsell covers your entire month.'}
               </p>
             </div>
           </div>
@@ -1021,14 +1021,14 @@ export default function HomePage() {
             <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.08)" }}>
               <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.boutique}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
-                {lang === 'es' ? 'Para hoteles independientes de hasta 40 habitaciones.' : 'For COMPANION PRO hotels up to 40 rooms.'}
+                {lang === 'es' ? 'Para propiedades boutique de hasta 30 habitaciones.' : 'For intimate boutique properties up to 30 rooms.'}
               </p>
               <div className="flex items-baseline gap-1 mt-4">
-                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$349</span>
+                <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$199</span>
                 <span className="font-sans text-[#9C9A93]" style={{ fontSize: "20px" }}>{t.pricing.perMonth}</span>
               </div>
               <p className="font-sans text-[#6B6560] mt-1" style={{ fontSize: '12px' }}>
-                {lang === 'es' ? 'o $279/mes con compromiso anual' : 'or $279/mo with annual commitment'}
+                {lang === 'es' ? 'o $159/mes con compromiso anual' : 'or $159/mo with annual commitment'}
               </p>
               <div className="my-5" style={{ borderTop: "1px solid rgba(250,249,245,0.08)" }} />
               <ul className="flex-1 space-y-3">
@@ -1045,11 +1045,11 @@ export default function HomePage() {
               <p className="font-sans text-[#53525D] text-center mt-2" style={{ fontSize: "12px" }}>{t.pricing.trial}</p>
             </div>
 
-            {/* COMPANION PRO — highlighted */}
+            {/* INDEPENDENT — highlighted */}
             <div className="rounded-2xl p-8 flex flex-col text-left relative" style={{ background: "#0F0D0B", border: "1px solid rgba(232,227,220,0.20)", borderTop: "2px solid rgba(232,227,220,0.35)" }}>
-              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing['COMPANION PRO']}</p>
+              <p className="font-sans text-[11px] font-semibold tracking-widest text-[#FAF9F5]/70 uppercase">{t.pricing.independent}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
-                {lang === 'es' ? 'Para hoteles de 41 a 200 habitaciones.' : 'For hotels from 41 to 200 rooms.'}
+                {lang === 'es' ? 'Para hoteles independientes, 31–100 habitaciones.' : 'For established independent hotels, 31–100 rooms.'}
               </p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>$599</span>
@@ -1077,7 +1077,7 @@ export default function HomePage() {
             <div className="rounded-2xl p-8 flex flex-col text-left" style={{ background: "#141210", border: "1px solid rgba(232,227,220,0.12)" }}>
               <p className="font-sans text-[11px] font-semibold tracking-widest text-[#9C9A93] uppercase">{t.pricing.portfolio}</p>
               <p className="font-sans text-[#9C9A93] mt-1" style={{ fontSize: '13px' }}>
-                {lang === 'es' ? 'Para grupos hoteleros.' : 'For portfolio groups.'}
+                {lang === 'es' ? '3+ propiedades. Tarifas grupales del 15–35% de descuento.' : '3+ properties. Group rates from 15–35% off per property.'}
               </p>
               <div className="flex items-baseline gap-1 mt-4">
                 <span className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1 }}>{t.pricing.portfolioPrice}</span>
@@ -1122,8 +1122,8 @@ export default function HomePage() {
               </p>
               <p className="font-sans" style={{ fontSize: '13px', color: '#6B6560' }}>
                 {lang === 'es'
-                  ? '4+ propiedades o 200+ habitaciones. Construimos alrededor de tu escala, tu estructura y tu marca.'
-                  : '4+ properties or 200+ rooms. We build around your scale, your structure, and your brand.'}
+                  ? '2+ propiedades reciben tarifas grupales del 15–35% de descuento. Un panel. Una relación.'
+                  : '2+ properties receive group rates from 15–35% off per property. One dashboard. One relationship.'}
               </p>
             </div>
             <button onClick={() => setShowCalendly(true)} className="font-sans text-sm"

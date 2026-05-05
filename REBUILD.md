@@ -52,8 +52,8 @@ Place Companion is an AI guest companion platform for independent boutique hotel
 - No @anthropic-ai/sdk — use @ai-sdk/anthropic
 - No green on send buttons — always orange #C96A3A
 - No "RECOMMENDED" badge on pricing cards
-- No "free trial" language — always "pilot"
-- No "Try It Free" — always "Start Your Pilot"
+- Pricing card CTA uses "free trial" language. Hero and nav CTAs remain "pilot" language.
+- Pricing card button: "Start Free Trial" / "Prueba Gratis 14 Días". Hero, nav, and onboarding buttons: "Start Your Pilot"
 - No "Trusted by X hotels" until true
 - No PMS/Cloudbeds/Mews language anywhere
 - No team section
@@ -62,8 +62,8 @@ Place Companion is an AI guest companion platform for independent boutique hotel
 ## PRICING (LIVE IN STRIPE)
 | Plan | Monthly | Annual | Stripe Monthly ID | Stripe Annual ID |
 |------|---------|--------|-------------------|------------------|
-| Companion | $349/mo | $3,348/yr | price_1TDoo6BgMSWbEFIIRTiYpX3C | price_1TDrWsBgMSWbEFIIvUeyIEsM |
-| Companion Pro | $599/mo | $5,748/yr | price_1TDoyDBgMSWbEFIImxwyxJvL | price_1TDrXwBgMSWbEFIIOk74Tmc4 |
+| Boutique | $199/mo | $2,388/yr | price_1TDoo6BgMSWbEFIIRTiYpX3C | price_1TDrWsBgMSWbEFIIvUeyIEsM |
+| Independent | $599/mo | $5,748/yr | price_1TDoyDBgMSWbEFIImxwyxJvL | price_1TDrXwBgMSWbEFIIOk74Tmc4 |
 | Portfolio | Custom | Custom | price_1TDqW5BgMSWbEFIImsrlKac2 | — |
 
 - Coupon: FOUNDING20 — 20% off forever — max 5 redemptions
@@ -154,12 +154,15 @@ Place Companion is an AI guest companion platform for independent boutique hotel
 - Trust line ES: "Sin compromiso · En vivo en 30 minutos"
 
 ## CTA LANGUAGE — CONSISTENT EVERYWHERE
-- Primary CTA: "Start Your Pilot" / "Inicia tu Piloto"
+- Primary CTA (hero/nav/onboarding): "Start Your Pilot" / "Inicia tu Piloto"
+  Pricing card CTA: "Start Free Trial" / "Prueba Gratis 14 Días"
 - Nav ghost: "See Live Demo" / "Ver Demo en Vivo"
 - Founding partners: "Apply for a Founding Partner Spot →"
-- Pricing cards: "Start Your Pilot" / "Inicia tu Piloto"
-- Pilot language: "14-day pilot · No commitment required"
-- NEVER: "Try It Free", "free trial", "no credit card required", "Create Assistant"
+- Pricing cards: "Start Free Trial" / "Prueba Gratis 14 Días"
+- Pricing cards: "14-day free trial · No commitment required"
+  All other contexts: "14-day pilot · No commitment required"
+- NEVER in hero/nav: "Try It Free", "no credit card required", "Create Assistant"
+  Free trial language permitted in pricing cards only.
 
 ## FOUNDING PARTNERS SECTION
 - 5 properties, 3 spots remaining
