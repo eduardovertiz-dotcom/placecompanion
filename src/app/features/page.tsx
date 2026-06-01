@@ -88,6 +88,26 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      {/* ── INTERACTION INTELLIGENCE ─────────────────────── */}
+      <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#141413" }}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
+            {t.features.interactionHeadline}
+          </h2>
+          <p className="font-sans font-light text-[#9C9A93] max-w-2xl mx-auto mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+            {t.features.interactionBody}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mt-14 text-left">
+            {t.features.interactionCards.map((card) => (
+              <div key={card.title} className="rounded-xl p-7" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                <p className="font-sans font-normal text-[#FAF9F5]" style={{ fontSize: "17px", fontWeight: 500 }}>{card.title}</p>
+                <p className="font-sans font-light text-[#9C9A93] mt-3" style={{ fontSize: "15px", lineHeight: 1.7 }}>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── PERSONALITY ──────────────────────────────────── */}
       <section className="py-20 md:py-32 text-center px-4 md:px-8" style={{ background: "#141413" }}>
         <div className="max-w-7xl mx-auto">

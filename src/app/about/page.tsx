@@ -19,7 +19,9 @@ export default function AboutPage() {
       >
         <div className="max-w-3xl">
           <h1 className="font-serif font-light text-[#FAF9F5]" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1.05 }}>
-            {t.about.heroHeadline}
+            {t.about.heroHeadline.split('\n').map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h1>
           <p className="font-sans text-[#9C9A93] mt-8" style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)", lineHeight: 1.75 }}>
             {t.about.heroSubhead}

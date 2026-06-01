@@ -376,6 +376,37 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── FROM CONVERSATION TO ACTION ──────────────────── */}
+      <section className="py-20 md:py-32" style={{ background: "#0F0D0B" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-14">
+            <h2 className="heading-section font-serif font-normal text-[#FFFFFF]">
+              {t.revenueIntent.headline}
+            </h2>
+            <p className="font-sans font-light text-[#9C9A93] max-w-2xl mx-auto mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+              {t.revenueIntent.subhead}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.revenueIntent.cards.map((card) => (
+              <div key={card.title} className="rounded-2xl p-7 flex flex-col" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                <p className="font-sans font-normal text-[#FAF9F5] mb-6" style={{ fontSize: "16px", fontWeight: 500 }}>{card.title}</p>
+                <div className="flex flex-col gap-3 mt-auto">
+                  {card.steps.map((step, i) => (
+                    <div key={i}>
+                      <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "14px", lineHeight: 1.6 }}>{step}</p>
+                      {i < card.steps.length - 1 && (
+                        <p className="font-sans text-[#4A4640] mt-1" style={{ fontSize: "12px" }}>↓</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── INTELLIGENCE ─────────────────────────────────── */}
       <section className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#1A1715" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -428,6 +459,30 @@ export default function HomePage() {
           >
             {t.intelligence.closing}
           </p>
+        </div>
+      </section>
+
+      {/* ── EVERY CONVERSATION REVEALS ───────────────────── */}
+      <section className="py-20 md:py-32" style={{ background: "#141210" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-start">
+            <div>
+              <h2 className="heading-section font-serif font-normal text-[#FFFFFF]">
+                {t.guestSignals.headline}
+              </h2>
+              <p className="font-sans font-light text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+                {t.guestSignals.body}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {t.guestSignals.items.map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-xl px-5 py-4" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#C96A3A", flexShrink: 0 }} />
+                  <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "15px" }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -546,13 +601,13 @@ export default function HomePage() {
             </p>
             <h2 className="heading-section font-serif font-normal text-[#FFFFFF] max-w-2xl mx-auto">
               {lang === 'es'
-                ? 'Cada pregunta respondida. Cada oportunidad registrada.'
-                : 'Every question answered. Every opportunity tracked.'}
+                ? 'Cada conversación entendida. Cada oportunidad registrada.'
+                : 'Every conversation understood. Every opportunity tracked.'}
             </h2>
             <p className="font-sans font-light mt-5 max-w-xl mx-auto" style={{ fontSize: '18px', color: '#9C9A93', lineHeight: 1.7 }}>
               {lang === 'es'
-                ? 'Tu panel muestra en tiempo real lo que tus huéspedes necesitan — y lo que tu equipo nunca tiene que atender.'
-                : 'Your dashboard shows in real time what your guests need — and what your team never has to handle.'}
+                ? 'Ve lo que los huéspedes necesitan, qué debe priorizar tu equipo y dónde están surgiendo oportunidades en tu propiedad.'
+                : 'See what guests need, what your team should prioritize, and where opportunities are emerging across your property.'}
             </p>
           </div>
 

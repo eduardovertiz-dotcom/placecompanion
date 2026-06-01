@@ -64,19 +64,19 @@ export default function AnnouncementBar() {
               {lang === 'es' ? (
                 <>
                   <span style={{ color: '#6B6560' }}>Programa de Socios Fundadores · </span>
-                  <span style={{ color: '#E8E3DC' }}>3 lugares disponibles — tarifas de por vida con 20% de descuento.</span>
+                  <span style={{ color: '#E8E3DC' }}>3 lugares disponibles — fija tu tarifa de por vida.</span>
                 </>
               ) : (
                 <>
                   <span style={{ color: '#6B6560' }}>Founding Partner Program · </span>
-                  <span style={{ color: '#E8E3DC' }}>3 spots remaining — lock in 20% off for life.</span>
+                  <span style={{ color: '#E8E3DC' }}>3 spots remaining — lock in your rate for life.</span>
                 </>
               )}
             </span>
             <span className="md:hidden" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '60vw' }}>
               {lang === 'es'
-                ? '3 lugares — 20% de por vida.'
-                : '3 spots left — 20% off.'}
+                ? '3 lugares — tarifa fija de por vida.'
+                : '3 spots left — rate locked for life.'}
             </span>
             <button
               onClick={() => {
