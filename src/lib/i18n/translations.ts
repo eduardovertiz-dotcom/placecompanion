@@ -607,7 +607,7 @@ export const translations = {
     },
     finalCta: {
       headline: 'Entiende a cada huésped. Captura cada oportunidad.',
-      body: 'Descubre cómo Place Companion transforma las conversaciones con tus huéspedes en información hospitalaria accionable.',
+      body: 'Descubre cómo Place Companion transforma las conversaciones con tus huéspedes en información accionable.',
       button: 'Inicia tu Piloto',
     },
     footer: {
