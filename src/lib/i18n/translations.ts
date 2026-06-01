@@ -13,7 +13,7 @@ export const translations = {
       signIn: 'Sign In',
     },
     hero: {
-      headline: 'Understand every guest. Capture every opportunity.',
+      headline: 'Understand every guest.\nCapture every opportunity.',
       subhead: 'Turn guest conversations into service opportunities, operational visibility, and exceptional hospitality experiences.',
       emerald: 'Your hotel becomes searchable by conversation.',
       primaryCta: 'Start Your Pilot',
@@ -161,7 +161,7 @@ export const translations = {
       },
     },
     finalCta: {
-      headline: 'Understand every guest. Capture every opportunity.',
+      headline: 'Understand every guest.\nCapture every opportunity.',
       body: 'See how Place Companion transforms guest conversations into actionable hospitality insight.',
       button: 'Start Your Pilot',
     },
@@ -458,7 +458,7 @@ export const translations = {
       signIn: 'Inicia Sesión',
     },
     hero: {
-      headline: 'Entiende a cada huésped. Captura cada oportunidad.',
+      headline: 'Entiende a cada huésped.\nCaptura cada oportunidad.',
       subhead: 'Convierte las conversaciones con tus huéspedes en oportunidades de servicio, visibilidad operativa y experiencias de hospitalidad excepcionales.',
       emerald: 'Tu hotel se vuelve buscable por conversación.',
       primaryCta: 'Inicia tu Piloto',
@@ -606,7 +606,7 @@ export const translations = {
       },
     },
     finalCta: {
-      headline: 'Entiende a cada huésped. Captura cada oportunidad.',
+      headline: 'Entiende a cada huésped.\nCaptura cada oportunidad.',
       body: 'Descubre cómo Place Companion transforma las conversaciones con tus huéspedes en información accionable.',
       button: 'Inicia tu Piloto',
     },

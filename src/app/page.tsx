@@ -89,7 +89,9 @@ export default function HomePage() {
             {/* Left */}
             <div>
               <h1 className="heading-hero font-serif font-normal text-[#FFFFFF] text-balance">
-                {t.hero.headline}
+                {t.hero.headline.split('\n').map((line, i, arr) => (
+                  <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                ))}
               </h1>
               <p className="font-sans font-light mt-6 md:mt-8" style={{ fontSize: "18px", lineHeight: 1.7, color: "#9C9A93" }}>
                 {t.hero.subhead}
@@ -1247,7 +1249,9 @@ export default function HomePage() {
           </svg>
 
           <h2 className="heading-section font-serif font-normal text-[#FFFFFF]">
-            {t.finalCta.headline}
+            {t.finalCta.headline.split('\n').map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
           <p className="font-sans text-[#A8A099] max-w-xl mx-auto mt-5 break-words" style={{ fontSize: "18px", lineHeight: 1.75 }}>
             {t.finalCta.body}

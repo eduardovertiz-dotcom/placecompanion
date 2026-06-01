@@ -123,7 +123,9 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 text-center" style={{ background: "#1A1715" }}>
         <div className="max-w-xl mx-auto px-4 md:px-8">
           <h2 className="font-serif font-normal text-[#FAF9F5]" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", lineHeight: 1.1 }}>
-            {t.finalCta.headline}
+            {t.finalCta.headline.split('\n').map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
           <p className="font-sans text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
             {t.finalCta.body}

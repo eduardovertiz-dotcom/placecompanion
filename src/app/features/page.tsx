@@ -252,7 +252,9 @@ export default function FeaturesPage() {
             <path d="M28 34v10M24 40l4 4 4-4" stroke="#FAF9F5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <h2 className="heading-section font-serif font-normal text-[#FAF9F5]">
-            {t.finalCta.headline}
+            {t.finalCta.headline.split('\n').map((line, i, arr) => (
+              <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
           <p className="font-sans text-[#9C9A93] max-w-xl mx-auto mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
             {t.finalCta.body}
