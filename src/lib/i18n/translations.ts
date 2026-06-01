@@ -161,8 +161,8 @@ export const translations = {
       },
     },
     finalCta: {
-      headline: 'Create your hotel assistant.',
-      body: 'See how guests experience your property when every question has an instant answer.',
+      headline: 'Understand every guest. Capture every opportunity.',
+      body: 'See how Place Companion transforms guest conversations into actionable hospitality insight.',
       button: 'Start Your Pilot',
     },
     footer: {
@@ -606,8 +606,8 @@ export const translations = {
       },
     },
     finalCta: {
-      headline: 'Crea el asistente de tu hotel.',
-      body: 'Descubre cómo los huéspedes viven tu propiedad cuando cada pregunta tiene una respuesta instantánea.',
+      headline: 'Entiende a cada huésped. Captura cada oportunidad.',
+      body: 'Descubre cómo Place Companion transforma las conversaciones con tus huéspedes en información hospitalaria accionable.',
       button: 'Inicia tu Piloto',
     },
     footer: {
