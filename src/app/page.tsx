@@ -515,14 +515,7 @@ export default function HomePage() {
               onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
             >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="11" cy="11" r="8" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <ellipse cx="11" cy="11" rx="3.5" ry="8" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <line x1="3" y1="11" x2="19" y2="11" stroke="#C96A3A" strokeWidth="1.25"/>
-                </svg>
-              </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>01</p>
+              <p className="font-sans tracking-widest" style={{ fontSize: '22px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '16px' }}>01</p>
               <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step1Title}</p>
               <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step1Desc}</p>
             </div>
@@ -539,13 +532,7 @@ export default function HomePage() {
               onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
             >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <path d="M11 3a8 8 0 016 13.3V19l-2.5-1.5A8 8 0 1111 3z" stroke="#C96A3A" strokeWidth="1.25" strokeLinejoin="round"/>
-                  <path d="M8 10h.01M11 10h.01M14 10h.01" stroke="#C96A3A" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>02</p>
+              <p className="font-sans tracking-widest" style={{ fontSize: '22px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '16px' }}>02</p>
               <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step2Title}</p>
               <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step2Desc}</p>
             </div>
@@ -562,15 +549,7 @@ export default function HomePage() {
               onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.12)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(232,227,220,0.06)' }}
             >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#1F1C19', border: '1px solid rgba(232,227,220,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <rect x="4" y="2" width="14" height="18" rx="2" stroke="#C96A3A" strokeWidth="1.25"/>
-                  <path d="M7 6h8M7 10h8M7 14h5" stroke="#C96A3A" strokeWidth="1.25" strokeLinecap="round"/>
-                  <circle cx="16" cy="16" r="4" fill="#1F1C19" stroke="#2D9E6B" strokeWidth="1.25"/>
-                  <path d="M14.5 16l1 1 2-2" stroke="#2D9E6B" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <p className="font-sans tracking-widest" style={{ fontSize: '10px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '10px' }}>03</p>
+              <p className="font-sans tracking-widest" style={{ fontSize: '22px', color: '#2D9E6B', letterSpacing: '0.12em', marginBottom: '16px' }}>03</p>
               <p className="font-sans font-medium text-[#FAF9F5]" style={{ fontSize: '17px', lineHeight: 1.3, marginBottom: '10px' }}>{t.howItWorks.step3Title}</p>
               <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: '15px', lineHeight: 1.65 }}>{t.howItWorks.step3Desc}</p>
             </div>
