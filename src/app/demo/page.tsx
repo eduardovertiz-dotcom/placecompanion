@@ -16,8 +16,8 @@ export default function DemoPage() {
     ...marazulChatConfig,
     placeholder: lang === 'es' ? 'Pregunta algo...' : 'Ask anything...',
     greeting: lang === 'es'
-      ? '¡Hola! Soy Marina, la IA de MarAzul. ¿En qué puedo ayudarte?'
-      : "Hi! I'm Marina, MarAzul's AI companion. What can I help you with?",
+      ? 'Bienvenido a MarAzul Riviera Maya. Soy Marina, tu companion de huéspedes. ¿En qué puedo ayudarte para que tu estancia sea excepcional?'
+      : "Welcome to MarAzul Riviera Maya. I'm Marina, your guest companion. How can I help make your stay exceptional?",
     suggestionChips: [
       t.demo.suggestionChips[0],
       t.demo.suggestionChips[1],

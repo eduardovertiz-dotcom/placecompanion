@@ -349,13 +349,13 @@ export const translations = {
     demo: {
       label: 'LIVE DEMO',
       headline: 'Meet Marina.',
-      description: 'AI concierge for MarAzul Riviera Maya. Ask anything — in any language.',
+      description: 'See how Place Companion understands guest needs, identifies opportunities, and supports exceptional service.',
       langNote: '',
       createCta: 'Start Your Pilot',
       trialNote: 'No commitment required · Live in minutes',
       chatPlaceholder: 'Ask anything about the hotel…',
       collectionLabel: 'Part of the MarAzul Collection',
-      aiCompanion: 'Your 24/7 AI Guest Companion',
+      aiCompanion: 'Your 24/7 Guest Companion',
       suggestionChips: ['Where is breakfast served?', 'Do you have surf lessons?', 'How late is the pool open?', 'Where is the nearest pharmacy?', '¿Tienen servicio de spa?'],
     },
     auth: {
@@ -794,13 +794,13 @@ export const translations = {
     demo: {
       label: 'DEMO EN VIVO',
       headline: 'Conoce a Marina.',
-      description: 'Concierge de IA para MarAzul Riviera Maya. Pregunta lo que quieras — en cualquier idioma.',
+      description: 'Descubre cómo Place Companion entiende las necesidades de los huéspedes, identifica oportunidades y apoya un servicio excepcional.',
       langNote: '',
       createCta: 'Inicia tu Piloto',
       trialNote: 'Sin tarjeta de crédito · En vivo en minutos',
       chatPlaceholder: 'Pregunta cualquier cosa sobre el hotel…',
       collectionLabel: 'Parte de la Colección MarAzul',
-      aiCompanion: 'Tu Asistente de Huéspedes con IA 24/7',
+      aiCompanion: 'Tu Companion de Huéspedes 24/7',
       suggestionChips: ['¿Dónde se sirve el desayuno?', '¿Tienen clases de surf?', '¿Hasta qué hora está abierta la alberca?', '¿Dónde está la farmacia más cercana?', '¿Tienen servicio de spa?'],
     },
     auth: {
