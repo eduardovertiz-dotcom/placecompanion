@@ -222,8 +222,8 @@ export default function HomePage() {
           </p>
           <p className="font-sans mt-6" style={{ fontSize: '18px', color: '#A8A099', lineHeight: 1.6 }}>
             {lang === 'es'
-              ? 'perdidos anualmente por hoteles en fricción evitable con huéspedes.'
-              : 'lost annually by hotels to avoidable guest friction.'}
+              ? 'perdidos anualmente en oportunidades no capturadas y fricción evitable con huéspedes.'
+              : 'lost annually to missed opportunities and avoidable guest friction.'}
           </p>
           <p className="font-sans mt-4" style={{ fontSize: '11px', color: '#6B6560', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Medallia, 2024
@@ -407,6 +407,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── EVERY CONVERSATION REVEALS ───────────────────── */}
+      <section className="py-20 md:py-32" style={{ background: "#141210" }}>
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-start">
+            <div>
+              <h2 className="heading-section font-serif font-normal text-[#FFFFFF]">
+                {t.guestSignals.headline}
+              </h2>
+              <p className="font-sans font-light text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
+                {t.guestSignals.body}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {t.guestSignals.items.map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-xl px-5 py-4" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
+                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#C96A3A", flexShrink: 0 }} />
+                  <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "15px" }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── INTELLIGENCE ─────────────────────────────────── */}
       <section className="py-20 md:py-32 text-center overflow-hidden" style={{ background: "#1A1715" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -459,30 +483,6 @@ export default function HomePage() {
           >
             {t.intelligence.closing}
           </p>
-        </div>
-      </section>
-
-      {/* ── EVERY CONVERSATION REVEALS ───────────────────── */}
-      <section className="py-20 md:py-32" style={{ background: "#141210" }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-20 items-start">
-            <div>
-              <h2 className="heading-section font-serif font-normal text-[#FFFFFF]">
-                {t.guestSignals.headline}
-              </h2>
-              <p className="font-sans font-light text-[#9C9A93] mt-5" style={{ fontSize: "18px", lineHeight: 1.75 }}>
-                {t.guestSignals.body}
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {t.guestSignals.items.map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-xl px-5 py-4" style={{ background: "#1F1E1D", border: "1px solid rgba(250,249,245,0.06)" }}>
-                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#C96A3A", flexShrink: 0 }} />
-                  <p className="font-sans font-light text-[#9C9A93]" style={{ fontSize: "15px" }}>{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

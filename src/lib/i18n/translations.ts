@@ -67,7 +67,7 @@ export const translations = {
     },
     guestSignals: {
       headline: 'Every conversation reveals something valuable.',
-      body: 'Every guest conversation contains signals. Place Companion identifies recurring requests, service opportunities, guest preferences, operational patterns, and moments that deserve attention. The result is better visibility, faster response, and a more personalized guest experience.',
+      body: 'Every guest conversation contains signals. Place Companion identifies recurring requests, guest preferences, service opportunities, operational patterns, and moments that deserve attention. The result is more personalized service, better visibility, faster response, and a better guest experience.',
       items: ['Guest intent detection', 'Revenue opportunity visibility', 'Service trend identification', 'Issue monitoring', 'Conversation analytics', 'Operational visibility'],
     },
     revenue: {
@@ -83,12 +83,12 @@ export const translations = {
       ],
     },
     intelligence: {
-      headline: 'It knows your hotel. And your destination.',
+      headline: 'Built on knowledge. Driven by understanding.',
       hotelLabel: 'YOUR HOTEL',
       destinationLabel: 'YOUR DESTINATION',
       hotelItems: ['Restaurant hours and menus', 'Spa treatments and availability', 'Room types and amenities', 'Pool and beach club rules', 'Check-in and checkout policies', 'Transportation and transfers'],
       destinationItems: ['Best local restaurants', 'Beaches and natural attractions', 'Activities and surf schools', 'Pharmacies and essentials', 'Markets and shopping', 'Hidden local favorites'],
-      closing: 'One assistant. Complete knowledge.',
+      closing: 'One conversation. Complete context.',
     },
     howItWorks: {
       headline: 'Live in minutes.',
@@ -162,7 +162,7 @@ export const translations = {
     },
     finalCta: {
       headline: 'Understand every guest.\nCapture every opportunity.',
-      body: 'See how Place Companion transforms guest conversations into actionable hospitality insight.',
+      body: 'See how Place Companion helps your team understand guests, uncover opportunities, and deliver exceptional hospitality at scale.',
       button: 'Start Your Pilot',
     },
     footer: {
@@ -512,7 +512,7 @@ export const translations = {
     },
     guestSignals: {
       headline: 'Cada conversación revela algo valioso.',
-      body: 'Cada conversación con un huésped contiene señales. Place Companion identifica solicitudes recurrentes, oportunidades de servicio, preferencias de los huéspedes, patrones operativos y momentos que merecen atención. El resultado es mayor visibilidad, respuesta más rápida y una experiencia más personalizada.',
+      body: 'Cada conversación con un huésped contiene señales. Place Companion identifica solicitudes recurrentes, preferencias de los huéspedes, oportunidades de servicio, patrones operativos y momentos que merecen atención. El resultado es un servicio más personalizado, mayor visibilidad, respuesta más rápida y una mejor experiencia para el huésped.',
       items: ['Detección de intención del huésped', 'Visibilidad de oportunidades de ingreso', 'Identificación de tendencias de servicio', 'Monitoreo de incidencias', 'Análisis de conversaciones', 'Visibilidad operativa'],
     },
     revenue: {
@@ -528,12 +528,12 @@ export const translations = {
       ],
     },
     intelligence: {
-      headline: 'Conoce tu hotel. Y tu destino.',
+      headline: 'Construido sobre conocimiento. Impulsado por comprensión.',
       hotelLabel: 'TU HOTEL',
       destinationLabel: 'TU DESTINO',
       hotelItems: ['Horarios y menús del restaurante', 'Tratamientos y disponibilidad del spa', 'Tipos de habitación y amenidades', 'Reglas de alberca y beach club', 'Políticas de check-in y check-out', 'Transporte y traslados'],
       destinationItems: ['Los mejores restaurantes locales', 'Playas y atractivos naturales', 'Actividades y escuelas de surf', 'Farmacias y artículos de primera necesidad', 'Mercados y tiendas', 'Favoritos locales secretos'],
-      closing: 'Un asistente. Conocimiento completo.',
+      closing: 'Una conversación. Contexto completo.',
     },
     howItWorks: {
       headline: 'En vivo en minutos.',
@@ -607,7 +607,7 @@ export const translations = {
     },
     finalCta: {
       headline: 'Entiende a cada huésped.\nCaptura cada oportunidad.',
-      body: 'Descubre cómo Place Companion transforma las conversaciones con tus huéspedes en información accionable.',
+      body: 'Descubre cómo Place Companion ayuda a tu equipo a entender a los huéspedes, identificar oportunidades y brindar una hospitalidad excepcional a escala.',
       button: 'Inicia tu Piloto',
     },
     footer: {
